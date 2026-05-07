@@ -120,12 +120,7 @@ export default function Internship() {
       </Section>
 
       <Section title="Project types" meta="pick one, scope it down" id="projects">
-        <Image
-          src="intern_b"
-          alt="pair · review"
-          density="extra"
-          className="intern-photo-plate"
-        />
+        <Image src="intern_b" alt="pair · review" className="intern-photo-plate" />
         <p>
           Every intern project lands in one of these four buckets. The exact problem changes by
           cohort and partner — these are the shapes.

@@ -1,4 +1,4 @@
-/* Unsplash photo catalogue — same URLs as the legacy imagery.js */
+/* Unsplash photo catalogue. */
 const U = (id: string, w = 1200, q = 78) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=${q}&auto=format&fit=crop`;
 
@@ -35,22 +35,3 @@ export const IMG = {
 } as const;
 
 export type ImgKey = keyof typeof IMG;
-
-export type Treatment = 'duotone' | 'mute' | 'full' | 'grain';
-export type Density = 'sparse' | 'balanced' | 'rich';
-
-export interface ImageryState {
-  enabled: boolean;
-  treatment: Treatment;
-  density: Density;
-  grain: boolean;
-}
-
-export const DEFAULTS: ImageryState = {
-  enabled: true,
-  treatment: 'duotone',
-  density: 'balanced',
-  grain: true,
-};
-
-export const STORAGE_KEY = 'aptiveon.imagery.v1';

@@ -1,35 +1,17 @@
-/* Photo containers + treatments. Treatments are toggled via body[data-img-treatment]. */
+/* Photo containers — natural colour, with an optional caption pill. */
 .apt-img {
   position: relative;
   background-size: cover;
   background-position: center;
   background-color: var(--color-fg-2);
   overflow: hidden;
-  isolation: isolate;
-  transition: filter 350ms ease;
+  transition: filter var(--duration-base) ease;
 }
-.apt-img-fx {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: normal;
-  z-index: 1;
-  transition: opacity 350ms ease;
-}
-.apt-img-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.18;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
-  mix-blend-mode: multiply;
-}
+
 .apt-img-cap {
   position: absolute;
   left: var(--space-3);
   bottom: var(--space-2);
-  z-index: 3;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: var(--tracking-wider);
@@ -39,97 +21,4 @@
   padding: var(--space-1) var(--space-2);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-}
-
-/* Treatment: duotone (oxide + ink) */
-body[data-img-treatment='duotone'] .apt-img {
-  filter: grayscale(1) contrast(1.05);
-  background-color: var(--color-fg);
-}
-body[data-img-treatment='duotone'] .apt-img:hover {
-  filter: grayscale(0) contrast(1.02) saturate(1.05);
-}
-body[data-img-treatment='duotone'] .apt-img::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 91, 31, 0.55),
-    rgba(31, 58, 138, 0.45)
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  transition: opacity 350ms ease;
-}
-body[data-img-treatment='duotone'] .apt-img:hover::before {
-  opacity: 0;
-}
-body[data-img-treatment='duotone'] .apt-img::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: rgba(20, 20, 19, 0.35);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  transition: opacity 350ms ease;
-}
-body[data-img-treatment='duotone'] .apt-img:hover::after {
-  opacity: 0;
-}
-
-/* Treatment: mute (warm desat) */
-body[data-img-treatment='mute'] .apt-img {
-  filter: saturate(0.55) contrast(0.95) brightness(0.96) sepia(0.18);
-}
-body[data-img-treatment='mute'] .apt-img:hover {
-  filter: saturate(1) contrast(1) brightness(1) sepia(0);
-}
-body[data-img-treatment='mute'] .apt-img::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: rgba(242, 238, 227, 0.1);
-  pointer-events: none;
-  transition: opacity 350ms ease;
-}
-body[data-img-treatment='mute'] .apt-img:hover::after {
-  opacity: 0;
-}
-
-/* Treatment: full */
-body[data-img-treatment='full'] .apt-img {
-  filter: saturate(0.92) contrast(1.02);
-}
-body[data-img-treatment='full'] .apt-img:hover {
-  filter: saturate(1.08) contrast(1.04);
-}
-
-/* Treatment: grain */
-body[data-img-treatment='grain'] .apt-img {
-  filter: grayscale(1) contrast(1.08) brightness(1.02);
-}
-body[data-img-treatment='grain'] .apt-img:hover {
-  filter: grayscale(0) contrast(1.04) brightness(1);
-}
-body[data-img-treatment='grain'] .apt-img-grain {
-  opacity: 0.42;
-}
-body[data-img-treatment='grain'] .apt-img:hover .apt-img-grain {
-  opacity: 0.18;
-}
-
-/* Density toggles */
-body[data-img-density='sparse'] .apt-img-density-extra,
-body[data-img-density='sparse'] .apt-img-density-rich,
-body[data-img-density='balanced'] .apt-img-density-rich {
-  display: none;
-}
-
-body[data-img-enabled='false'] .apt-img,
-body[data-img-enabled='false'] .apt-img-block {
-  display: none !important;
 }
