@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="lockup">
           <span className="glyph" />
           <div>
-            <div className="name">Aptiveon Technology</div>
+            <div className="name">Aptiveon Technologies</div>
             <div className="desc">
               Applied AI infrastructure · workflow automation · retrieval systems for regulated
               operations.
@@ -68,7 +68,7 @@ export default function Footer() {
         ))}
       </div>
       <div className="foot-stamp">
-        <span>© 2026 Aptiveon Technology</span>
+        <span>© 2026 Aptiveon Technologies</span>
         <span>Singapore · London · NYC</span>
       </div>
     </footer>

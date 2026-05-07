@@ -3,16 +3,17 @@ import Crumb from '@/components/ui/Crumb';
 import PageHero from '@/components/ui/PageHero';
 import Section from '@/components/ui/Section';
 import Image from '@/components/ui/Image';
+import Select, { type SelectOption } from '@/components/ui/Select';
 
-const KINDS = [
-  'Engagement — Applied Systems Development',
-  'Engagement — AI Digital Assistants',
-  'Engagement — RAG Knowledge Systems',
-  'Engagement — Workflow Automation',
-  'Product — Workflow Engine partnership',
-  'Product — Knowledge Assistant pilot',
-  'Internship application',
-  'Something else',
+const KINDS: SelectOption[] = [
+  { value: 'asd', label: 'Engagement — Applied Systems Development' },
+  { value: 'aida', label: 'Engagement — AI Digital Assistants' },
+  { value: 'rag', label: 'Engagement — RAG Knowledge Systems' },
+  { value: 'wfa', label: 'Engagement — Workflow Automation' },
+  { value: 'awe', label: 'Product — Workflow Engine partnership' },
+  { value: 'aka', label: 'Product — Knowledge Assistant pilot' },
+  { value: 'internship', label: 'Internship application' },
+  { value: 'other', label: 'Something else' },
 ];
 
 export default function Contact() {
@@ -67,13 +68,13 @@ export default function Contact() {
             <h4>DIRECT</h4>
             <h5>For organizations</h5>
             <p>If you'd rather skip the form, the inbox is read by the founding team.</p>
-            <a href="mailto:contact@aptiveon.tech">contact@aptiveon.tech →</a>
+            <a href="mailto:contact@aptiveon.com">contact@aptiveon.com →</a>
           </div>
           <div>
             <h4>STUDENTS</h4>
             <h5>For internship applicants</h5>
             <p>Apply directly with a short note about what you've built and want to build next.</p>
-            <a href="mailto:apply@aptiveon.tech">apply@aptiveon.tech →</a>
+            <a href="mailto:apply@aptiveon.com">apply@aptiveon.com →</a>
           </div>
         </div>
 
@@ -85,6 +86,7 @@ export default function Contact() {
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [kind, setKind] = useState(KINDS[0].value);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,12 +105,17 @@ function ContactForm() {
       <label htmlFor="f-org">Organization (optional)</label>
       <input id="f-org" name="org" type="text" placeholder="Company / school / project" />
 
-      <label htmlFor="f-kind">What's this about?</label>
-      <select id="f-kind" name="kind" defaultValue={KINDS[0]}>
-        {KINDS.map((k) => (
-          <option key={k}>{k}</option>
-        ))}
-      </select>
+      <label id="f-kind-label" htmlFor="f-kind">
+        What's this about?
+      </label>
+      <Select
+        id="f-kind"
+        name="kind"
+        aria-labelledby="f-kind-label"
+        options={KINDS}
+        value={kind}
+        onChange={setKind}
+      />
 
       <label htmlFor="f-msg">The constraint</label>
       <textarea

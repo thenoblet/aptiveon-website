@@ -159,7 +159,7 @@ export default function Solutions() {
               blocking you. We'll write back with a take and rough shape.
             </p>
             <Button to="/contact" variant="line" arrow>
-              contact@aptiveon.tech
+              contact@aptiveon.com
             </Button>
           </div>
           <div>

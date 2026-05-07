@@ -18,6 +18,8 @@
 @import './components/page.css';
 @import './components/imagery.css';
 @import './components/modal.css';
+@import './components/select.css';
+@import './components/splash.css';
 
 @import './pages/home.css';
 @import './pages/solutions.css';
