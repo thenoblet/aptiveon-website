@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 legacy
+.claude
+CLAUDE.md

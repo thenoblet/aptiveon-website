@@ -77,6 +77,27 @@
   max-width: 50ch;
 }
 
+@media (max-width: 48rem) {
+  .page-hero {
+    padding-top: var(--space-5);
+    margin-bottom: var(--space-9);
+  }
+  .page-title {
+    max-width: 100%;
+    margin-bottom: var(--space-5);
+  }
+  .page-dek {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-6);
+  }
+  .sec-title {
+    font-size: var(--text-2xl);
+  }
+  .section {
+    margin-top: var(--space-10);
+  }
+}
+
 /*
  * 2-column key/value strip — matches legacy: each row has a hairline below it,
  * and a top hairline crowns the whole block. No vertical separators.

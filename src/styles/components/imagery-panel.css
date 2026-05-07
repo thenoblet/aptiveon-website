@@ -170,3 +170,11 @@
   border-bottom: 1px solid var(--color-fg);
   cursor: pointer;
 }
+
+/* Hide the floating tweaks panel on phones — it eats real estate. */
+@media (max-width: 48rem) {
+  #apt-tweaks-toggle,
+  #apt-tweaks {
+    display: none !important;
+  }
+}

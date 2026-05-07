@@ -393,6 +393,38 @@
     aspect-ratio: 16/10;
   }
 }
+@media (max-width: 48rem) {
+  .agg {
+    padding: var(--space-6);
+    gap: var(--space-4);
+  }
+  .agg .num {
+    font-size: var(--text-4xl);
+  }
+  .case {
+    margin-top: var(--space-12);
+    padding-top: var(--space-5);
+  }
+  .case-head h2 {
+    font-size: var(--text-3xl);
+  }
+  .case-quote blockquote {
+    font-size: var(--text-xl);
+  }
+  .case-r .results .num {
+    font-size: var(--text-3xl);
+  }
+  .ework .head {
+    padding: var(--space-5) var(--space-6);
+  }
+  .ework-grid > div {
+    padding: var(--space-5) var(--space-6);
+  }
+  .cust-cta h3 {
+    font-size: var(--text-3xl);
+  }
+}
+
 @media (max-width: 56rem) {
   .cust-index {
     grid-template-columns: 1fr 1fr;

@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useReveal } from '@/hooks/useReveal';
 
 export default function Footer() {
+  const wordmarkRef = useReveal<HTMLDivElement>(0.4);
+
   return (
     <footer className="foot">
       <div className="foot-mark">
@@ -57,7 +60,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="foot-wordmark" aria-label="aptiveon">
+      <div ref={wordmarkRef} className="foot-wordmark" aria-label="aptiveon">
         {Array.from('aptiveon.').map((ch, i) => (
           <span key={i} className="ltr" data-char={ch} aria-hidden="true">
             {ch}

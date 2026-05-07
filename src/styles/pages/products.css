@@ -129,6 +129,25 @@
     height: 12.5rem;
   }
 }
+@media (max-width: 48rem) {
+  .product-page {
+    margin-top: var(--space-10);
+  }
+  .prod-banner {
+    padding: var(--space-6);
+    gap: var(--space-5);
+  }
+  .prod-banner h2 {
+    font-size: var(--text-4xl);
+  }
+  .prod-banner .specbox {
+    padding: var(--space-4) var(--space-5);
+  }
+  .feat-grid .f {
+    padding: var(--space-4) var(--space-5);
+  }
+}
+
 @media (max-width: 45rem) {
   .feat-grid {
     grid-template-columns: 1fr;

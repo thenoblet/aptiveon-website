@@ -150,6 +150,35 @@
     border-bottom: 1px solid var(--color-rule-base);
   }
 }
+@media (max-width: 48rem) {
+  .form-l,
+  .form-r {
+    padding: var(--space-6);
+  }
+  .form-l label {
+    margin-top: var(--space-4);
+  }
+  /* iOS Safari auto-zooms inputs whose font-size is below 16px on focus —
+     bump to 1rem to suppress that and increase tap surface. */
+  .form-l input,
+  .form-l textarea,
+  .form-l select {
+    font-size: var(--text-lg);
+    padding: var(--space-3);
+  }
+  .form-l button {
+    width: 100%;
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-lg);
+  }
+  .channels > div {
+    padding: var(--space-5);
+  }
+  .contact-loc {
+    height: 12rem;
+  }
+}
+
 @media (max-width: 45rem) {
   .channels {
     grid-template-columns: 1fr;

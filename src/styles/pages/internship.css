@@ -144,6 +144,22 @@
     border-bottom: 1px solid var(--color-rule-base);
   }
 }
+@media (max-width: 48rem) {
+  .phase {
+    padding: var(--space-5) var(--space-5);
+  }
+  .ptype {
+    padding: var(--space-5);
+  }
+  .applybox {
+    padding: var(--space-6);
+    gap: var(--space-5);
+  }
+  .applybox h3 {
+    font-size: var(--text-2xl);
+  }
+}
+
 @media (max-width: 45rem) {
   .phases,
   .ptypes,

@@ -26,6 +26,11 @@ export function useAmbientParticles(
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Honour reduced motion; halve density on phones.
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const viewportW = window.innerWidth;
+    const adjustedCount = viewportW < 480 ? Math.min(40, count) : viewportW < 768 ? Math.min(70, count) : count;
+
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
     let W = window.innerWidth,
       H = window.innerHeight;
@@ -41,7 +46,7 @@ export function useAmbientParticles(
     window.addEventListener('resize', resize);
 
     const particles: Particle[] = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < adjustedCount; i++) {
       particles.push({
         x: Math.random() * W,
         y: Math.random() * H,

@@ -36,6 +36,9 @@ export function useHeroParticles(
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Honour the OS reduced-motion preference — skip the canvas entirely.
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0,
       H = 0;
@@ -79,9 +82,15 @@ export function useHeroParticles(
       return pts.map((p) => ({ tx: p.tx + ox, ty: p.ty + oy }));
     };
 
+    // Cheap on phones, generous on desktops. Drop the wordmark resolve entirely
+    // on the smallest screens — it's barely legible at that size anyway.
+    const viewportW = window.innerWidth;
+    const wordmarkCap = viewportW < 480 ? 0 : viewportW < 768 ? 120 : 380;
+    const ambientCap = viewportW < 480 ? 60 : viewportW < 768 ? 100 : 180;
+
     let targets = buildTargets();
     const particles: Particle[] = [];
-    const COUNT = Math.min(targets.length, 380);
+    const COUNT = Math.min(targets.length, wordmarkCap);
     for (let i = 0; i < COUNT; i++) {
       const t = targets[Math.floor(Math.random() * targets.length)];
       particles.push({
@@ -99,7 +108,7 @@ export function useHeroParticles(
         dy: 0,
       });
     }
-    const AMBIENT = 180;
+    const AMBIENT = ambientCap;
     for (let j = 0; j < AMBIENT; j++) {
       particles.push({
         kind: 'ambient',

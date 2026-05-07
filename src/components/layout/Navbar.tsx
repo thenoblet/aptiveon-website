@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 interface SubItem {
@@ -50,9 +51,16 @@ const PRODUCT_ITEMS: SubItem[] = [
 ];
 
 export default function Navbar() {
-  const { pathname } = useLocation();
+  const { pathname, key } = useLocation();
   const isSolutions = pathname.startsWith('/solutions');
   const isProducts = pathname.startsWith('/products');
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Close the mobile drawer on every route change.
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [key]);
 
   return (
     <header className="navbar">
@@ -94,7 +102,21 @@ export default function Navbar() {
             Talk to sales →
           </Link>
         </div>
+
+        <button
+          type="button"
+          className="nav-hamburger"
+          aria-label="Open navigation menu"
+          aria-expanded={drawerOpen}
+          onClick={() => setDrawerOpen(true)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </div>
+
+      <MobileNav open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </header>
   );
 }
@@ -142,4 +164,87 @@ function NavGroup({
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return `nav-link ${isActive ? 'active' : ''}`;
+}
+
+function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const ref = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dlg = ref.current;
+    if (!dlg) return;
+    if (open && !dlg.open) dlg.showModal();
+    else if (!open && dlg.open) dlg.close();
+  }, [open]);
+
+  return (
+    <dialog ref={ref} className="mobile-nav" onClose={onClose}>
+      <header className="mobile-nav-head">
+        <Link to="/" className="wordmark">
+          <span className="glyph" />
+          aptiveon
+        </Link>
+        <button
+          type="button"
+          className="mobile-nav-close"
+          onClick={onClose}
+          aria-label="Close menu"
+        >
+          ×
+        </button>
+      </header>
+
+      <div className="mobile-nav-body">
+        <details>
+          <summary>Solutions</summary>
+          <ul>
+            {SOLUTION_ITEMS.map((it) => (
+              <li key={it.to}>
+                <Link to={it.to}>
+                  <span className="m-name">{it.name}</span>
+                  <span className="m-ref">{it.ref}</span>
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link to="/solutions" className="m-all">
+                All solutions →
+              </Link>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>Products</summary>
+          <ul>
+            {PRODUCT_ITEMS.map((it) => (
+              <li key={it.to}>
+                <Link to={it.to}>
+                  <span className="m-name">{it.name}</span>
+                  <span className="m-ref">{it.ref}</span>
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link to="/products" className="m-all">
+                All products →
+              </Link>
+            </li>
+          </ul>
+        </details>
+
+        <Link to="/customers" className="plain-link">
+          Customers
+        </Link>
+        <Link to="/internship" className="plain-link">
+          Internship
+        </Link>
+      </div>
+
+      <div className="mobile-nav-foot">
+        <Link to="/contact" className="cta-link">
+          Talk to sales →
+        </Link>
+      </div>
+    </dialog>
+  );
 }

@@ -31,7 +31,10 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-7);
-  padding: var(--space-14) 0 var(--space-20);
+  /* Use longhand vertical padding so .lp-wrap's horizontal padding survives.
+     Padding shorthand on the same element would otherwise zero the sides. */
+  padding-top: var(--space-14);
+  padding-bottom: var(--space-20);
 }
 .hero .eyebrow {
   font-family: var(--font-mono);
@@ -611,6 +614,14 @@
   .pillars .pl {
     border-right: 0;
     border-bottom: 1px solid var(--color-rule-base);
+    padding: var(--space-7) 0;
+  }
+  .pillars .pl:first-child {
+    padding-top: var(--space-7);
+  }
+  .pillars .pl:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
   }
   .product-moment .head {
     flex-direction: column;
@@ -630,6 +641,99 @@
   .frame .body {
     padding: var(--space-6);
     min-height: 0;
+  }
+}
+
+/* Phone — tighten section padding and the lp-wrap gutter, reduce the queue mock */
+@media (max-width: 48rem) {
+  .lp-wrap {
+    padding: 0 var(--space-6);
+  }
+  .hero {
+    min-height: 70vh;
+  }
+  .hero-inner {
+    padding-top: var(--space-9);
+    padding-bottom: var(--space-12);
+    gap: var(--space-5);
+  }
+  .hero h1 {
+    max-width: 100%;
+  }
+  /* Scroll indicator is a desktop affordance — phones scroll by default,
+     and at narrow widths it overlaps the CTA buttons. */
+  .hero .scroll-cue {
+    display: none;
+  }
+  .pillar-line {
+    padding: var(--space-16) 0 var(--space-14);
+  }
+  .pillars {
+    padding: var(--space-12) 0;
+  }
+  .stats {
+    padding: var(--space-16) 0;
+  }
+  .stats .grid {
+    gap: var(--space-9);
+  }
+  .product-moment {
+    padding: var(--space-16) 0;
+  }
+  .product-moment .head h2 {
+    max-width: 100%;
+    font-size: var(--text-3xl);
+  }
+  .frame .qhead {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .qrow {
+    grid-template-columns: 4rem 1fr auto;
+    font-size: var(--text-md);
+    gap: var(--space-3);
+  }
+  .qrow .pl {
+    font-size: 0.6875rem;
+    padding: var(--space-1) var(--space-2);
+  }
+  .quote {
+    padding: var(--space-16) 0;
+  }
+  .quote blockquote {
+    font-size: var(--text-2xl);
+  }
+  .compl {
+    padding: var(--space-9) 0;
+  }
+  .compl .row {
+    gap: var(--space-6);
+    justify-content: flex-start;
+  }
+  .intern .row {
+    gap: var(--space-4);
+  }
+  .home-cta {
+    padding: var(--space-20) 0;
+  }
+  .home-cta h2 {
+    font-size: clamp(2.25rem, 8vw, 4rem);
+  }
+  .stats .stat .num,
+  .frame .foot .ms b {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+  .stats .stat .desc {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+  }
+}
+
+/* Small phone — drop logo wall to 2 columns */
+@media (max-width: 36rem) {
+  .logos .row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
 }
 
@@ -725,5 +829,64 @@ body[data-img-treatment='duotone'] .home-cta.with-img .cta-back {
   .hero-imgs {
     height: 10rem;
     gap: 0.25rem;
+  }
+}
+
+/*
+ * Tablet (iPad portrait, ~744–1024px) — between the desktop default and the
+ * phone overrides. The desktop hero is 88vh tall which dominates a tall iPad
+ * screen and makes the section feel disconnected from everything below.
+ * Pull the proportions in without touching the lp-wrap horizontal padding
+ * (which is already consistent across all sections).
+ */
+@media (min-width: 48.0625rem) and (max-width: 64rem) {
+  .hero {
+    min-height: 56vh;
+  }
+  .hero-inner {
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-14);
+    gap: var(--space-6);
+  }
+  .hero-imgs {
+    height: 11rem;
+  }
+  .hero h1 {
+    max-width: 16ch;
+  }
+}
+
+/*
+ * Mobile hero imagery — single feature photo at full bleed. Defined AFTER the
+ * desktop .hero-imgs rule above so it actually wins on phones (CSS source
+ * order matters when specificity is equal — media queries don't bump it).
+ *
+ *   width: 100vw + margin-left: calc(-50vw + 50%)
+ * is the bullet-proof full-bleed trick: it widens the box to the viewport and
+ * shifts it back by exactly the parent's left padding, so the image sits flush
+ * to both screen edges regardless of what padding .lp-wrap has.
+ *
+ * aspect-ratio 3/2 + max-height = editorial proportion that scales with the
+ * device width without ever dominating taller phones.
+ */
+@media (max-width: 48rem) {
+  .hero-imgs {
+    grid-template-columns: 1fr;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: 0;
+    aspect-ratio: 3 / 2;
+    max-height: 20rem;
+    height: auto;
+    gap: 0;
+    margin-bottom: var(--space-9);
+  }
+  .hero-imgs .apt-img {
+    border: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-imgs .apt-img:nth-child(n + 2) {
+    display: none;
   }
 }

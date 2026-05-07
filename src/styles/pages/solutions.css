@@ -101,6 +101,31 @@
     border-bottom: 1px solid var(--color-rule-base);
   }
 }
+@media (max-width: 48rem) {
+  .specsheet .ss-l,
+  .specsheet .ss-r {
+    padding: var(--space-6);
+  }
+  .specsheet h3 {
+    font-size: var(--text-3xl);
+  }
+  .sol-head {
+    padding-bottom: var(--space-3);
+  }
+  .sol-head h2 {
+    font-size: var(--text-3xl);
+  }
+  .sol-head .tag {
+    margin-left: 0;
+  }
+  .solution {
+    margin-top: var(--space-12);
+  }
+  .solution + .solution {
+    margin-top: var(--space-12);
+  }
+}
+
 @media (max-width: 45rem) {
   .uses {
     grid-template-columns: 1fr;

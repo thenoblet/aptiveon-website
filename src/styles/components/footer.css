@@ -31,11 +31,13 @@
   margin: 0;
 }
 .foot-mark ul li {
-  margin: 0 0 var(--space-2);
+  margin: 0;
 }
 .foot-mark ul a {
+  display: inline-block;
   color: var(--color-fg-invert-mute);
   font-size: var(--text-md);
+  padding: var(--space-1) 0;
 }
 .foot-mark ul a:hover {
   color: var(--color-accent);
@@ -120,6 +122,44 @@
   }
 }
 
+/*
+ * Touch fallback — phones / tablets without hover. When the wordmark scrolls
+ * into view (Footer adds `.in` via useReveal), each letter fills from the
+ * bottom up, staggered, for the same effect as desktop hover.
+ */
+@media (hover: none) {
+  .foot-wordmark.in .ltr::before {
+    clip-path: inset(0 0 0 0);
+  }
+  .foot-wordmark.in .ltr:nth-child(1)::before {
+    transition-delay: 100ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(2)::before {
+    transition-delay: 180ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(3)::before {
+    transition-delay: 260ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(4)::before {
+    transition-delay: 340ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(5)::before {
+    transition-delay: 420ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(6)::before {
+    transition-delay: 500ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(7)::before {
+    transition-delay: 580ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(8)::before {
+    transition-delay: 660ms;
+  }
+  .foot-wordmark.in .ltr:nth-child(9)::before {
+    transition-delay: 740ms;
+  }
+}
+
 .foot-stamp {
   max-width: var(--container-shell);
   margin: 0 auto;
@@ -139,5 +179,22 @@
   .foot-stamp {
     flex-direction: column;
     gap: var(--space-1);
+  }
+}
+
+@media (max-width: 36rem) {
+  .foot {
+    padding: var(--space-9) var(--space-6) var(--space-5);
+  }
+  .foot-mark {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding: var(--space-6) 0 var(--space-6);
+  }
+  .foot-wordmark {
+    padding: var(--space-5) 0 var(--space-5);
+  }
+  .foot-stamp {
+    padding: var(--space-4) 0 0;
   }
 }

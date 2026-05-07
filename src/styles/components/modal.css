@@ -131,3 +131,27 @@
   display: flex;
   gap: var(--space-3);
 }
+
+@media (max-width: 48rem) {
+  /* Prevent iOS Safari auto-zoom on input focus + larger tap targets. */
+  .apply-form input,
+  .apply-form textarea {
+    font-size: var(--text-lg);
+    padding: var(--space-3);
+  }
+  .apply-form .submit-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  .apply-form .submit-row .help {
+    order: 2;
+    text-align: center;
+  }
+  .modal-body {
+    padding: var(--space-5);
+  }
+  .modal-head {
+    padding: var(--space-4) var(--space-5);
+  }
+}
