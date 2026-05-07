@@ -1,0 +1,60 @@
+/* Buttons — primary / ghost / link variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--color-fg);
+  transition: all var(--duration-base) ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn .arr {
+  transition: transform var(--duration-base) ease;
+  display: inline-block;
+}
+.btn:hover .arr {
+  transform: translateX(4px);
+}
+
+.btn-primary {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+.btn-primary:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-fg);
+}
+.btn-ghost:hover {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+
+.btn-accent {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+.btn-accent:hover {
+  background: #fff;
+  color: var(--color-fg);
+  border-color: #fff;
+}
+
+.btn-line {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  color: var(--color-fg);
+  border-bottom: 1px solid var(--color-fg);
+  padding-bottom: 1px;
+  display: inline-block;
+}

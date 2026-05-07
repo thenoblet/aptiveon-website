@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Internship — Aptiveon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="aptiveon.css">
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  .phases {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--ink); margin-top: 8px; background: var(--paper);
+  }
+  .phase { padding: 22px 20px; border-right: 1px solid var(--rule); position: relative; }
+  .phase:last-child { border-right: 0; }
+  .phase .ph-num { font-family: var(--mono); font-size: 11px; color: var(--orange-ink); margin-bottom: 6px; }
+  .phase h4 { font-family: var(--sans); font-weight: 500; font-size: 18px; margin: 0 0 6px; }
+  .phase .wks { font-family: var(--mono); font-size: 11px; color: var(--mute); margin-bottom: 10px; }
+  .phase p { color: var(--ink-2); font-size: 13.5px; margin: 0; }
+  .ptypes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--ink); }
+  .ptype { padding: 22px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .ptype:nth-child(2n) { border-right: 0; }
+  .ptype:nth-last-child(-n+2) { border-bottom: 0; }
+  .ptype .tg { font-family: var(--mono); font-size: 11px; color: var(--cobalt); margin-bottom: 6px; }
+  .ptype h4 { font-family: var(--sans); font-weight: 500; font-size: 19px; margin: 0 0 8px; }
+  .ptype p { color: var(--ink-2); font-size: 14px; margin: 0 0 8px; }
+  .ptype .ex { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+  .applybox {
+    border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .applybox h3 { font-family: var(--sans); font-weight: 500; font-size: 26px; margin: 0 0 12px; color: #fff; }
+  .applybox p { color: #C9C4B6; font-size: 14.5px; margin: 0 0 14px; }
+  .applybox table.spec th { color: #8B867A; border-bottom-color: #2E2C28; }
+  .applybox table.spec td { color: #fff; border-bottom-color: #2E2C28; }
+  .applybox .applycta {
+    display: inline-block; font-family: var(--mono); font-size: 13px;
+    color: var(--ink); background: var(--orange);
+    padding: 10px 14px; border-radius: 2px; margin-top: 10px;
+  }
+  .applybox .applycta:hover { background: var(--paper); }
+  @media (max-width: 1100px) { .phases { grid-template-columns: 1fr 1fr; } .phase { border-right:0; border-bottom: 1px solid var(--rule); } }
+  @media (max-width: 720px) { .phases, .ptypes, .applybox { grid-template-columns: 1fr; } .ptype { border-right: 0; } }
+</style>
+</head>
+<body data-screen-label="03 Internship">
+
+<main class="content">
+
+  <div class="crumb">
+    <span>aptiveon</span><span class="sep">/</span><span class="cur">internship</span>
+    <span class="stamp">ref. 03 · public · cohort 02 open</span>
+  </div>
+
+  <section class="hero" style="grid-template-columns: 1fr; gap: 0;">
+    <div>
+      <h1 class="page-title">Real systems, <span class="mark">not</span> tiny tasks.</h1>
+      <p class="page-dek" style="max-width: 60ch;">The Applied Systems Internship is for first- and second-year students who want to build real software under engineering mentorship. Each intern ships at least one system that goes into production with a real user on the other end.</p>
+      <div class="hero-meta">
+        <div><b>COHORT</b>02 · 2026</div>
+        <div><b>LENGTH</b>12–16 weeks</div>
+        <div><b>STIPEND</b>Yes</div>
+        <div><b>STATUS</b>Applications open</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="how">
+    <div class="sec-head">
+      <div class="sec-num">§ 03.1</div>
+      <h2 class="sec-title">How it works</h2>
+      <div class="sec-meta">4 phases · 12–16 weeks</div>
+    </div>
+    <div class="sec-body col-wide">
+      <p>One project per intern, end-to-end. You design it with a mentor, build it, put it in front of a real user, and write up what you learned.</p>
+      <div class="phases">
+        <div class="phase">
+          <div class="ph-num">01 / DESIGN</div>
+          <h4>Scope &amp; design</h4>
+          <div class="wks">weeks 1–2</div>
+          <p>Pick a real problem with a real user. Write a one-page spec. Argue it with your mentor.</p>
+        </div>
+        <div class="phase">
+          <div class="ph-num">02 / BUILD</div>
+          <h4>Build</h4>
+          <div class="wks">weeks 3–10</div>
+          <p>Ship the system. Weekly demos, code review, paired sessions on the hard parts.</p>
+        </div>
+        <div class="phase">
+          <div class="ph-num">03 / DEPLOY</div>
+          <h4>Deploy &amp; observe</h4>
+          <div class="wks">weeks 10–14</div>
+          <p>Put it in front of the real user. Watch it. Fix what breaks. Measure what matters.</p>
+        </div>
+        <div class="phase">
+          <div class="ph-num">04 / WRITE</div>
+          <h4>Write it up</h4>
+          <div class="wks">weeks 14–16</div>
+          <p>A public-quality writeup of what you built, why, and what you'd do differently.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project types -->
+  <section class="section" id="projects">
+    <div class="sec-head">
+      <div class="sec-num">§ 03.2</div>
+      <h2 class="sec-title">Project types</h2>
+      <div class="sec-meta">pick one, scope it down</div>
+    </div>
+    <div class="sec-body col-wide">
+      <p>Every intern project lands in one of these four buckets. The exact problem changes by cohort and partner — these are the shapes.</p>
+      <div class="ptypes" style="margin-top: 14px;">
+        <div class="ptype">
+          <div class="tg">TYPE · ASSISTANT</div>
+          <h4>A digital assistant for a real role</h4>
+          <p>Pick a role, sit with someone in it for a day, build the assistant they actually need. Cite everything.</p>
+          <div class="ex">e.g. SOP assistant for ops · drafting tool for a writer · triage for a support queue</div>
+        </div>
+        <div class="ptype">
+          <div class="tg">TYPE · RAG</div>
+          <h4>A retrieval pipeline + eval harness</h4>
+          <p>Build a grounded Q&amp;A system over a real corpus. Write the evals. Beat your own baseline twice.</p>
+          <div class="ex">e.g. policy Q&amp;A · technical-docs assistant · academic-paper retrieval</div>
+        </div>
+        <div class="ptype">
+          <div class="tg">TYPE · WORKFLOW</div>
+          <h4>An automation with human review</h4>
+          <p>Take a manual workflow, automate the easy 80%, route the hard 20% to a human. Audit every run.</p>
+          <div class="ex">e.g. invoice extraction · doc routing · cross-system reconciliation</div>
+        </div>
+        <div class="ptype">
+          <div class="tg">TYPE · APPLIED SYSTEMS</div>
+          <h4>An internal tool that replaces a spreadsheet</h4>
+          <p>Find a spreadsheet that ought to be a system. Build the system. Keep it boring.</p>
+          <div class="ex">e.g. ops dashboard · admin tool · partner intake portal</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apply -->
+  <section class="section" id="apply">
+    <div class="sec-head">
+      <div class="sec-num">§ 03.3</div>
+      <h2 class="sec-title">Eligibility &amp; apply</h2>
+      <div class="sec-meta">cohort 02 — applications open</div>
+    </div>
+    <div class="sec-body col-wide">
+      <div class="applybox">
+        <div>
+          <h3>Show us what you've built.</h3>
+          <p>A half-finished side project, a Github repo, a writeup of something that didn't work — any of those beats a polished resume. We want evidence that you make things, not evidence that you study things.</p>
+          <p>Send a short note: what you've built, what you'd want to build with us, and one technical thing you've recently changed your mind about.</p>
+          <a class="applycta" href="mailto:apply@aptiveon.tech">Apply for cohort 02 &rarr;</a>
+        </div>
+        <div>
+          <table class="spec">
+            <tbody>
+              <tr><th>Eligibility</th><td>1st &amp; 2nd year undergraduates</td></tr>
+              <tr><th>Time</th><td>12–16 weeks · full or part time</td></tr>
+              <tr><th>Format</th><td>Project-based, mentored</td></tr>
+              <tr><th>Output</th><td>Shipped system + writeup</td></tr>
+              <tr><th>Stipend</th><td>Yes</td></tr>
+              <tr><th>Apply by</th><td>2026.06.30</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="chrome.js" data-active="program"></script>
+<script src="imagery.js"></script>
+</body>
+</html>

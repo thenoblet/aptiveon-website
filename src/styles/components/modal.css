@@ -1,0 +1,133 @@
+/*
+ * Modal — built on native <dialog>. The element itself is the panel; the
+ * ::backdrop pseudo-element is the dimmed overlay behind it.
+ */
+.modal {
+  /*
+   * Restore native dialog centering — Tailwind's preflight resets `* { margin: 0 }`
+   * which clobbers the UA `margin: auto` that centers an open <dialog>.
+   */
+  margin: auto;
+  width: min(32rem, calc(100vw - var(--space-8)));
+  max-height: calc(100vh - var(--space-8));
+  padding: 0;
+  border: 1px solid var(--color-fg);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-pop);
+}
+
+.modal::backdrop {
+  background: rgba(20, 20, 19, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-rule-base);
+  gap: var(--space-4);
+}
+.modal-head h2 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-fg);
+}
+
+.modal-close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: var(--text-3xl);
+  line-height: 1;
+  color: var(--color-fg-mute);
+  cursor: pointer;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-xs);
+  transition: color var(--duration-fast) ease;
+}
+.modal-close:hover {
+  color: var(--color-fg);
+}
+.modal-close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.modal-body {
+  padding: var(--space-6);
+}
+
+/* Apply-form layout (used by ApplyModal on the Internship page). */
+.apply-intro {
+  margin: 0 0 var(--space-5);
+  color: var(--color-fg-2);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+}
+.apply-form label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-fg-mute);
+  margin: var(--space-4) 0 var(--space-2);
+}
+.apply-form label:first-of-type {
+  margin-top: 0;
+}
+.apply-form input,
+.apply-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule-base);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  color: var(--color-fg);
+}
+.apply-form textarea {
+  resize: vertical;
+  line-height: var(--leading-normal);
+  min-height: 7rem;
+}
+.apply-form input:focus,
+.apply-form textarea:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0;
+  border-color: var(--color-accent);
+}
+.apply-form .submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.apply-form .help {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-fg-mute);
+}
+.apply-sent {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+}
+.apply-sent p {
+  margin: 0;
+  color: var(--color-fg-2);
+}
+.apply-sent .actions {
+  display: flex;
+  gap: var(--space-3);
+}

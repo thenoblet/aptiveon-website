@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aptiveon — Ship AI that survives audit.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="aptiveon.css">
+<style>
+  /* ── Landing-page overrides ─────────────────────────────────────── */
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); }
+  main.landing { padding: 0; max-width: none; }
+  .lp-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* Section reveal primitive — used everywhere */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-stagger > * { opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal-stagger.in > *:nth-child(1) { transition-delay: .05s; opacity: 1; transform: none; }
+  .reveal-stagger.in > *:nth-child(2) { transition-delay: .18s; opacity: 1; transform: none; }
+  .reveal-stagger.in > *:nth-child(3) { transition-delay: .31s; opacity: 1; transform: none; }
+  .reveal-stagger.in > *:nth-child(4) { transition-delay: .44s; opacity: 1; transform: none; }
+  .reveal-stagger.in > *:nth-child(5) { transition-delay: .57s; opacity: 1; transform: none; }
+
+  /* ── 1. HERO ─────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex; align-items: center;
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .hero canvas.particles {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr; gap: 28px;
+    padding: 60px 0 80px;
+  }
+  .hero .eyebrow {
+    font-family: var(--mono); font-size: 12px; color: var(--mute);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero .eyebrow .live-dot {
+    width: 7px; height: 7px; background: var(--orange); display: inline-block;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.85); } }
+
+  .hero h1 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: clamp(56px, 9vw, 124px);
+    line-height: 0.94;
+    letter-spacing: -0.038em;
+    margin: 0;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .hero h1 .word { display: inline-block; overflow: hidden; vertical-align: top; }
+  .hero h1 .word > span {
+    display: inline-block;
+    transform: translateY(110%);
+    animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .hero h1 .word.w2 > span { animation-delay: .12s; }
+  .hero h1 .word.w3 > span { animation-delay: .24s; }
+  .hero h1 .word.w4 > span { animation-delay: .36s; }
+  .hero h1 .word.w5 > span { animation-delay: .48s; }
+  @keyframes rise { to { transform: none; } }
+  .hero h1 em {
+    font-style: normal;
+    background: var(--orange); color: #fff;
+    padding: 0 .15em .04em;
+  }
+
+  .hero .dek {
+    font-size: 18px; color: var(--ink-2);
+    max-width: 44ch; margin: 0;
+    opacity: 0; animation: fadein .8s ease forwards .9s;
+  }
+  @keyframes fadein { to { opacity: 1; } }
+
+  .hero .ctas {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0; animation: fadein .8s ease forwards 1.1s;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 13px;
+    padding: 14px 18px; border-radius: 2px;
+    border: 1px solid var(--ink); transition: all .2s ease;
+  }
+  .btn .arr { transition: transform .25s ease; }
+  .btn:hover .arr { transform: translateX(4px); }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn.primary:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+
+  .hero .scroll-cue {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 11px; color: var(--mute);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadein .8s ease forwards 1.6s;
+  }
+  .hero .scroll-cue .line {
+    width: 1px; height: 28px; background: var(--ink);
+    animation: cue 2s ease-in-out infinite;
+    transform-origin: top;
+  }
+  @keyframes cue { 0%,100% { transform: scaleY(0.3); opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
+
+  /* ── 2. LOGO WALL — quiet beat ──────────────────────── */
+  .logos {
+    padding: 54px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .logos .lbl {
+    font-family: var(--mono); font-size: 11px; color: var(--mute);
+    text-align: center; margin-bottom: 24px;
+  }
+  .logos .row {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 36px;
+    align-items: center; justify-items: center;
+  }
+  .logos .row .l {
+    color: var(--ink-2); font-size: 16px;
+    opacity: 0.55; transition: opacity .2s, color .2s;
+    white-space: nowrap;
+  }
+  .logos .row .l:hover { opacity: 1; color: var(--ink); }
+
+  /* ── 3. VALUE PROP — kinetic line ─────────────────── */
+  .pillar-line {
+    padding: 140px 0 120px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pillar-line h2 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: clamp(36px, 5.6vw, 76px);
+    line-height: 1.05; letter-spacing: -0.028em;
+    margin: 0; max-width: 22ch;
+    color: var(--ink);
+  }
+  .pillar-line h2 .w {
+    display: inline-block; opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .pillar-line.in h2 .w { opacity: 1; transform: none; }
+  .pillar-line h2 .w.muted { color: var(--mute); }
+  .pillar-line h2 .w.mark {
+    background: var(--orange); color: #fff;
+    padding: 0 .12em .04em;
+  }
+
+  /* ── 4. THREE PILLARS ────────────────────────────── */
+  .pillars { padding: 100px 0; border-bottom: 1px solid var(--rule); }
+  .pillars .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--ink); }
+  .pillars .pl {
+    padding: 32px 32px 36px 0;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .pillars .pl:last-child { border-right: 0; }
+  .pillars .pl .ico {
+    width: 44px; height: 44px; margin-bottom: 22px;
+    color: var(--orange);
+  }
+  .pillars .pl .ico svg { width: 100%; height: 100%; }
+  .pillars .pl h3 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: 26px; letter-spacing: -0.018em;
+    margin: 0 0 10px; color: var(--ink);
+  }
+  .pillars .pl p {
+    color: var(--ink-2); font-size: 15px; max-width: 32ch;
+    margin: 0;
+  }
+
+  /* ── 5. NUMBERS ─────────────────────────────────── */
+  .stats {
+    background: var(--ink); color: var(--paper);
+    padding: 110px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .stats {
+    --mx: 20%; --my: 30%;
+    --mx2: 80%; --my2: 70%;
+  }
+  .stats::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 420px at var(--mx) var(--my), rgba(255,91,31,0.32), transparent 60%),
+      radial-gradient(ellipse 700px 460px at var(--mx2) var(--my2), rgba(31,58,138,0.28), transparent 60%);
+    opacity: 0; transition: opacity 1.2s ease;
+    will-change: background;
+  }
+  .stats.in::before { opacity: 1; }
+  .stats .lp-wrap { position: relative; z-index: 1; }
+  .stats .lbl {
+    font-family: var(--mono); font-size: 11px; color: #8B867A;
+    margin-bottom: 28px; letter-spacing: 0.05em;
+  }
+  .stats .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px; }
+  .stats .stat .num {
+    font-family: var(--sans); font-weight: 500;
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 1; letter-spacing: -0.03em;
+    color: #fff; display: flex; align-items: baseline; gap: 6px;
+  }
+  .stats .stat .num .u { color: var(--orange); font-size: 0.5em; font-weight: 500; }
+  .stats .stat .desc {
+    font-family: var(--sans); font-size: 15px;
+    color: #C9C4B6; margin: 18px 0 0; max-width: 28ch;
+    border-top: 1px solid #2E2C28; padding-top: 14px;
+  }
+
+  /* ── 6. PRODUCT MOMENT ─────────────────────────── */
+  .product { padding: 120px 0; border-bottom: 1px solid var(--rule); }
+  .product .head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 36px;
+  }
+  .product .head .eb { font-family: var(--mono); font-size: 11px; color: var(--mute); }
+  .product .head h2 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: clamp(34px, 4.2vw, 52px);
+    letter-spacing: -0.022em; margin: 8px 0 0;
+    color: var(--ink); max-width: 18ch;
+  }
+  .product .head .meta { font-family: var(--mono); font-size: 11.5px; color: var(--mute); align-self: end; }
+
+  .frame {
+    background: var(--ink); color: var(--paper);
+    border: 1px solid var(--ink);
+    overflow: hidden;
+    box-shadow: 0 24px 60px -20px rgba(20,20,19,0.25);
+  }
+  .frame .bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-bottom: 1px solid #2E2C28;
+    font-family: var(--mono); font-size: 11.5px; color: #8B867A;
+  }
+  .frame .bar .dot { width: 9px; height: 9px; background: #2E2C28; border-radius: 50%; }
+  .frame .bar .addr {
+    margin-left: 16px; padding: 4px 10px;
+    background: rgba(255,255,255,0.04); border-radius: 2px;
+    font-size: 11px;
+  }
+  .frame .body { padding: 28px 32px; min-height: 380px; }
+  .frame .qhead {
+    display: flex; justify-content: space-between;
+    border-bottom: 1px solid #2E2C28;
+    padding-bottom: 14px; margin-bottom: 16px;
+    font-family: var(--mono); font-size: 12px; color: #C9C4B6;
+  }
+  .frame .qhead b { color: var(--orange); font-weight: 500; }
+  .qrow {
+    display: grid; grid-template-columns: 90px 1fr 110px;
+    align-items: center; gap: 16px;
+    padding: 14px 0; border-bottom: 1px solid #2A2824;
+    font-size: 14.5px;
+    transition: background .25s ease;
+  }
+  .qrow .id { font-family: var(--mono); font-size: 12px; color: #8B867A; }
+  .qrow .nm { color: #fff; }
+  .qrow .pl {
+    font-family: var(--mono); font-size: 11px;
+    padding: 4px 10px; border-radius: 2px;
+    text-align: center; letter-spacing: 0.04em;
+  }
+  .pl-pend { background: rgba(255,255,255,0.04); color: #C9C4B6; border: 1px solid #2E2C28; }
+  .pl-cite { background: rgba(255,91,31,0.18); color: var(--orange); border: 1px solid rgba(255,91,31,0.4); }
+  .pl-flag { background: rgba(31,58,138,0.18); color: #9DAEDB; border: 1px solid rgba(31,58,138,0.5); }
+
+  .qrow.flipping {
+    animation: flipBg 1.6s ease;
+  }
+  @keyframes flipBg {
+    0% { background: transparent; }
+    50% { background: rgba(255,91,31,0.06); }
+    100% { background: transparent; }
+  }
+
+  .frame .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-top: 22px; padding-top: 16px; border-top: 1px solid #2E2C28;
+  }
+  .frame .foot .ms { font-family: var(--mono); font-size: 11px; color: #8B867A; }
+  .frame .foot .ms b { color: var(--orange); font-size: 22px; font-weight: 500; display: block; margin-top: 4px; font-family: var(--sans); letter-spacing: -0.02em; }
+
+  /* ── 7. CUSTOMER QUOTE ────────────────────────── */
+  .quote { padding: 140px 0; border-bottom: 1px solid var(--rule); }
+  .quote .grid { display: grid; grid-template-columns: 220px 1fr; gap: 56px; align-items: start; }
+  .quote .who { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+  .quote .who .mark {
+    width: 56px; height: 56px; margin-bottom: 14px;
+    display: block;
+  }
+  .quote .who .name { color: var(--ink); font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+  .quote blockquote {
+    margin: 0;
+    font-family: var(--sans); font-weight: 500;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.15; letter-spacing: -0.022em;
+    color: var(--ink); max-width: 22ch;
+  }
+  .quote blockquote em {
+    font-style: normal; color: var(--orange);
+  }
+  .quote .person {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-2);
+    margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--rule);
+    display: flex; gap: 10px; align-items: center;
+  }
+  .quote .person .l { width: 28px; height: 1px; background: var(--ink); display: inline-block; }
+  .quote .person b { font-weight: 500; color: var(--ink); }
+
+  /* ── 8. COMPLIANCE STRIP ─────────────────────── */
+  .compl { padding: 60px 0; border-bottom: 1px solid var(--rule); }
+  .compl .row { display: flex; gap: 48px; flex-wrap: wrap; align-items: center; justify-content: center; }
+  .compl .b {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .compl .b b { font-family: var(--sans); font-weight: 600; color: var(--ink); font-size: 14px; letter-spacing: -0.005em; }
+  .compl .b .ok { color: #4F6A2E; }
+  .compl .b .pending { color: var(--mute); }
+
+  /* ── 9. INTERNSHIP STRIP ───────────────────── */
+  .intern {
+    background: var(--paper-2);
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .intern .row {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    flex-wrap: wrap;
+  }
+  .intern .lbl { font-family: var(--mono); font-size: 11px; color: var(--orange); letter-spacing: 0.05em; }
+  .intern h3 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: 22px; letter-spacing: -0.014em; margin: 4px 0 0; color: var(--ink);
+  }
+  .intern .right { display: flex; gap: 14px; align-items: center; }
+  .intern .meta { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+
+  /* ── 10. CTA ──────────────────────────────── */
+  .cta {
+    padding: 160px 0;
+    text-align: center;
+    background: var(--ink); color: var(--paper);
+    position: relative; overflow: hidden;
+  }
+  .cta::before {
+    content: "";
+    position: absolute; left: 50%; top: 50%;
+    width: 800px; height: 800px;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(circle, rgba(255,91,31,0.25), transparent 60%);
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { transform: translate(-50%,-50%) scale(0.8); opacity: .6; }
+    50%     { transform: translate(-50%,-50%) scale(1.15); opacity: 1; }
+  }
+  .cta .lp-wrap { position: relative; z-index: 1; }
+  .cta h2 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1; letter-spacing: -0.032em;
+    margin: 0 0 28px; color: #fff;
+    max-width: 16ch; margin-left: auto; margin-right: auto;
+  }
+  .cta h2 em { font-style: normal; color: var(--orange); }
+  .cta .btn.primary {
+    background: var(--orange); border-color: var(--orange); color: #fff;
+    font-size: 14px; padding: 16px 22px;
+  }
+  .cta .btn.primary:hover { background: #fff; color: var(--ink); border-color: #fff; }
+  .cta .sub { font-family: var(--mono); font-size: 12px; color: #8B867A; margin-top: 20px; }
+
+  /* ── Responsive ─────────────────────────── */
+  @media (max-width: 900px) {
+    .pillars .grid, .stats .grid { grid-template-columns: 1fr; }
+    .pillars .pl { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .product .head { flex-direction: column; gap: 6px; }
+    .quote .grid { grid-template-columns: 1fr; gap: 24px; }
+    .logos .row { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .qrow { grid-template-columns: 80px 1fr 90px; }
+    .frame .body { padding: 22px; min-height: 0; }
+  }
+</style>
+</head>
+<body data-screen-label="00 Home">
+
+<main class="content landing">
+
+  <!-- ── 1. HERO ─────────────────────────────────────── -->
+  <section class="hero">
+    <canvas class="particles" id="hero-particles"></canvas>
+    <div class="lp-wrap hero-inner">
+      <div class="eyebrow"><span class="live-dot"></span>54,812 workflow runs · last 24h</div>
+      <h1>
+        <span class="word w1"><span>Ship&nbsp;AI</span></span>
+        <span class="word w2"><span>that&nbsp;</span></span>
+        <span class="word w3"><span><em>survives</em>&nbsp;</span></span>
+        <span class="word w4"><span>audit.</span></span>
+      </h1>
+      <p class="dek">Aptiveon is the workflow infrastructure regulated teams use to put AI into production — with citations, human review, and an audit trail per run.</p>
+      <div class="ctas">
+        <a class="btn primary" href="Contact.html">Talk to sales <span class="arr">→</span></a>
+        <a class="btn ghost" href="Products.html">See the platform <span class="arr">→</span></a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>scroll</span><span class="line"></span></div>
+  </section>
+
+  <!-- ── 2. LOGO WALL ───────────────────────────── -->
+  <section class="logos reveal">
+    <div class="lp-wrap">
+      <div class="lbl">TRUSTED IN PRODUCTION BY</div>
+      <div class="row">
+        <div class="l" style="font-weight:600;letter-spacing:-0.01em;">NorthArc</div>
+        <div class="l" style="font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:0.04em;">MERIDIAN/H</div>
+        <div class="l" style="font-style:italic;font-weight:500;">Halden &amp; Lo</div>
+        <div class="l" style="font-weight:500;letter-spacing:0.18em;">CASCADIA</div>
+        <div class="l" style="font-family:'IBM Plex Mono',monospace;">delta·tela</div>
+        <div class="l" style="font-weight:600;">Brackmoor&nbsp;Health</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. VALUE PROP — kinetic line ─────────────── -->
+  <section class="pillar-line reveal">
+    <div class="lp-wrap">
+      <h2 class="kinetic" data-kinetic>
+        Most AI projects <span class="muted">die in the audit.</span> Ours <span class="mark">don't.</span>
+      </h2>
+    </div>
+  </section>
+
+  <!-- ── 4. THREE PILLARS ────────────────────────── -->
+  <section class="pillars reveal">
+    <div class="lp-wrap">
+      <div class="grid reveal-stagger">
+        <div class="pl">
+          <div class="ico"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="10" width="32" height="24" rx="1"/><path d="M6 18 L38 18 M14 26 L30 26"/></svg></div>
+          <h3>Cited by default</h3>
+          <p>Every answer points to the source paragraph. Auditors get the receipts; reviewers spot drift early.</p>
+        </div>
+        <div class="pl">
+          <div class="ico"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="14" cy="22" r="6"/><circle cx="30" cy="22" r="6"/><path d="M20 22 L24 22 M14 28 L14 36 M30 28 L30 36 M14 16 L14 8 M30 16 L30 8"/></svg></div>
+          <h3>Human in the loop</h3>
+          <p>Drop a review step anywhere in a workflow. Reviewers get a queue, a UI, and an explicit override.</p>
+        </div>
+        <div class="pl">
+          <div class="ico"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 6 L36 14 L36 30 L22 38 L8 30 L8 14 Z"/><path d="M22 6 L22 22 M22 22 L36 14 M22 22 L8 14"/></svg></div>
+          <h3>Your tenancy</h3>
+          <p>Hosted in your region. Customer data stays in customer tenancy — including for evals and fine-tuning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. NUMBERS ─────────────────────────────── -->
+  <section class="stats reveal">
+    <div class="lp-wrap">
+      <div class="lbl">PRODUCTION · LAST 6 MONTHS</div>
+      <div class="grid">
+        <div class="stat">
+          <div class="num"><span data-counter data-from="0" data-to="14">0</span><span class="u">+</span></div>
+          <p class="desc">Production deployments across 9 enterprise customers in 4 regulated sectors.</p>
+        </div>
+        <div class="stat">
+          <div class="num"><span data-counter data-from="0" data-to="4.2" data-decimals="1">0</span><span class="u">M</span></div>
+          <p class="desc">Documents indexed across pilot and production tenants of the Workflow Engine.</p>
+        </div>
+        <div class="stat">
+          <div class="num"><span data-counter data-from="0" data-to="99.4" data-decimals="1">0</span><span class="u">%</span></div>
+          <p class="desc">Median cited-answer accuracy on customer-curated eval sets, last 90 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6. PRODUCT MOMENT ──────────────────────── -->
+  <section class="product reveal">
+    <div class="lp-wrap">
+      <div class="head">
+        <div>
+          <div class="eb">PRODUCT · WORKFLOW ENGINE</div>
+          <h2>One queue. Every answer cited.</h2>
+        </div>
+        <div class="meta">awe-prod.northarc · SG-1</div>
+      </div>
+
+      <div class="frame">
+        <div class="bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="addr">awe.aptiveon.tech / queue / pending</span>
+        </div>
+        <div class="body">
+          <div class="qhead">
+            <span>QUEUE · prospectus_review</span>
+            <span><span data-counter data-from="0" data-to="312">0</span> open · <b><span data-counter data-from="0" data-to="99.6" data-decimals="1">0</span>% cited</b></span>
+          </div>
+          <div class="qrow" id="q-flip"><span class="id">NA-A412</span><span class="nm">Q3 2026 structured note</span><span class="pl pl-pend">PENDING</span></div>
+          <div class="qrow"><span class="id">NA-A411</span><span class="nm">Clause 4.2 review</span><span class="pl pl-cite">CITED</span></div>
+          <div class="qrow"><span class="id">NA-A410</span><span class="nm">Disclosure update</span><span class="pl pl-cite">CITED</span></div>
+          <div class="qrow"><span class="id">NA-A409</span><span class="nm">Risk factors §7</span><span class="pl pl-cite">CITED</span></div>
+          <div class="qrow"><span class="id">NA-A408</span><span class="nm">Term sheet variant</span><span class="pl pl-flag">FLAGGED</span></div>
+          <div class="foot">
+            <span class="ms">analyst-hours saved · 6mo<b>+86%</b></span>
+            <span class="ms">audit trail · per run</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 7. CUSTOMER QUOTE ───────────────────── -->
+  <section class="quote reveal">
+    <div class="lp-wrap">
+      <div class="grid">
+        <div class="who">
+          <svg class="mark" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" fill="#1F3A8A"/>
+            <path d="M12 42 L12 14 L28 38 L28 14 L44 42" fill="none" stroke="#F2EEE3" stroke-width="3"/>
+          </svg>
+          <div class="name">NorthArc Capital</div>
+          <div>Capital markets · 1,200 staff</div>
+          <div>SG · CH · UK</div>
+        </div>
+        <div>
+          <blockquote>
+            Three analysts spent a week on each prospectus. We get to a defensible read in <em>under four hours</em> — and every flag points to the paragraph it came from.
+          </blockquote>
+          <div class="person">
+            <span class="l"></span>
+            <span><b>Priya Raman</b>&nbsp;&nbsp;Head of Compliance Engineering, NorthArc Capital</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 8. COMPLIANCE ─────────────────────── -->
+  <section class="compl reveal">
+    <div class="lp-wrap">
+      <div class="row">
+        <div class="b"><b>SOC 2 Type II</b><span class="ok">✓ 2026.Q1</span></div>
+        <div class="b"><b>ISO 27001</b><span class="pending">audit Q3 2026</span></div>
+        <div class="b"><b>GDPR DPA</b><span class="ok">✓</span></div>
+        <div class="b"><b>HIPAA BAA</b><span class="pending">on request</span></div>
+        <div class="b"><b>SG · EU · US</b><span class="ok">✓ regions</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 9. INTERNSHIP STRIP ─────────────────── -->
+  <section class="intern reveal">
+    <div class="lp-wrap">
+      <div class="row">
+        <div>
+          <div class="lbl">APPLIED SYSTEMS INTERNSHIP · COHORT 02</div>
+          <h3>For 1st &amp; 2nd-year students who'd rather ship than slide-deck.</h3>
+        </div>
+        <div class="right">
+          <span class="meta">apply by 2026.06.30</span>
+          <a class="btn ghost" href="Internship.html">Read the program <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 10. CTA ─────────────────────────────── -->
+  <section class="cta">
+    <div class="lp-wrap">
+      <h2>Put it in production. <em>Properly.</em></h2>
+      <a class="btn primary" href="Contact.html">Talk to sales <span class="arr">→</span></a>
+      <div class="sub">A written exchange beats a discovery call. We reply within two business days.</div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  /* ── Intersection-based reveals ─────────────────── */
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ── Kinetic word-by-word reveal on the value-prop line ── */
+  (function () {
+    var el = document.querySelector('[data-kinetic]');
+    if (!el) return;
+    // Split the visible text nodes into word spans, preserving inner spans.
+    function wrapWords(node) {
+      Array.from(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (w) {
+            if (w.match(/^\s+$/)) { frag.appendChild(document.createTextNode(w)); return; }
+            if (!w) return;
+            var s = document.createElement('span');
+            s.className = 'w';
+            s.textContent = w;
+            frag.appendChild(s);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) {
+          // already a span inside <h2> (.muted, .mark) — wrap each word inside it
+          var inner = n;
+          var cls = inner.className;
+          var text = inner.textContent;
+          inner.textContent = '';
+          text.split(/(\s+)/).forEach(function (w) {
+            if (w.match(/^\s+$/)) { inner.appendChild(document.createTextNode(w)); return; }
+            if (!w) return;
+            var s = document.createElement('span');
+            s.className = 'w ' + cls;
+            s.textContent = w;
+            inner.appendChild(s);
+          });
+        }
+      });
+    }
+    wrapWords(el);
+    // Stagger the reveal in CSS
+    var words = el.querySelectorAll('.w');
+    words.forEach(function (w, i) {
+      w.style.transitionDelay = (i * 80) + 'ms';
+    });
+  })();
+
+  /* ── Counter count-up ─────────────────────────── */
+  (function () {
+    function fmt(n, d) { return d > 0 ? n.toFixed(d) : Math.round(n).toLocaleString('en-US'); }
+    function run(el) {
+      if (el.dataset._done) return;
+      el.dataset._done = '1';
+      var from = parseFloat(el.dataset.from || '0');
+      var to   = parseFloat(el.dataset.to   || '0');
+      var dec  = parseInt(el.dataset.decimals || '0', 10);
+      var dur  = 1600;
+      var t0   = performance.now();
+      function step(t) {
+        var p = Math.min(1, (t - t0) / dur);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(from + (to - from) * e, dec);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    var els = document.querySelectorAll('[data-counter]');
+    if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+    }, { threshold: 0.4 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ── Stats: gradient orbs follow the cursor ─────────── */
+  (function () {
+    var stats = document.querySelector('.stats');
+    if (!stats) return;
+    var mx = 20, my = 30; // current rendered % (eased)
+    var tx = 20, ty = 30; // target %
+    var active = false;
+
+    stats.addEventListener('mousemove', function (e) {
+      var r = stats.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width) * 100;
+      ty = ((e.clientY - r.top) / r.height) * 100;
+      active = true;
+    });
+    stats.addEventListener('mouseleave', function () {
+      active = false;
+      tx = 20; ty = 30;
+    });
+
+    function tick() {
+      mx += (tx - mx) * 0.08;
+      my += (ty - my) * 0.08;
+      // Cobalt orb mirrors the cursor (opposite quadrant) for a parallax feel
+      var mx2 = 100 - mx, my2 = 100 - my;
+      stats.style.setProperty('--mx',  mx.toFixed(2) + '%');
+      stats.style.setProperty('--my',  my.toFixed(2) + '%');
+      stats.style.setProperty('--mx2', mx2.toFixed(2) + '%');
+      stats.style.setProperty('--my2', my2.toFixed(2) + '%');
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  /* ── Queue flip: NA-A412 PENDING → CITED on a slow loop ── */
+  (function () {
+    var row = document.getElementById('q-flip');
+    if (!row) return;
+    var pill = row.querySelector('.pl');
+    var pending = true;
+    setInterval(function () {
+      pending = !pending;
+      row.classList.add('flipping');
+      setTimeout(function () { row.classList.remove('flipping'); }, 1600);
+      pill.classList.toggle('pl-pend', pending);
+      pill.classList.toggle('pl-cite', !pending);
+      pill.textContent = pending ? 'PENDING' : 'CITED';
+    }, 3400);
+  })();
+
+  /* ── Hero particles → wordmark resolve ─────────── */
+  (function () {
+    var canvas = document.getElementById('hero-particles');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0;
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      W = r.width; H = r.height;
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Build target points by sampling the wordmark "aptiveon" rendered to an offscreen canvas
+    function buildTargets() {
+      var off = document.createElement('canvas');
+      var size = Math.min(W * 0.55, 520);
+      var oh = Math.round(size * 0.22);
+      off.width = size; off.height = oh;
+      var octx = off.getContext('2d');
+      octx.fillStyle = '#000';
+      octx.font = '600 ' + Math.round(oh * 0.85) + 'px "Inter Tight", sans-serif';
+      octx.textBaseline = 'middle';
+      octx.textAlign = 'center';
+      octx.fillText('aptiveon.', size/2, oh/2);
+      var img = octx.getImageData(0, 0, size, oh).data;
+      var pts = [];
+      var step = 4;
+      for (var y = 0; y < oh; y += step) {
+        for (var x = 0; x < size; x += step) {
+          var idx = (y * size + x) * 4 + 3;
+          if (img[idx] > 128) pts.push({ x: x, y: y });
+        }
+      }
+      // Map into hero coords: place wordmark in the LOWER-RIGHT quadrant, very faint
+      var ox = W - size - 40;
+      var oy = H - oh - 100;
+      return pts.map(function (p) { return { tx: p.x + ox, ty: p.y + oy }; });
+    }
+
+    var targets = buildTargets();
+    var particles = [];
+    var COUNT = Math.min(targets.length, 380);
+    for (var i = 0; i < COUNT; i++) {
+      var t = targets[Math.floor(Math.random() * targets.length)];
+      particles.push({
+        kind: 'wordmark',
+        x: Math.random() * W,
+        y: Math.random() * H,
+        tx: t.tx, ty: t.ty,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        size: Math.random() * 1.4 + 0.6,
+        hue: Math.random() < 0.18 ? 'orange' : 'mute',
+        seed: Math.random() * 1000
+      });
+    }
+
+    // Ambient particles — drift the whole hero, never settle on the wordmark.
+    // Same lifecycle (random spawn → fade in over the resolve window) so they
+    // feel like they came from the same starburst.
+    var AMBIENT = 180;
+    for (var j = 0; j < AMBIENT; j++) {
+      particles.push({
+        kind: 'ambient',
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.55,
+        vy: (Math.random() - 0.5) * 0.55,
+        size: Math.random() * 1.3 + 0.5,
+        hue: Math.random() < 0.14 ? 'orange' : 'mute',
+        seed: Math.random() * 1000,
+        dx: 0, dy: 0
+      });
+    }
+
+    var t0 = performance.now();
+    var RESOLVE_START = 1400;
+    var RESOLVE_END   = 3600;
+
+    // Each particle gets a displacement offset that decays back to zero.
+    particles.forEach(function (p) { p.dx = 0; p.dy = 0; });
+
+    // Mouse tracking — listen on the hero section so the canvas can stay pointer-events: none.
+    var hero = document.querySelector('.hero');
+    var mouse = { x: -9999, y: -9999, active: false };
+    if (hero) {
+      hero.addEventListener('mousemove', function (e) {
+        var r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+        mouse.active = true;
+      });
+      hero.addEventListener('mouseleave', function () { mouse.active = false; });
+    }
+
+    var REPEL_RADIUS = 90;
+    var REPEL_STRENGTH = 28;
+
+    function frame(now) {
+      var elapsed = now - t0;
+      ctx.clearRect(0, 0, W, H);
+
+      var resolveP = Math.max(0, Math.min(1, (elapsed - RESOLVE_START) / (RESOLVE_END - RESOLVE_START)));
+      var eP = 1 - Math.pow(1 - resolveP, 2.5);
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+
+        if (p.kind === 'ambient') {
+          // gentle drift; bounce off edges; never targets the wordmark
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+          // tiny seeded jitter for organic feel
+          var ajx = Math.sin(now * 0.0006 + p.seed) * 0.25;
+          var ajy = Math.cos(now * 0.0007 + p.seed) * 0.25;
+          var rxA = p.x + ajx;
+          var ryA = p.y + ajy;
+
+          // mouse repulsion (active immediately for ambient)
+          if (mouse.active) {
+            var addx = rxA - mouse.x;
+            var addy = ryA - mouse.y;
+            var adist2 = addx * addx + addy * addy;
+            if (adist2 < REPEL_RADIUS * REPEL_RADIUS && adist2 > 0.5) {
+              var adist = Math.sqrt(adist2);
+              var aforce = (1 - adist / REPEL_RADIUS);
+              aforce = aforce * aforce * REPEL_STRENGTH;
+              p.dx += (addx / adist) * aforce * 0.18;
+              p.dy += (addy / adist) * aforce * 0.18;
+            }
+          }
+          p.dx *= 0.86; p.dy *= 0.86;
+          rxA += p.dx; ryA += p.dy;
+
+          // fade-in tied to resolve window
+          var aOp = Math.min(1, eP * 1.2);
+          if (p.hue === 'orange') ctx.fillStyle = 'rgba(255,91,31,' + (0.35 * aOp) + ')';
+          else                    ctx.fillStyle = 'rgba(20,20,19,' + (0.20 * aOp) + ')';
+          ctx.beginPath();
+          ctx.arc(rxA, ryA, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          continue;
+        }
+
+        if (eP < 1) {
+          p.x += p.vx + (p.tx - p.x) * 0.0008 * eP;
+          p.y += p.vy + (p.ty - p.y) * 0.0008 * eP;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        } else {
+          var jx = Math.sin(now * 0.0008 + p.seed) * 0.6;
+          var jy = Math.cos(now * 0.0009 + p.seed) * 0.6;
+          p.x = p.tx + jx;
+          p.y = p.ty + jy;
+        }
+
+        // base render position
+        var rx, ry;
+        if (eP > 0 && eP < 1) {
+          rx = p.x + (p.tx - p.x) * eP;
+          ry = p.y + (p.ty - p.y) * eP;
+        } else {
+          rx = p.x; ry = p.y;
+        }
+
+        // mouse repulsion — only after particles have resolved (don't fight the migration)
+        if (mouse.active && eP > 0.6) {
+          var ddx = rx - mouse.x;
+          var ddy = ry - mouse.y;
+          var dist2 = ddx * ddx + ddy * ddy;
+          if (dist2 < REPEL_RADIUS * REPEL_RADIUS && dist2 > 0.5) {
+            var dist = Math.sqrt(dist2);
+            var force = (1 - dist / REPEL_RADIUS);
+            force = force * force * REPEL_STRENGTH;
+            p.dx += (ddx / dist) * force * 0.18;
+            p.dy += (ddy / dist) * force * 0.18;
+          }
+        }
+
+        // spring back & friction
+        p.dx *= 0.86;
+        p.dy *= 0.86;
+
+        rx += p.dx;
+        ry += p.dy;
+
+        if (p.hue === 'orange') ctx.fillStyle = 'rgba(255,91,31,' + (0.5 + 0.4 * eP) + ')';
+        else                    ctx.fillStyle = 'rgba(20,20,19,' + (0.18 + 0.18 * eP) + ')';
+
+        ctx.beginPath();
+        ctx.arc(rx, ry, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+</script>
+
+<script src="chrome.js" data-active="home"></script>
+<script src="imagery.js"></script>
+</body>
+</html>

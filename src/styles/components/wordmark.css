@@ -1,0 +1,44 @@
+/* Aptiveon wordmark — used in navbar + footer */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-fg);
+}
+.wordmark:hover {
+  color: var(--color-fg);
+}
+
+.glyph {
+  width: var(--space-6);
+  height: var(--space-6);
+  background: var(--color-accent);
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.glyph::after {
+  content: '';
+  position: absolute;
+  inset: var(--space-1) var(--space-1) auto auto;
+  width: 0.375rem;
+  height: 0.375rem;
+  background: var(--color-bg);
+}
+
+/* Section-marker variant: slightly smaller; used as a section / case head */
+.section-mark {
+  width: 1.125rem;
+  height: 1.125rem;
+  align-self: center;
+  transform: translateY(-1px);
+}
+.section-mark::after {
+  inset: 3px 3px auto auto;
+  width: 0.3125rem;
+  height: 0.3125rem;
+}

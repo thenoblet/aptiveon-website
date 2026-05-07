@@ -1,0 +1,62 @@
+/*
+ * Base layer — resets, root sizing, and default element styles.
+ * Everything sized in rem so that changing the html font-size scales the
+ * entire UI proportionally.
+ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    /*
+     * 100% = the user's browser default (typically 16px). Honour the user's
+     * accessibility settings — never hardcode 16px here. To globally up- or
+     * down-shift the whole UI, change this single value.
+     */
+    font-size: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--scroll-pad-top);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--color-fg);
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color var(--duration-base) ease;
+  }
+  a:hover {
+    color: var(--color-link-hover);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}

@@ -1,0 +1,299 @@
+/* Page-shell primitives — used on every secondary page */
+
+/*
+ * Default content column for non-landing pages. Landing overrides this to
+ * full-bleed (see pages/home.css → .content.landing) so the hero / stats /
+ * CTA strips can run edge-to-edge.
+ */
+.content {
+  max-width: var(--container-shell);
+  margin: 0 auto;
+  padding: 0 var(--space-7) var(--space-24);
+  min-width: 0;
+}
+
+@media (max-width: 56rem) {
+  .content {
+    padding: 0 var(--space-6) var(--space-16);
+  }
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-9) 0 var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-fg-mute);
+}
+.crumb .sep {
+  color: var(--color-rule-base);
+}
+.crumb .cur {
+  color: var(--color-fg-2);
+}
+.crumb .stamp {
+  margin-left: auto;
+  color: var(--color-fg-mute);
+}
+
+/*
+ * Secondary-page hero (Solutions, Products, Customers, Internship, Contact).
+ * The landing page uses a separate `.hero` class with its own bespoke styles.
+ */
+.page-hero {
+  border-top: 1px solid var(--color-fg);
+  padding-top: var(--space-7);
+  margin-bottom: var(--space-12);
+}
+
+.page-title {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-hero);
+  letter-spacing: var(--tracking-tighter);
+  line-height: 1.02;
+  margin: 0 0 var(--space-6);
+  color: var(--color-fg);
+  max-width: 14ch;
+}
+.page-title .mark {
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0 0.18em 0.08em;
+  font-style: normal;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.page-title .quiet {
+  color: var(--color-fg-mute);
+}
+.page-dek {
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  color: var(--color-fg-2);
+  margin: 0 0 var(--space-8);
+  max-width: 50ch;
+}
+
+/*
+ * 2-column key/value strip — matches legacy: each row has a hairline below it,
+ * and a top hairline crowns the whole block. No vertical separators.
+ */
+.hero-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--space-8);
+  border-top: 1px solid var(--color-rule-base);
+  margin-top: var(--space-7);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-fg-2);
+}
+.hero-meta > div {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-rule-base);
+}
+.hero-meta b {
+  display: block;
+  color: var(--color-fg-mute);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-xs);
+  margin-bottom: var(--space-1);
+}
+
+@media (max-width: 36rem) {
+  .hero-meta {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+}
+
+/* Section heads */
+.section {
+  scroll-margin-top: var(--scroll-pad-top);
+  margin-top: var(--space-14);
+}
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--color-fg);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.sec-title {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+.sec-meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-fg-mute);
+}
+
+/* Spec table */
+.spec {
+  width: 100%;
+  border-collapse: collapse;
+}
+.spec th,
+.spec td {
+  text-align: left;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-rule-base);
+  font-size: var(--text-md);
+  vertical-align: top;
+}
+.spec th {
+  width: 7rem;
+  color: var(--color-fg-mute);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-xs);
+}
+.spec td {
+  color: var(--color-fg-2);
+}
+.spec tr:last-child th,
+.spec tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Engage block (used on Solutions footer + others) */
+.engage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+.engage h4 {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-fg-mute);
+  margin: 0 0 var(--space-1);
+  letter-spacing: var(--tracking-wider);
+}
+.engage h5 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-normal);
+  margin: 0 0 var(--space-2);
+}
+.engage p {
+  color: var(--color-fg-2);
+  margin: 0 0 var(--space-3);
+}
+@media (max-width: 45rem) {
+  .engage {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reveal primitives */
+.reveal {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition:
+    opacity var(--duration-slowest) var(--ease-out-expo),
+    transform var(--duration-slowest) var(--ease-out-expo);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 700ms var(--ease-out-expo),
+    transform 700ms var(--ease-out-expo);
+}
+.reveal-stagger.in > *:nth-child(1) {
+  transition-delay: 50ms;
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger.in > *:nth-child(2) {
+  transition-delay: 180ms;
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger.in > *:nth-child(3) {
+  transition-delay: 310ms;
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger.in > *:nth-child(4) {
+  transition-delay: 440ms;
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger.in > *:nth-child(5) {
+  transition-delay: 570ms;
+  opacity: 1;
+  transform: none;
+}
+/* Alias used on Customers page */
+.rv {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 800ms var(--ease-out-expo),
+    transform 800ms var(--ease-out-expo);
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Kinetic word reveal — wraps split words */
+.kinetic .w {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease;
+}
+.kinetic.in .w {
+  opacity: 1;
+  transform: none;
+}
+.kinetic .w.muted {
+  color: var(--color-fg-mute);
+}
+.kinetic .w.mark {
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0 0.12em 0.04em;
+}
+
+/* Hero h1 word-rise (Home) */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: rise var(--duration-slowest) var(--ease-out-expo) forwards;
+}
+.word.w2 > span {
+  animation-delay: 120ms;
+}
+.word.w3 > span {
+  animation-delay: 240ms;
+}
+.word.w4 > span {
+  animation-delay: 360ms;
+}
+.word.w5 > span {
+  animation-delay: 480ms;
+}

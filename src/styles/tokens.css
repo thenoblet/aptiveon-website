@@ -1,0 +1,239 @@
+/*
+ * Design tokens — the single source of truth for the entire site.
+ *
+ * Change one value here and it cascades through the whole UI:
+ *  • Tailwind v4 reads @theme to generate utility classes (text-base,
+ *    p-4, bg-paper, rounded-md, etc.).
+ *  • All custom CSS in src/styles/** references these via var(...).
+ *
+ * Naming follows Tailwind / Material UI / Stripe conventions:
+ *  --color-*   palette + semantic role aliases
+ *  --font-*    family stacks
+ *  --text-*    type scale (rem)
+ *  --leading-* line-heights
+ *  --tracking-* letter-spacing
+ *  --weight-*  font-weights
+ *  --space-*   4-pt grid (rem)
+ *  --radius-*  corner radii
+ *  --shadow-*  elevation
+ *  --z-*       stacking
+ *  --container-*  max-widths
+ */
+@theme {
+  /* ── Colour palette (raw) ──────────────────────────────────── */
+  --color-paper: #f2eee3;
+  --color-paper-2: #ece7d7;
+  --color-ink: #141413;
+  --color-ink-2: #2e2c28;
+  --color-mute: #8b867a;
+  --color-rule: #d9d3c4;
+  --color-rule-2: #e5dfcf;
+
+  --color-orange: #ff5b1f;
+  --color-orange-ink: #b33a0f;
+  --color-cobalt: #1f3a8a;
+  --color-cobalt-2: #2d4fb0;
+  --color-moss: #4f6a2e;
+
+  /* ── Type families ─────────────────────────────────────────── */
+  --font-sans:
+    'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* ── Type scale (rem; 1rem = 16px @ root) ──────────────────── */
+  --text-2xs: 0.625rem; /* 10px */
+  --text-xs: 0.6875rem; /* 11px */
+  --text-sm: 0.75rem; /* 12px */
+  --text-md: 0.8125rem; /* 13px */
+  --text-base: 0.9375rem; /* 15px */
+  --text-lg: 1rem; /* 16px */
+  --text-xl: 1.125rem; /* 18px */
+  --text-2xl: 1.375rem; /* 22px */
+  --text-3xl: 1.625rem; /* 26px */
+  --text-4xl: 2rem; /* 32px */
+  --text-5xl: 2.375rem; /* 38px */
+  --text-6xl: 3rem; /* 48px */
+  --text-7xl: 4rem; /* 64px */
+
+  /* Fluid display sizes — clamp(min, vw, max) */
+  --text-display: clamp(3.5rem, 9vw, 7.75rem); /* hero h1 */
+  --text-hero: clamp(2.25rem, 5.6vw, 4.75rem); /* page-title */
+  --text-headline: clamp(2rem, 4vw, 3.25rem); /* section heads */
+  --text-eyebrow: clamp(1.5rem, 2.5vw, 1.875rem); /* small heads */
+
+  /* ── Line heights ──────────────────────────────────────────── */
+  --leading-tight: 0.95;
+  --leading-snug: 1.05;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.65;
+
+  /* ── Letter spacing ────────────────────────────────────────── */
+  --tracking-tightest: -0.038em;
+  --tracking-tighter: -0.028em;
+  --tracking-tight: -0.022em;
+  --tracking-normal: -0.012em;
+  --tracking-wide: 0;
+  --tracking-wider: 0.04em;
+  --tracking-widest: 0.06em;
+
+  /* ── Font weights ──────────────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semi: 600;
+  --weight-bold: 700;
+
+  /* ── Spacing scale (4-pt grid) ─────────────────────────────── */
+  --spacing: 0.25rem; /* Tailwind base; p-4 = 1rem etc. */
+
+  --space-0: 0;
+  --space-1: 0.25rem; /*  4px */
+  --space-2: 0.5rem; /*  8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-7: 1.75rem; /* 28px */
+  --space-8: 2rem; /* 32px */
+  --space-9: 2.25rem; /* 36px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-14: 3.5rem; /* 56px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+  --space-28: 7rem; /* 112px */
+  --space-32: 8rem; /* 128px */
+  --space-40: 10rem; /* 160px */
+
+  /* ── Radii ─────────────────────────────────────────────────── */
+  --radius-none: 0;
+  --radius-xs: 0.125rem; /* 2px */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.875rem; /* 14px */
+  --radius-pill: 9999px;
+
+  /* ── Shadows ───────────────────────────────────────────────── */
+  --shadow-card: 0 1rem 2.5rem rgba(20, 20, 19, 0.08);
+  --shadow-frame: 0 1.5rem 3.75rem -1.25rem rgba(20, 20, 19, 0.25);
+  --shadow-fab: 0 0.5rem 1.5rem rgba(20, 20, 19, 0.18);
+  --shadow-pop: 0 0.75rem 2.5rem rgba(20, 20, 19, 0.18);
+
+  /* ── Z-index scale ─────────────────────────────────────────── */
+  --z-below: -1;
+  --z-base: 0;
+  --z-content: 1;
+  --z-nav: 20;
+  --z-menu: 30;
+  --z-overlay: 40;
+  --z-tweaks: 9998;
+  --z-tweaks-toggle: 9999;
+
+  /* ── Containers ────────────────────────────────────────────── */
+  --container-shell: 82.5rem; /* 1320px */
+  --container-wrap: 77.5rem; /* 1240px */
+  --container-prose: 60ch;
+
+  /* ── Page chrome ───────────────────────────────────────────── */
+  --topbar-height: 4rem; /* 64px */
+  --scroll-pad-top: 5rem; /* 80px */
+
+  /* ── Motion ────────────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 600ms;
+  --duration-slowest: 900ms;
+
+  /* ── Keyframes (used by class-based animations below) ──────── */
+  --animate-rise: rise var(--duration-slowest) var(--ease-out-expo) forwards;
+  --animate-fadein: fadein 800ms ease forwards;
+  --animate-livedot: livedot 2.4s ease-in-out infinite;
+  --animate-cue: cue 2s ease-in-out infinite;
+  --animate-breathe: breathe 6s ease-in-out infinite;
+  --animate-flipbg: flipBg 1.6s ease;
+
+  @keyframes rise {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes fadein {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes livedot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(0.85);
+    }
+  }
+  @keyframes cue {
+    0%,
+    100% {
+      transform: scaleY(0.3);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.15);
+      opacity: 1;
+    }
+  }
+  @keyframes flipBg {
+    0% {
+      background: transparent;
+    }
+    50% {
+      background: rgba(255, 91, 31, 0.06);
+    }
+    100% {
+      background: transparent;
+    }
+  }
+}
+
+/*
+ * Semantic role aliases — refer to these in components, not the raw palette.
+ * This is the layer that lets you swap themes (e.g. dark mode) by changing
+ * the role bindings without touching component CSS.
+ */
+:root {
+  --color-bg: var(--color-paper);
+  --color-bg-2: var(--color-paper-2);
+  --color-fg: var(--color-ink);
+  --color-fg-2: var(--color-ink-2);
+  --color-fg-mute: var(--color-mute);
+  --color-rule-base: var(--color-rule);
+  --color-rule-soft: var(--color-rule-2);
+  --color-accent: var(--color-orange);
+  --color-accent-ink: var(--color-orange-ink);
+  --color-link: var(--color-cobalt);
+  --color-link-hover: var(--color-orange-ink);
+  --color-success: var(--color-moss);
+
+  /* Inverted surface (used on dark sections — stats, cta, prod-banner) */
+  --color-bg-invert: var(--color-ink);
+  --color-bg-invert-2: var(--color-ink-2);
+  --color-fg-invert: var(--color-paper);
+  --color-fg-invert-mute: #c9c4b6;
+  --color-rule-invert: #2e2c28;
+}

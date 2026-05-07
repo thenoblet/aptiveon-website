@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Products — Aptiveon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="aptiveon.css">
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  .product { scroll-margin-top: 80px; margin-top: 56px; }
+  .prod-banner {
+    border: 1px solid var(--ink);
+    background: var(--ink); color: var(--paper);
+    padding: 28px;
+    display: grid; grid-template-columns: 1fr 380px; gap: 28px;
+    align-items: center;
+  }
+  .prod-banner.cobalt { background: var(--cobalt); }
+  .prod-banner .ref { font-family: var(--mono); font-size: 11.5px; color: #B6C2E8; margin-bottom: 6px; }
+  .prod-banner.cobalt .ref { color: #B6C2E8; }
+  .prod-banner h2 {
+    font-family: var(--sans); font-weight: 500; font-size: 38px;
+    letter-spacing: -0.022em; margin: 0 0 10px; color: #fff;
+  }
+  .prod-banner p { font-size: 15.5px; color: #DCD7C8; margin: 0; max-width: 50ch; }
+  .prod-banner.cobalt p { color: #DCE2F2; }
+  .prod-banner .tagrow { display: flex; gap: 8px; margin-top: 14px; }
+  .prod-banner .ptag {
+    font-family: var(--mono); font-size: 11px; color: var(--paper);
+    border: 1px solid #5A5750; padding: 2px 8px; border-radius: 2px;
+  }
+  .prod-banner.cobalt .ptag { border-color: #6F84BF; color: #fff; }
+  .prod-banner .specbox {
+    background: var(--paper); color: var(--ink); padding: 18px 20px;
+    border: 1px solid var(--rule);
+  }
+  .prod-banner .specbox .lbl { font-family: var(--mono); font-size: 11px; color: var(--mute); margin-bottom: 8px; }
+  .feat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--rule); margin-top: 24px; background: var(--paper);
+  }
+  .feat-grid .f {
+    padding: 18px 20px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .feat-grid .f:nth-child(2n) { border-right: 0; }
+  .feat-grid .f:nth-last-child(-n+2) { border-bottom: 0; }
+  .feat-grid .f h5 {
+    font-family: var(--sans); font-weight: 500; font-size: 16px; margin: 0 0 6px;
+  }
+  .feat-grid .f p { color: var(--ink-2); font-size: 14px; margin: 0; }
+  .feat-grid .f .num { font-family: var(--mono); font-size: 11px; color: var(--orange-ink); margin-bottom: 6px; }
+  .product.cobalt .feat-grid .f .num { color: var(--cobalt); }
+  @media (max-width: 1100px) { .prod-banner { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .feat-grid { grid-template-columns: 1fr; } .feat-grid .f { border-right:0; } }
+</style>
+</head>
+<body data-screen-label="02 Products">
+
+<main class="content">
+
+  <div class="crumb">
+    <span>aptiveon</span><span class="sep">/</span><span class="cur">products</span>
+    <span class="stamp">ref. 02 · public</span>
+  </div>
+
+  <section class="hero" style="grid-template-columns: 1fr; gap: 0;">
+    <div>
+      <h1 class="page-title">A <span class="mark">platform</span> first. Products as tenants.</h1>
+      <p class="page-dek" style="max-width: 60ch;">The Aptiveon Workflow Engine is the underlying infrastructure. The Knowledge Assistant is the first product built on top of it. Future products are tenants of the same platform, not new codebases.</p>
+      <div class="hero-meta">
+        <div><b>PLATFORM</b>AWE — in development</div>
+        <div><b>PRODUCT</b>AKA — pilot deployments</div>
+        <div><b>FUTURE</b>02.3 placeholder</div>
+        <div><b>MODEL</b>Single platform, many tenants</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02.1 AWE -->
+  <section class="product" id="awe">
+    <div class="prod-banner">
+      <div>
+        <div class="ref">PRODUCT 02.1 · AWE</div>
+        <h2>Aptiveon Workflow Engine</h2>
+        <p>A configurable platform for orchestrating AI workflows, retrieval pipelines, integrations, and human-in-the-loop review.</p>
+        <div class="tagrow">
+          <span class="ptag">PLATFORM</span>
+          <span class="ptag">IN DEVELOPMENT</span>
+          <span class="ptag">SELF-HOSTED OR MANAGED</span>
+        </div>
+      </div>
+      <div class="specbox">
+        <div class="lbl">SPEC SHEET</div>
+        <table class="spec">
+          <tbody>
+            <tr><th>Inputs</th><td>Documents, APIs, schedules, events, operators</td></tr>
+            <tr><th>Outputs</th><td>Orchestrated tasks, retrieved context, reviewed outputs</td></tr>
+            <tr><th>Stack</th><td>TypeScript · Python · Postgres · queues</td></tr>
+            <tr><th>Maturity</th><td>In development · early partners</td></tr>
+            <tr><th>Engagement</th><td>Hosted by Aptiveon, or self-hosted</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="f"><div class="num">F.01</div><h5>Workflow orchestration</h5><p>Compose multi-step workflows with retries, branches, and explicit failure paths. Inspect any run.</p></div>
+      <div class="f"><div class="num">F.02</div><h5>Retrieval pipelines</h5><p>Pluggable chunking, embeddings, vector + lexical retrieval, re-rankers, citation built in.</p></div>
+      <div class="f"><div class="num">F.03</div><h5>Integrations</h5><p>API, database, webhook, and SaaS adapters. Typed contracts at every boundary.</p></div>
+      <div class="f"><div class="num">F.04</div><h5>Human review</h5><p>Drop a review step anywhere in a workflow. Reviewers get a queue, a UI, and an audit trail.</p></div>
+      <div class="f"><div class="num">F.05</div><h5>Observability</h5><p>Per-run logs, token costs, latency, eval scores. Alerting on regressions, not vibes.</p></div>
+      <div class="f"><div class="num">F.06</div><h5>Multi-tenant</h5><p>Each product or engagement is a tenant. Shared platform, isolated data.</p></div>
+    </div>
+  </section>
+
+  <!-- 02.2 AKA -->
+  <section class="product cobalt" id="aka">
+    <div class="prod-banner cobalt">
+      <div>
+        <div class="ref">PRODUCT 02.2 · AKA</div>
+        <h2>Aptiveon Knowledge Assistant</h2>
+        <p>A practical assistant that helps organizations search, summarize, and act on their own documents, policies, manuals, and internal knowledge.</p>
+        <div class="tagrow">
+          <span class="ptag">PRODUCT</span>
+          <span class="ptag">PILOT DEPLOYMENTS</span>
+          <span class="ptag">TENANT OF AWE</span>
+        </div>
+      </div>
+      <div class="specbox">
+        <div class="lbl">SPEC SHEET</div>
+        <table class="spec">
+          <tbody>
+            <tr><th>Inputs</th><td>Uploaded docs, structured KBs, role context</td></tr>
+            <tr><th>Outputs</th><td>Grounded answers, drafts, cited summaries</td></tr>
+            <tr><th>Stack</th><td>AWE · LLM providers · vector store</td></tr>
+            <tr><th>Maturity</th><td>Pilot deployments</td></tr>
+            <tr><th>Engagement</th><td>4–8 weeks to first deployment</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="f"><div class="num">F.01</div><h5>Grounded answers</h5><p>Every answer cites the document and section it came from. Hallucination is visible, not implicit.</p></div>
+      <div class="f"><div class="num">F.02</div><h5>Document ingestion</h5><p>Drop in PDFs, Office docs, Markdown, Notion exports. Chunking and embeddings handled.</p></div>
+      <div class="f"><div class="num">F.03</div><h5>Configurable prompts</h5><p>Tune the assistant's voice, refusal behaviour, and scope per deployment without touching code.</p></div>
+      <div class="f"><div class="num">F.04</div><h5>Guardrails</h5><p>Topic filters, PII handling, and explicit "I don't know" behaviour for out-of-corpus questions.</p></div>
+      <div class="f"><div class="num">F.05</div><h5>Simple UI</h5><p>A clean chat surface for non-technical teams. No prompt engineering required at the user end.</p></div>
+      <div class="f"><div class="num">F.06</div><h5>Eval harness</h5><p>Curate a question set, watch coverage and accuracy over time. Catches regressions on doc updates.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="future">
+    <div class="sec-head">
+      <div class="sec-num">§ 02.3</div>
+      <h2 class="sec-title">What's next</h2>
+      <div class="sec-meta">placeholder · partner-driven</div>
+    </div>
+    <div class="sec-body col-wide">
+      <p>The third product slot stays empty until a real partner pulls it through. We'd rather ship one good thing on top of AWE than three half-products.</p>
+      <p>If you have a candidate use case — a workflow that should be a product, not a one-off engagement — that's the conversation to have.</p>
+      <a class="line" href="Contact.html" style="display:inline-block; font-family: var(--mono); font-size: 13px; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px;">Propose a product &rarr;</a>
+    </div>
+  </section>
+
+</main>
+
+<script src="chrome.js" data-active="products"></script>
+<script src="imagery.js"></script>
+</body>
+</html>
