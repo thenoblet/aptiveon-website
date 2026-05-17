@@ -1,12 +1,9 @@
-/*
- * First-paint splash overlay. Sits above everything on initial load and
- * unmounts itself once preload + minimum-display promises both resolve.
- */
+/* First-paint splash overlay — sits above everything on load, then fades. */
 .splash {
   position: fixed;
   inset: 0;
-  z-index: var(--z-tweaks-toggle); /* above modals; nothing else outranks it */
-  background: var(--color-bg);
+  z-index: 9999;
+  background: var(--paper);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,26 +24,21 @@
   padding: 0 var(--space-6);
 }
 
-/* Brand glyph — uses the existing .glyph class but a touch larger and
-   gently floating so the splash has a quiet pulse without feeling jumpy. */
 .splash-glyph {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
+  background: var(--accent);
+  border-radius: var(--radius-xs);
   animation: splash-float 3s ease-in-out infinite;
-}
-.splash-glyph::after {
-  inset: 0.625rem 0.625rem auto auto;
-  width: 1rem;
-  height: 1rem;
 }
 
 .splash-wordmark {
   display: inline-flex;
-  font-family: var(--font-sans);
-  font-weight: var(--weight-semi);
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  letter-spacing: -0.025em;
-  color: var(--color-fg);
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
   overflow: hidden;
 }
 .splash-ltr {
@@ -56,11 +48,10 @@
   animation: splash-rise 500ms var(--ease-out-expo) forwards;
 }
 
-/* Thin shimmer bar — orange travels left-to-right inside a faint ink track. */
 .splash-bar {
   width: 12rem;
   height: 2px;
-  background: rgba(20, 20, 19, 0.08);
+  background: var(--line);
   border-radius: var(--radius-pill);
   overflow: hidden;
   position: relative;
@@ -72,23 +63,21 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-accent) 50%,
+    var(--accent) 50%,
     transparent 100%
   );
   animation: splash-shimmer 1.4s ease-in-out infinite;
 }
 
 .splash-tagline {
-  margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
-  color: var(--color-fg-mute);
+  color: var(--ink-3);
   opacity: 0;
   animation: splash-fadein 600ms ease forwards 800ms;
 }
 
-/* Keyframes. Kept local to the splash so they can't leak elsewhere. */
 @keyframes splash-rise {
   to {
     opacity: 1;

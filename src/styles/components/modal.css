@@ -1,64 +1,59 @@
-/*
- * Modal — built on native <dialog>. The element itself is the panel; the
- * ::backdrop pseudo-element is the dimmed overlay behind it.
- */
+/* Modal — native <dialog>. The element is the panel; ::backdrop is the dim. */
 .modal {
-  /*
-   * Restore native dialog centering — Tailwind's preflight resets `* { margin: 0 }`
-   * which clobbers the UA `margin: auto` that centers an open <dialog>.
-   */
   margin: auto;
-  width: min(32rem, calc(100vw - var(--space-8)));
+  width: min(36rem, calc(100vw - var(--space-8)));
   max-height: calc(100vh - var(--space-8));
   padding: 0;
-  border: 1px solid var(--color-fg);
-  border-radius: var(--radius-xs);
-  background: var(--color-bg);
-  color: var(--color-fg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
   box-shadow: var(--shadow-pop);
 }
-
 .modal::backdrop {
-  background: rgba(20, 20, 19, 0.55);
-  backdrop-filter: blur(4px);
+  background: rgba(22, 20, 15, 0.55);
   -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
 .modal-head {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: var(--space-5) var(--space-6);
-  border-bottom: 1px solid var(--color-rule-base);
+  border-bottom: 1px solid var(--line);
   gap: var(--space-4);
 }
 .modal-head h2 {
   margin: 0;
-  font-family: var(--font-sans);
-  font-weight: var(--weight-medium);
-  font-size: var(--text-xl);
-  letter-spacing: var(--tracking-normal);
-  color: var(--color-fg);
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-card);
+  color: var(--ink);
+}
+.modal-head h2 em {
+  color: var(--accent);
+  font-style: italic;
 }
 
 .modal-close {
-  appearance: none;
-  border: 0;
-  background: transparent;
   font-size: var(--text-3xl);
   line-height: 1;
-  color: var(--color-fg-mute);
-  cursor: pointer;
+  color: var(--ink-3);
   padding: 0 var(--space-2);
-  border-radius: var(--radius-xs);
-  transition: color var(--duration-fast) ease;
+  border-radius: var(--radius-sm);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out-expo);
 }
 .modal-close:hover {
-  color: var(--color-fg);
+  color: var(--ink);
 }
 .modal-close:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -66,18 +61,20 @@
   padding: var(--space-6);
 }
 
-/* Apply-form layout (used by ApplyModal on the Internship page). */
+/* Apply form (inside the Internship modal). */
 .apply-intro {
   margin: 0 0 var(--space-5);
-  color: var(--color-fg-2);
-  font-size: var(--text-md);
+  color: var(--ink-2);
+  font-size: var(--text-base);
   line-height: var(--leading-relaxed);
 }
 .apply-form label {
   display: block;
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-fg-mute);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink-3);
   margin: var(--space-4) 0 var(--space-2);
 }
 .apply-form label:first-of-type {
@@ -87,13 +84,17 @@
 .apply-form textarea {
   width: 100%;
   box-sizing: border-box;
-  background: var(--color-bg);
-  border: 1px solid var(--color-rule-base);
-  border-radius: var(--radius-xs);
-  padding: var(--space-2) var(--space-3);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
   font-family: var(--font-sans);
-  font-size: var(--text-md);
-  color: var(--color-fg);
+  font-size: var(--text-base);
+  color: var(--ink);
+  outline: 0;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-expo),
+    box-shadow var(--duration-fast) var(--ease-out-expo);
 }
 .apply-form textarea {
   resize: vertical;
@@ -102,9 +103,8 @@
 }
 .apply-form input:focus,
 .apply-form textarea:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 0;
-  border-color: var(--color-accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 .apply-form .submit-row {
   display: flex;
@@ -116,7 +116,7 @@
 .apply-form .help {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-fg-mute);
+  color: var(--ink-3);
 }
 .apply-sent {
   display: grid;
@@ -125,7 +125,7 @@
 }
 .apply-sent p {
   margin: 0;
-  color: var(--color-fg-2);
+  color: var(--ink-2);
 }
 .apply-sent .actions {
   display: flex;
@@ -133,20 +133,14 @@
 }
 
 @media (max-width: 48rem) {
-  /* Prevent iOS Safari auto-zoom on input focus + larger tap targets. */
   .apply-form input,
   .apply-form textarea {
     font-size: var(--text-lg);
-    padding: var(--space-3);
   }
   .apply-form .submit-row {
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-3);
-  }
-  .apply-form .submit-row .help {
-    order: 2;
-    text-align: center;
   }
   .modal-body {
     padding: var(--space-5);

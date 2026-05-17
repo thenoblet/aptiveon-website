@@ -1,13 +1,14 @@
-/* Photo containers — natural colour, with an optional caption pill. */
+/* Photo containers — natural cover image with an optional caption pill. */
 .apt-img {
   position: relative;
   background-size: cover;
   background-position: center;
-  background-color: var(--color-fg-2);
+  background-color: var(--paper-3);
   overflow: hidden;
-  transition: filter var(--duration-base) ease;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  transition: filter var(--duration-base) var(--ease-out-expo);
 }
-
 .apt-img-cap {
   position: absolute;
   left: var(--space-3);
@@ -15,10 +16,11 @@
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: var(--tracking-wider);
-  color: rgba(242, 238, 227, 0.85);
+  color: var(--paper);
   text-transform: lowercase;
-  background: rgba(20, 20, 19, 0.55);
+  background: rgba(22, 20, 15, 0.6);
   padding: var(--space-1) var(--space-2);
-  backdrop-filter: blur(2px);
+  border-radius: var(--radius-xs);
   -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
 }

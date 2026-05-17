@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  /** `shell` ≈ 1320px (default). `wrap` ≈ 1240px (used on landing). */
+  /** `wrap` ≈ 1280px (default). `shell` ≈ 1320px. */
   size?: 'shell' | 'wrap';
   children: ReactNode;
 }
@@ -12,7 +12,7 @@ const SIZES: Record<NonNullable<Props['size']>, string> = {
 };
 
 export default function Container({
-  size = 'shell',
+  size = 'wrap',
   className = '',
   style,
   children,
@@ -20,7 +20,7 @@ export default function Container({
 }: Props) {
   return (
     <div
-      className={`mx-auto px-7 ${className}`.trim()}
+      className={`wrap ${className}`.trim()}
       style={{ maxWidth: SIZES[size], ...style }}
       {...rest}
     >
