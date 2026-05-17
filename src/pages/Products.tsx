@@ -1,22 +1,17 @@
 import Crumb from '@/components/ui/Crumb';
 import PageHero from '@/components/ui/PageHero';
-import Section from '@/components/ui/Section';
 import SpecTable, { type SpecRow } from '@/components/ui/SpecTable';
 import Button from '@/components/ui/Button';
-import Image from '@/components/ui/Image';
-import type { ImgKey } from '@/lib/imagery';
 
 interface Product {
   id: string;
-  cobalt?: boolean;
+  accent?: boolean;
   short: string;
   name: string;
   blurb: string;
   tags: string[];
   spec: SpecRow[];
   features: { title: string; body: string }[];
-  photo: ImgKey;
-  caption: string;
 }
 
 const PRODUCTS: Product[] = [
@@ -60,12 +55,10 @@ const PRODUCTS: Product[] = [
         body: 'Each product or engagement is a tenant. Shared platform, isolated data.',
       },
     ],
-    photo: 'prod_awe',
-    caption: 'platform · infrastructure',
   },
   {
     id: 'aka',
-    cobalt: true,
+    accent: true,
     short: 'AKA',
     name: 'Aptiveon Knowledge Assistant',
     blurb:
@@ -104,60 +97,70 @@ const PRODUCTS: Product[] = [
         body: 'Curate a question set, watch coverage and accuracy over time. Catches regressions on doc updates.',
       },
     ],
-    photo: 'prod_aka',
-    caption: 'analyst · grounded answer',
   },
 ];
 
 export default function Products() {
   return (
-    <>
-      <Crumb current="products" />
+    <div className="page-main">
+      <div className="page-wrap">
+        <Crumb current="products" />
 
-      <PageHero
-        title={
-          <>
-            A <span className="mark">platform</span> first. Products as tenants.
-          </>
-        }
-        dek="The Aptiveon Workflow Engine is the underlying infrastructure. The Knowledge Assistant is the first product built on top of it. Future products are tenants of the same platform, not new codebases."
-        meta={[
-          { label: 'PLATFORM', value: 'AWE — in development' },
-          { label: 'PRODUCT', value: 'AKA — pilot deployments' },
-          { label: 'FUTURE', value: '02.3 placeholder' },
-          { label: 'MODEL', value: 'Single platform, many tenants' },
-        ]}
-      />
+        <PageHero
+          title={
+            <>
+              A <span className="mark">platform</span> first. Products as
+              tenants.
+            </>
+          }
+          dek="The Aptiveon Workflow Engine is the underlying infrastructure. The Knowledge Assistant is the first product built on top of it. Future products are tenants of the same platform, not new codebases."
+          meta={[
+            { label: 'PLATFORM', value: 'AWE — in development' },
+            { label: 'PRODUCT', value: 'AKA — pilot deployments' },
+            { label: 'FUTURE', value: '02.3 placeholder' },
+            { label: 'MODEL', value: 'Single platform, many tenants' },
+          ]}
+        />
 
-      {PRODUCTS.map((p) => (
-        <ProductBlock key={p.id} product={p} />
-      ))}
+        {PRODUCTS.map((p) => (
+          <ProductBlock key={p.id} product={p} />
+        ))}
 
-      <Section title="What's next" meta="placeholder · partner-driven" id="future">
-        <p>
-          The third product slot stays empty until a real partner pulls it through. We'd rather
-          ship one good thing on top of AWE than three half-products.
-        </p>
-        <p>
-          If you have a candidate use case — a workflow that should be a product, not a one-off
-          engagement — that's the conversation to have.
-        </p>
-        <Button to="/contact" variant="line" arrow>
-          Propose a product
-        </Button>
-      </Section>
-    </>
+        <section className="future-block" id="future">
+          <div className="sec-head">
+            <h2 className="sec-title">What's next</h2>
+            <span className="sec-meta">placeholder · partner-driven</span>
+          </div>
+          <p className="future-body">
+            The third product slot stays empty until a real partner pulls it
+            through. We'd rather ship one good thing on top of AWE than three
+            half-products.
+          </p>
+          <p className="future-body">
+            If you have a candidate use case — a workflow that should be a
+            product, not a one-off engagement — that's the conversation to
+            have.
+          </p>
+          <Button to="/contact" variant="primary" arrow>
+            Propose a product
+          </Button>
+        </section>
+      </div>
+    </div>
   );
 }
 
 function ProductBlock({ product: p }: { product: Product }) {
   return (
-    <section className={`product-page ${p.cobalt ? 'cobalt' : ''}`} id={p.id}>
-      <div className={`prod-banner with-img ${p.cobalt ? 'cobalt' : ''}`}>
-        <div>
+    <section
+      className={`product-block${p.accent ? ' product-accent' : ''}`}
+      id={p.id}
+    >
+      <div className="prod-banner">
+        <div className="prod-banner-l">
           <div className="ref">{p.short}</div>
-          <h2>{p.name}</h2>
-          <p>{p.blurb}</p>
+          <h2 className="prod-name">{p.name}</h2>
+          <p className="prod-blurb">{p.blurb}</p>
           <div className="tagrow">
             {p.tags.map((t) => (
               <span key={t} className="ptag">
@@ -166,16 +169,15 @@ function ProductBlock({ product: p }: { product: Product }) {
             ))}
           </div>
         </div>
-        <Image src={p.photo} alt={p.caption} className="banner-img" />
-        <div className="specbox">
-          <div className="lbl">SPEC SHEET</div>
+        <div className="prod-banner-r">
+          <div className="lbl">Spec sheet</div>
           <SpecTable rows={p.spec} />
         </div>
       </div>
 
       <div className="feat-grid">
         {p.features.map((f) => (
-          <div key={f.title} className="f">
+          <div key={f.title} className="feat">
             <h5>{f.title}</h5>
             <p>{f.body}</p>
           </div>
