@@ -1,0 +1,54 @@
+/* Marquee — infinite horizontal strip. Two variants:
+   .marquee-band — token strip below the home hero (hairline-bound, mono).
+   .marquee-logos — wider logo row used inside the Integrations section.
+*/
+.marquee {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: var(--space-5) 0;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.marquee-logos {
+  background: transparent;
+}
+
+.marquee-track {
+  display: flex;
+  gap: var(--space-14);
+  animation: marquee 50s linear infinite;
+  width: max-content;
+}
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+.marquee-track.static {
+  animation: none;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.marquee-band .marquee-item::after {
+  content: '';
+  width: 1px;
+  height: 0.75rem;
+  background: var(--line-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
