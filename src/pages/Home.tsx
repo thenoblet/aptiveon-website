@@ -57,6 +57,44 @@ function Hero() {
               ▸ See it in action
             </a>
           </div>
+          <div className="hero-trust">
+            <div className="trust-avatars">
+              <span className="trust-av">
+                <img
+                  src="https://randomuser.me/api/portraits/women/44.jpg"
+                  alt="Sarah Chen"
+                  loading="lazy"
+                />
+              </span>
+              <span className="trust-av">
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  alt="Marcus Webb"
+                  loading="lazy"
+                />
+              </span>
+              <span className="trust-av">
+                <img
+                  src="https://randomuser.me/api/portraits/women/68.jpg"
+                  alt="Priya Nair"
+                  loading="lazy"
+                />
+              </span>
+              <span className="trust-av">
+                <img
+                  src="https://randomuser.me/api/portraits/men/7.jpg"
+                  alt="James Okafor"
+                  loading="lazy"
+                />
+              </span>
+              <span className="trust-av" aria-hidden="true">
+                +8K
+              </span>
+            </div>
+            <p className="trust-text">
+              <b>86K+ teams</b> across 40+ countries
+            </p>
+          </div>
         </div>
         <div className="hero-visual">
           <LivePerformance />

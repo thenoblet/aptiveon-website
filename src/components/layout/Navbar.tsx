@@ -29,9 +29,9 @@ export default function Navbar() {
   return (
     <header className={`nav${scrolled ? ' scrolled' : ''}`}>
       <div className="wrap nav-inner">
-        <Link to="/" className="nav-brand wordmark" aria-label="Aptiveon home">
-          <span className="glyph" aria-hidden="true" />
-          <span>
+        <Link to="/" className="nav-brand" aria-label="Aptiveon home">
+          <span className="nav-glyph" aria-hidden="true" />
+          <span className="wordmark">
             aptiveon<span className="dot-end">.</span>
           </span>
         </Link>
@@ -86,9 +86,9 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <dialog ref={ref} className="mobile-nav" onClose={onClose}>
       <header className="mobile-nav-head">
-        <Link to="/" className="nav-brand wordmark" aria-label="Aptiveon home">
-          <span className="glyph" aria-hidden="true" />
-          <span>
+        <Link to="/" className="nav-brand" aria-label="Aptiveon home">
+          <span className="nav-glyph" aria-hidden="true" />
+          <span className="wordmark">
             aptiveon<span className="dot-end">.</span>
           </span>
         </Link>

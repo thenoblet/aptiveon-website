@@ -2,7 +2,7 @@
 
 .solution {
   scroll-margin-top: var(--scroll-pad-top);
-  margin-bottom: var(--space-20);
+  margin-bottom: 96px;
 }
 
 .sol-head {
@@ -16,7 +16,7 @@
 .sol-head h2 {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(32px, 4vw, 52px);
   line-height: var(--leading-card);
   letter-spacing: var(--tracking-card);
   color: var(--ink);
@@ -25,6 +25,7 @@
   font-weight: var(--weight-medium);
   letter-spacing: -0.03em;
 }
+/* Square-cornered tag chip, not pill. */
 .sol-tag {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -32,17 +33,26 @@
   color: var(--accent);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border: 1px solid var(--accent-line);
-  border-radius: var(--radius-pill);
+  border-radius: 3px;
   background: var(--accent-soft);
 }
 
+/* Bordered two-pane card — left pane sans, right pane paper-2. */
 .specsheet {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: var(--space-10);
-  align-items: start;
+  grid-template-columns: 1fr 380px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.ss-l {
+  padding: 36px 40px;
+  border-right: 1px solid var(--line);
+}
+.ss-r {
+  padding: 28px 32px;
+  background: var(--paper-2);
 }
 
 .ss-l .ref {
@@ -56,7 +66,7 @@
 .ss-l h3 {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: clamp(1.625rem, 2.8vw, 2.25rem);
+  font-size: clamp(26px, 2.8vw, 36px);
   line-height: var(--leading-card);
   letter-spacing: var(--tracking-card);
   color: var(--ink);
@@ -75,15 +85,16 @@
   max-width: 60ch;
 }
 
+/* Use-case rows — 2-col grid with solid hairline rules per row. */
 .uses {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: 1px dashed var(--line);
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
 }
 .uses > div {
+  padding: 16px 20px 16px 0;
+  border-bottom: 1px solid var(--line);
   font-size: var(--text-md);
   color: var(--ink);
   line-height: 1.5;
@@ -110,15 +121,28 @@
 
 .engage-block {
   scroll-margin-top: var(--scroll-pad-top);
-  margin: var(--space-20) 0 var(--space-12);
+  margin: 96px 0 var(--space-12);
 }
 
 @media (max-width: 60rem) {
   .specsheet {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+  }
+  .ss-l {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 24px;
+  }
+  .ss-r {
+    padding: 20px 24px;
   }
   .uses {
     grid-template-columns: 1fr;
+  }
+  .sol-head h2 {
+    font-size: clamp(26px, 7vw, 36px);
+  }
+  .solution {
+    margin-bottom: 64px;
   }
 }
