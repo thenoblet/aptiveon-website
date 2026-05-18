@@ -35,6 +35,10 @@
   border-left-color: rgba(255, 255, 255, 0.18);
   color: var(--paper);
 }
+:root[data-mode='dark'] .product-accent .prod-banner-r {
+  background: color-mix(in srgb, var(--accent) 80%, white);
+  border-left-color: rgba(0, 0, 0, 0.22);
+}
 .product-accent .prod-banner-r .lbl,
 .product-accent .prod-banner-r .spec th {
   color: rgba(255, 255, 255, 0.65);

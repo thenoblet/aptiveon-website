@@ -30,6 +30,45 @@
     background: var(--paper);
     overflow-x: hidden;
     font-feature-settings: 'ss01', 'ss02', 'cv11';
+    /* Cheap palette transition for the theme toggle — only colours, no
+       layout-affecting properties. Individual chrome elements (nav, foot,
+       arch, brand) get the same trio so the swap reads as one cohesive
+       fade rather than a body change with everything else snapping. */
+    transition:
+      background-color var(--duration-base) var(--ease-out-expo),
+      color var(--duration-base) var(--ease-out-expo);
+  }
+
+  .nav,
+  .foot,
+  .arch,
+  .brand,
+  .impact,
+  .ipr,
+  .lf,
+  .tst,
+  .home-cta,
+  .platform-pulse {
+    transition:
+      background-color var(--duration-base) var(--ease-out-expo),
+      border-color var(--duration-base) var(--ease-out-expo),
+      color var(--duration-base) var(--ease-out-expo);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body,
+    .nav,
+    .foot,
+    .arch,
+    .brand,
+    .impact,
+    .ipr,
+    .lf,
+    .tst,
+    .home-cta,
+    .platform-pulse {
+      transition: none;
+    }
   }
 
   a {

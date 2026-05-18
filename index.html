@@ -70,6 +70,28 @@
     />
   </head>
   <body>
+    <!--
+      No-FOUC theme bootstrap. Runs synchronously before any CSS or React
+      hits the page so the user never sees a flash of the wrong palette.
+      The useTheme hook reads <html data-mode> as its source of truth.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('aptv:mode');
+          var mode =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia &&
+                  window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-mode', mode);
+        } catch (e) {
+          /* localStorage unavailable — keep the default in tokens.css */
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

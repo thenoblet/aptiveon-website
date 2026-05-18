@@ -85,7 +85,27 @@
 .nav-cta-row {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
+}
+
+/* Icon-only theme toggle — same shell as .btn-tiny, square. */
+.theme-toggle {
+  width: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-2);
+  transition:
+    color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo);
+}
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.theme-toggle svg {
+  display: block;
 }
 
 /* Hamburger button (visible on tablet & narrower). */
@@ -206,8 +226,15 @@
     calc(var(--space-7) + env(safe-area-inset-bottom, 0));
   border-top: 1px solid var(--line);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 .mobile-nav-foot .btn-primary {
-  width: 100%;
+  flex: 1;
   justify-content: center;
+}
+.mobile-nav-foot .mobile-nav-theme {
+  width: 42px;
+  height: 42px;
 }

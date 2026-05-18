@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 const LINKS = [
   { label: 'Solutions', to: '/solutions' },
@@ -50,6 +51,7 @@ export default function Navbar() {
         </ul>
 
         <div className="nav-cta-row">
+          <ThemeToggle />
           <Link to="/contact" className="btn btn-tiny">
             Talk to sales →
           </Link>
@@ -114,6 +116,7 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
         <Link to="/contact" className="btn btn-primary">
           Talk to sales →
         </Link>
+        <ThemeToggle className="mobile-nav-theme" />
       </div>
     </dialog>
   );

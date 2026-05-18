@@ -51,6 +51,9 @@
   background: var(--paper-3);
   box-shadow: 0 24px 60px -32px rgba(15, 23, 42, 0.22);
 }
+:root[data-mode='dark'] .cohort-photo-frame {
+  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.55);
+}
 .cohort-photo-frame::before {
   content: '';
   position: absolute;
