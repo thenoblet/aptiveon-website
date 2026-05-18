@@ -285,6 +285,22 @@
   --warn: var(--color-warn);
   --bad: var(--color-bad);
 
+  /*
+   * Inverted-island surface — used by sections that should stay dark
+   * regardless of theme (Architecture, Brand, Footer). In light mode
+   * the page is light and these sections invert to the ink palette; in
+   * dark mode the page is already dark and these sections keep a
+   * matching dark slate (one shade up from paper for separation).
+   *
+   *   --invert-bg   the dark surface itself.
+   *   --invert-fg   the light text/lines that sit on it.
+   *
+   * Descendant CSS uses color-mix(in srgb, var(--invert-fg) X%, transparent)
+   * for muted paper-on-ink tints so the contrast follows the mode flip.
+   */
+  --invert-bg: var(--ink);
+  --invert-fg: var(--paper);
+
   /* Legacy compatibility aliases (still referenced by older CSS). */
   --color-bg: var(--paper);
   --color-bg-2: var(--paper-2);
@@ -361,6 +377,11 @@
   --ink-4: #5a5347;
   --line: rgba(241, 235, 219, 0.1);
   --line-strong: rgba(241, 235, 219, 0.18);
+
+  /* Inverted-island stays dark in dark mode — paper-2 is one tone
+     lighter than the page bg, with --ink as the light foreground. */
+  --invert-bg: var(--paper-2);
+  --invert-fg: var(--ink);
 }
 :root[data-mode='dark'][data-accent='clay'] {
   --accent-soft: rgba(211, 107, 72, 0.14);
