@@ -53,18 +53,70 @@
   height: 8.5rem;
   margin-bottom: var(--space-3);
 }
+
+/* Bars are an accent gradient ramping up across the week — today (the 7th
+   bar) lands at full accent with a soft glow above it. The opacity ladder
+   on the earlier bars is what gives the chart its "building up" feel. */
 .perf-bar {
   flex: 1;
   min-height: 4px;
   border-radius: 2px;
-  background: var(--ink-4);
-  opacity: 0.5;
-  transition: height var(--duration-base) var(--ease-out-expo);
+  position: relative;
+  transition:
+    height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    background var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) var(--bar-head, 40%), transparent) 0%,
+    color-mix(in srgb, var(--accent) var(--bar-base, 30%), transparent) 100%
+  );
+}
+.perf-bar:nth-child(1) {
+  --bar-head: 28%;
+  --bar-base: 18%;
+}
+.perf-bar:nth-child(2) {
+  --bar-head: 38%;
+  --bar-base: 26%;
+}
+.perf-bar:nth-child(3) {
+  --bar-head: 50%;
+  --bar-base: 36%;
+}
+.perf-bar:nth-child(4) {
+  --bar-head: 62%;
+  --bar-base: 46%;
+}
+.perf-bar:nth-child(5) {
+  --bar-head: 74%;
+  --bar-base: 56%;
+}
+.perf-bar:nth-child(6) {
+  --bar-head: 86%;
+  --bar-base: 66%;
+}
+.perf-bar:nth-child(7) {
+  --bar-head: 100%;
+  --bar-base: 78%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.perf-bar:nth-child(7)::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 100%;
+  height: 14px;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 .perf-bar.is-active {
-  background: var(--accent);
-  opacity: 1;
-  box-shadow: 0 0 0 1px var(--accent-line);
+  /* legacy class — no longer needed; styling lives on :nth-child(7). */
 }
 
 .perf-axis {
