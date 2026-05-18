@@ -4,9 +4,9 @@
 */
 .foot {
   margin-top: var(--space-24);
-  background: var(--ink);
-  color: var(--paper);
-  border-top: 1px solid var(--ink);
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+  border-top: 1px solid var(--invert-bg);
 }
 
 .foot-mark {
@@ -36,13 +36,13 @@
   font-weight: var(--weight-semi);
   font-size: var(--text-lg);
   letter-spacing: -0.01em;
-  color: var(--paper);
+  color: var(--invert-fg);
   margin-bottom: var(--space-2);
 }
 .foot-desc {
   font-size: var(--text-base);
   line-height: 1.6;
-  color: color-mix(in srgb, var(--paper) 55%, transparent);
+  color: color-mix(in srgb, var(--invert-fg) 55%, transparent);
   max-width: 32ch;
 }
 
@@ -51,7 +51,7 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-wider);
-  color: color-mix(in srgb, var(--paper) 45%, transparent);
+  color: color-mix(in srgb, var(--invert-fg) 45%, transparent);
   margin-bottom: var(--space-4);
   text-transform: none;
 }
@@ -65,7 +65,7 @@
 .foot-col a {
   display: inline-block;
   font-size: var(--text-base);
-  color: color-mix(in srgb, var(--paper) 72%, transparent);
+  color: color-mix(in srgb, var(--invert-fg) 72%, transparent);
   padding: 4px 0;
   transition: color var(--duration-fast) var(--ease-out-expo);
 }
@@ -81,26 +81,26 @@
   max-width: var(--max-w);
   margin: 0 auto;
   padding: var(--space-10) var(--gutter) var(--space-12);
-  border-top: 1px solid color-mix(in srgb, var(--paper) 10%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--invert-fg) 10%, transparent);
   font-family: var(--font-sans);
   font-weight: var(--weight-semi);
   font-size: clamp(3.5rem, 12vw, 7.75rem);
   letter-spacing: -0.04em;
   line-height: 0.9;
-  color: var(--ink); /* same as bg — only the stroke shows */
+  color: var(--invert-bg); /* same as bg — only the stroke shows */
   user-select: none;
   -webkit-user-select: none;
 }
 .foot-wordmark .ltr {
   position: relative;
   display: inline-block;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--paper) 22%, transparent);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--invert-fg) 22%, transparent);
 }
 .foot-wordmark .ltr::before {
   content: attr(data-char);
   position: absolute;
   inset: 0;
-  color: var(--ink);
+  color: var(--invert-bg);
   -webkit-text-stroke: 1px var(--accent);
   clip-path: inset(100% 0 0 0);
   transition: clip-path 700ms var(--ease-out-expo);
@@ -159,10 +159,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid color-mix(in srgb, var(--paper) 10%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--invert-fg) 10%, transparent);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: color-mix(in srgb, var(--paper) 40%, transparent);
+  color: color-mix(in srgb, var(--invert-fg) 40%, transparent);
   letter-spacing: 0.02em;
 }
 
