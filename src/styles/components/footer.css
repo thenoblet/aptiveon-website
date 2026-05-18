@@ -1,43 +1,48 @@
-/* Footer — lockup + columns + big serif wordmark + stamp. */
+/* Footer — dark ink background with paper-on-ink columns and a giant
+   outline-only wordmark that fills with the active accent on hover (touch
+   fallback wipes the fill on scroll-into-view).
+*/
 .foot {
-  margin-top: var(--space-20);
-  border-top: 1px solid var(--line);
-  background: var(--paper);
-  color: var(--ink);
+  margin-top: var(--space-24);
+  background: var(--ink);
+  color: var(--paper);
+  border-top: 1px solid var(--ink);
 }
 
 .foot-mark {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: var(--space-12) var(--gutter) var(--space-6);
+  padding: var(--space-14) var(--gutter) var(--space-8);
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: var(--space-10);
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: var(--space-12);
 }
 
 .foot-lockup {
   display: flex;
-  gap: var(--space-3);
   align-items: flex-start;
+  gap: var(--space-3);
 }
-.foot-lockup .foot-glyph {
-  width: 1.5rem;
-  height: 1.5rem;
+.foot-glyph {
+  width: 1.375rem;
+  height: 1.375rem;
   background: var(--accent);
   border-radius: 2px;
   flex-shrink: 0;
+  margin-top: 4px;
 }
 .foot-name {
   font-family: var(--font-sans);
   font-weight: var(--weight-semi);
   font-size: var(--text-lg);
-  color: var(--ink);
+  letter-spacing: -0.01em;
+  color: var(--paper);
   margin-bottom: var(--space-2);
 }
 .foot-desc {
   font-size: var(--text-base);
-  line-height: 1.55;
-  color: var(--ink-3);
+  line-height: 1.6;
+  color: rgba(241, 235, 219, 0.55);
   max-width: 32ch;
 }
 
@@ -46,47 +51,57 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-wider);
-  color: var(--ink-3);
-  margin-bottom: var(--space-3);
+  color: rgba(241, 235, 219, 0.45);
+  margin-bottom: var(--space-4);
+  text-transform: none;
 }
 .foot-col ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
+  padding: 0;
 }
 .foot-col a {
+  display: inline-block;
   font-size: var(--text-base);
-  color: var(--ink-2);
+  color: rgba(241, 235, 219, 0.72);
+  padding: 4px 0;
   transition: color var(--duration-fast) var(--ease-out-expo);
 }
 .foot-col a:hover {
   color: var(--accent);
 }
 
-/* Big serif wordmark, ink-outlined, with the accent layer wiping up on hover
-   or when the footer scrolls into view (touch fallback). */
+/* Giant ink-on-ink wordmark — 1px paper-tinted stroke. Each letter has a
+   ::before pseudo with an accent stroke that's clip-pathed off-screen until
+   :hover (or until the section scrolls into view, on touch).
+*/
 .foot-wordmark {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: var(--space-10) var(--gutter) var(--space-7);
-  border-top: 1px solid var(--line);
-  font-family: var(--font-display);
-  font-weight: var(--weight-regular);
-  font-size: clamp(4rem, 14vw, 9rem);
-  letter-spacing: var(--tracking-display);
+  padding: var(--space-10) var(--gutter) var(--space-12);
+  border-top: 1px solid rgba(241, 235, 219, 0.1);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semi);
+  font-size: clamp(3.5rem, 12vw, 7.75rem);
+  letter-spacing: -0.04em;
   line-height: 0.9;
-  color: var(--ink);
+  color: var(--ink); /* same as bg — only the stroke shows */
+  user-select: none;
+  -webkit-user-select: none;
 }
 .foot-wordmark .ltr {
   position: relative;
   display: inline-block;
+  -webkit-text-stroke: 1px rgba(241, 235, 219, 0.22);
 }
 .foot-wordmark .ltr::before {
   content: attr(data-char);
   position: absolute;
   inset: 0;
-  color: var(--accent);
+  color: var(--ink);
+  -webkit-text-stroke: 1px var(--accent);
   clip-path: inset(100% 0 0 0);
   transition: clip-path 700ms var(--ease-out-expo);
   pointer-events: none;
@@ -102,67 +117,73 @@
   }
 }
 
-/* Touch fallback — fill from bottom up on intersect. */
+/* Touch fallback — fill the letters in sequence when the wordmark
+   scrolls into view (the .in class is added by useReveal). */
 @media (hover: none) {
   .foot-wordmark.in .ltr::before {
     clip-path: inset(0 0 0 0);
   }
   .foot-wordmark.in .ltr:nth-child(1)::before {
-    transition-delay: 100ms;
+    transition-delay: 80ms;
   }
   .foot-wordmark.in .ltr:nth-child(2)::before {
-    transition-delay: 180ms;
+    transition-delay: 160ms;
   }
   .foot-wordmark.in .ltr:nth-child(3)::before {
-    transition-delay: 260ms;
+    transition-delay: 240ms;
   }
   .foot-wordmark.in .ltr:nth-child(4)::before {
-    transition-delay: 340ms;
+    transition-delay: 320ms;
   }
   .foot-wordmark.in .ltr:nth-child(5)::before {
-    transition-delay: 420ms;
+    transition-delay: 400ms;
   }
   .foot-wordmark.in .ltr:nth-child(6)::before {
-    transition-delay: 500ms;
+    transition-delay: 480ms;
   }
   .foot-wordmark.in .ltr:nth-child(7)::before {
-    transition-delay: 580ms;
+    transition-delay: 560ms;
   }
   .foot-wordmark.in .ltr:nth-child(8)::before {
-    transition-delay: 660ms;
+    transition-delay: 640ms;
   }
   .foot-wordmark.in .ltr:nth-child(9)::before {
-    transition-delay: 740ms;
+    transition-delay: 720ms;
   }
 }
 
 .foot-stamp {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: var(--space-5) var(--gutter) var(--space-10);
+  padding: var(--space-5) var(--gutter) var(--space-8);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(241, 235, 219, 0.1);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--ink-3);
-  border-top: 1px solid var(--line);
-  letter-spacing: var(--tracking-wide);
+  color: rgba(241, 235, 219, 0.4);
+  letter-spacing: 0.02em;
 }
 
-@media (max-width: 56rem) {
+@media (max-width: 55rem) {
   .foot-mark {
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-7);
+    gap: var(--space-8);
   }
   .foot-stamp {
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-1);
   }
 }
-
 @media (max-width: 36rem) {
   .foot-mark {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: var(--space-7);
+    padding: var(--space-10) var(--gutter) var(--space-6);
+  }
+  .foot-wordmark {
+    padding: var(--space-8) var(--gutter) var(--space-9);
   }
 }
