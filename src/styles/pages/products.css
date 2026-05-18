@@ -2,38 +2,60 @@
 
 .product-block {
   scroll-margin-top: var(--scroll-pad-top);
-  margin-bottom: var(--space-20);
+  margin-bottom: 96px;
+  border: 1px solid var(--ink);
+  overflow: hidden;
 }
 
+/* Banner — two-pane: ref/name/blurb/tags on left, spec table on right. */
 .prod-banner {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: var(--space-10);
-  padding: var(--space-8);
+  grid-template-columns: 1fr 380px;
+  border-bottom: 1px solid var(--line);
+}
+.prod-banner-l {
+  padding: 40px 44px;
+}
+.prod-banner-r {
+  padding: 32px;
   background: var(--paper-2);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-7);
+  border-left: 1px solid var(--line);
 }
-.product-accent .prod-banner {
-  background: var(--accent);
+
+/* Accent variant (AKA) — banner-l fills accent, banner-r darkens it. */
+.product-accent {
   border-color: var(--accent);
+}
+.product-accent .prod-banner-l {
+  background: var(--accent);
   color: var(--paper);
 }
-.product-accent .prod-banner .ref {
+.product-accent .prod-banner-r {
+  background: color-mix(in srgb, var(--accent) 80%, black);
+  border-left-color: rgba(255, 255, 255, 0.18);
   color: var(--paper);
 }
-.product-accent .prod-banner h2,
-.product-accent .prod-banner .prod-blurb,
-.product-accent .prod-banner .ptag {
+.product-accent .prod-banner-r .lbl,
+.product-accent .prod-banner-r .spec th {
+  color: rgba(255, 255, 255, 0.65);
+}
+.product-accent .prod-banner-r .spec td {
   color: var(--paper);
 }
-.product-accent .prod-banner .lbl {
+.product-accent .prod-banner-r .spec th,
+.product-accent .prod-banner-r .spec td {
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+.product-accent .ref {
   color: var(--paper);
 }
-.product-accent .prod-banner .spec {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(255, 255, 255, 0.3);
+.product-accent .prod-name,
+.product-accent .prod-blurb {
+  color: var(--paper);
+}
+.product-accent .ptag {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--paper);
 }
 
 .prod-banner-l .ref {
@@ -47,7 +69,7 @@
 .prod-name {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(32px, 4vw, 52px);
   line-height: var(--leading-card);
   letter-spacing: var(--tracking-card);
   color: var(--ink);
@@ -72,18 +94,15 @@
 }
 .ptag {
   display: inline-block;
-  padding: 3px 8px;
+  padding: 3px 9px;
   font-family: var(--font-mono);
-  font-size: var(--text-2xs);
+  font-size: 10px;
   font-weight: var(--weight-semi);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   border: 1px solid var(--line-strong);
   color: var(--ink-2);
-  border-radius: var(--radius-xs);
-}
-.product-accent .ptag {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
 }
 
 .prod-banner-r .lbl {
@@ -95,21 +114,29 @@
   margin-bottom: var(--space-3);
 }
 
+/* Feat-grid — tight bordered grid, no gaps, shared hairlines. */
 .feat-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-3);
+  gap: 0;
+  border-top: 1px solid var(--line);
 }
 .feat {
-  padding: var(--space-6);
+  padding: 28px 28px 32px;
   background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.feat:nth-child(3n) {
+  border-right: 0;
+}
+.feat:nth-last-child(-n + 3) {
+  border-bottom: 0;
 }
 .feat h5 {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: var(--text-2xl);
+  font-size: 22px;
   line-height: 1.04;
   letter-spacing: var(--tracking-card);
   color: var(--ink);
@@ -125,9 +152,13 @@
   color: var(--ink-2);
 }
 
+.product-accent .feat {
+  background: var(--paper);
+}
+
 .future-block {
   scroll-margin-top: var(--scroll-pad-top);
-  margin: var(--space-20) 0 var(--space-12);
+  margin: 96px 0 var(--space-12);
 }
 .future-body {
   font-size: var(--text-lg);
@@ -140,16 +171,44 @@
 @media (max-width: 60rem) {
   .prod-banner {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
-    padding: var(--space-6);
+  }
+  .prod-banner-l {
+    padding: 28px;
+  }
+  .prod-banner-r {
+    padding: 24px 28px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .product-accent .prod-banner-r {
+    border-top-color: rgba(255, 255, 255, 0.18);
   }
   .feat-grid {
     grid-template-columns: 1fr 1fr;
+  }
+  .feat:nth-child(3n) {
+    border-right: 1px solid var(--line);
+  }
+  .feat:nth-child(2n) {
+    border-right: 0;
+  }
+  .feat:nth-last-child(-n + 3) {
+    border-bottom: 1px solid var(--line);
+  }
+  .feat:nth-last-child(-n + 2) {
+    border-bottom: 0;
   }
 }
 
 @media (max-width: 36rem) {
   .feat-grid {
     grid-template-columns: 1fr;
+  }
+  .feat {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+  .feat:last-child {
+    border-bottom: 0 !important;
   }
 }

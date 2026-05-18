@@ -65,10 +65,13 @@
 .agg-stats .stat:last-child {
   border-right: 0;
 }
+.agg-stats .stat {
+  padding: 32px 24px;
+}
 .agg-stats .num {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: clamp(2rem, 3.4vw, 2.625rem);
+  font-size: clamp(40px, 5vw, 64px);
   line-height: 1;
   letter-spacing: var(--tracking-display);
   color: var(--ink);
@@ -161,18 +164,17 @@
 
 .case-body {
   display: grid;
-  grid-template-columns: 18rem 1fr;
-  gap: var(--space-10);
-  padding: var(--space-7);
-  background: var(--paper-2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  grid-template-columns: 340px 1fr;
+  gap: 56px;
 }
 
 .case-l {
+  position: sticky;
+  top: 96px;
+  align-self: start;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 14px;
 }
 .case-l .lbl {
   font-family: var(--font-mono);
@@ -185,8 +187,8 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
   background: var(--paper-3);
 }
 .case-photo {
@@ -194,6 +196,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: grayscale(0.4) brightness(0.96) contrast(1.04);
 }
 
 .case-r {
@@ -202,7 +205,8 @@
   gap: var(--space-5);
 }
 .arc {
-  padding-bottom: var(--space-4);
+  margin-bottom: 36px;
+  padding-bottom: 36px;
   border-bottom: 1px dashed var(--line);
 }
 .arc:last-of-type {
@@ -220,7 +224,7 @@
 .arc-hed {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: var(--text-xl);
+  font-size: clamp(22px, 2.6vw, 30px);
   line-height: 1.15;
   letter-spacing: -0.015em;
   color: var(--ink);
@@ -238,15 +242,15 @@
 
 .case-quote {
   border-left: 2px solid var(--accent);
-  padding: var(--space-4) var(--space-5);
-  margin: var(--space-2) 0;
+  padding: 18px 22px;
+  margin: 32px 0;
   background: var(--accent-soft);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius: 0;
 }
 .case-quote p {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: var(--text-lg);
+  font-size: 22px;
   line-height: 1.4;
   color: var(--ink);
   margin-bottom: var(--space-2);
@@ -285,7 +289,7 @@
 .cr-num {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: var(--text-2xl);
+  font-size: clamp(26px, 3vw, 36px);
   line-height: 1;
   letter-spacing: var(--tracking-card);
   color: var(--ink);
@@ -301,11 +305,6 @@
 }
 
 @media (max-width: 55rem) {
-  .case-body {
-    grid-template-columns: 1fr;
-    padding: var(--space-5);
-    gap: var(--space-6);
-  }
   .case-results {
     grid-template-columns: 1fr;
   }
@@ -401,34 +400,39 @@
   }
 }
 
-/* ── Customer CTA ──────────────────────────────────────── */
+/* ── Customer CTA — centered card. ─────────────────────── */
 .cust-cta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-6);
-  padding: var(--space-9);
+  text-align: center;
+  padding: 64px 48px;
   background: var(--paper-2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
   margin: var(--space-16) 0 var(--space-12);
 }
 .cust-cta h3 {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
-  font-size: clamp(1.625rem, 3vw, 2.25rem);
+  font-size: clamp(32px, 4vw, 48px);
   line-height: 1.05;
   letter-spacing: var(--tracking-card);
   color: var(--ink);
+  margin: 0 auto var(--space-7);
+  max-width: 18ch;
 }
 .cust-cta h3 em {
   font-style: italic;
   color: var(--accent);
 }
+
 @media (max-width: 55rem) {
+  .case-body {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .case-l {
+    position: static;
+  }
   .cust-cta {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    padding: 48px 24px;
   }
 }
