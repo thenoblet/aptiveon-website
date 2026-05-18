@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ComponentType } from 'react';
-import LiveTrace from '@/components/ui/LiveTrace';
+import LivePerformance from '@/components/ui/LivePerformance';
 import Marquee from '@/components/ui/Marquee';
 import Sparkbar from '@/components/ui/Sparkbar';
 import { useHeroParticles } from '@/hooks/useHeroParticles';
@@ -59,7 +59,7 @@ function Hero() {
           </div>
         </div>
         <div className="hero-visual">
-          <LiveTrace />
+          <LivePerformance />
         </div>
       </div>
     </section>

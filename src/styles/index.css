@@ -22,6 +22,7 @@
 @import './components/splash.css';
 @import './components/marquee.css';
 @import './components/live-trace.css';
+@import './components/live-performance.css';
 
 @import './pages/home.css';
 @import './pages/solutions.css';
