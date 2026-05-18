@@ -1,11 +1,7 @@
 import Crumb from '@/components/ui/Crumb';
 import PageHero from '@/components/ui/PageHero';
-import Section from '@/components/ui/Section';
-import SectionMark from '@/components/ui/SectionMark';
 import SpecTable, { type SpecRow } from '@/components/ui/SpecTable';
 import Button from '@/components/ui/Button';
-import Image from '@/components/ui/Image';
-import type { ImgKey } from '@/lib/imagery';
 
 interface Solution {
   id: string;
@@ -16,8 +12,6 @@ interface Solution {
   uses: string[];
   spec: SpecRow[];
   tag?: string;
-  photo: ImgKey;
-  caption: string;
 }
 
 const SOLUTIONS: Solution[] = [
@@ -44,8 +38,6 @@ const SOLUTIONS: Solution[] = [
       { label: 'Engagement', value: '10–20 weeks · build → operate → transfer' },
     ],
     tag: 'core',
-    photo: 'sol_asd',
-    caption: 'internal tools · ops dashboard',
   },
   {
     id: 'aida',
@@ -69,8 +61,6 @@ const SOLUTIONS: Solution[] = [
       { label: 'Maturity', value: 'Pilot → production' },
       { label: 'Engagement', value: '8–14 weeks' },
     ],
-    photo: 'sol_aida',
-    caption: 'role-scoped assistant',
   },
   {
     id: 'rag',
@@ -95,8 +85,6 @@ const SOLUTIONS: Solution[] = [
       { label: 'Engagement', value: '6–12 weeks' },
     ],
     tag: 'retrieval',
-    photo: 'sol_rag',
-    caption: 'corpus · retrieval',
   },
   {
     id: 'wfa',
@@ -120,62 +108,68 @@ const SOLUTIONS: Solution[] = [
       { label: 'Maturity', value: 'Production' },
       { label: 'Engagement', value: '8–16 weeks' },
     ],
-    photo: 'sol_wfa',
-    caption: 'queue · review',
   },
 ];
 
 export default function Solutions() {
   return (
-    <>
-      <Crumb current="solutions" />
+    <div className="page-main">
+      <div className="page-wrap">
+        <Crumb current="solutions" />
 
-      <PageHero
-        title={
-          <>
-            Four practice areas, <span className="mark">one</span> spec sheet.
-          </>
-        }
-        dek="Every Aptiveon engagement is one of these four. Each has the same five-row spec — Inputs, Outputs, Stack, Maturity, Typical Engagement — so you can compare them as objects."
-        meta={[
-          { label: 'AREAS', value: '4' },
-          { label: 'FORMAT', value: 'Build · operate · transfer' },
-          { label: 'TYPICAL ENGAGEMENT', value: '8–20 weeks' },
-          { label: 'STATUS', value: 'Open for partner pilots' },
-        ]}
-      />
+        <PageHero
+          title={
+            <>
+              Four practice areas, <span className="mark">one</span> spec sheet.
+            </>
+          }
+          dek="Every Aptiveon engagement is one of these four. Each has the same five-row spec — Inputs, Outputs, Stack, Maturity, Typical Engagement — so you can compare them as objects."
+          meta={[
+            { label: 'AREAS', value: '4' },
+            { label: 'FORMAT', value: 'Build · operate · transfer' },
+            { label: 'TYPICAL ENGAGEMENT', value: '8–20 weeks' },
+            { label: 'STATUS', value: 'Open for partner pilots' },
+          ]}
+        />
 
-      {SOLUTIONS.map((s) => (
-        <SolutionBlock key={s.id} solution={s} />
-      ))}
+        {SOLUTIONS.map((s) => (
+          <SolutionBlock key={s.id} solution={s} />
+        ))}
 
-      <Section title="Start a conversation" meta="written exchange > discovery call" id="engage">
-        <div className="engage">
-          <div>
-            <h4>SCOPING</h4>
-            <h5>Send the constraint.</h5>
-            <p>
-              Tell us the system you have in mind, the data involved, and the thing that's actually
-              blocking you. We'll write back with a take and rough shape.
-            </p>
-            <Button to="/contact" variant="line" arrow>
-              contact@aptiveon.com
-            </Button>
+        <section className="engage-block" id="engage">
+          <div className="sec-head">
+            <h2 className="sec-title">Start a conversation</h2>
+            <span className="sec-meta">written exchange &gt; discovery call</span>
           </div>
-          <div>
-            <h4>NEXT</h4>
-            <h5>Read the products.</h5>
-            <p>
-              Most engagements run on the Aptiveon Workflow Engine. The Knowledge Assistant is a
-              worked example of what we ship on top of it.
-            </p>
-            <Button to="/products" variant="line" arrow>
-              Products
-            </Button>
+          <div className="engage">
+            <div>
+              <h4>SCOPING</h4>
+              <h5>Send the constraint.</h5>
+              <p>
+                Tell us the system you have in mind, the data involved, and the
+                thing that's actually blocking you. We'll write back with a
+                take and rough shape.
+              </p>
+              <Button to="/contact" variant="primary" arrow>
+                contact@aptiveon.com
+              </Button>
+            </div>
+            <div>
+              <h4>NEXT</h4>
+              <h5>Read the products.</h5>
+              <p>
+                Most engagements run on the Aptiveon Workflow Engine. The
+                Knowledge Assistant is a worked example of what we ship on top
+                of it.
+              </p>
+              <Button to="/products" variant="ghost" arrow>
+                Products
+              </Button>
+            </div>
           </div>
-        </div>
-      </Section>
-    </>
+        </section>
+      </div>
+    </div>
   );
 }
 
@@ -183,29 +177,29 @@ function SolutionBlock({ solution: s }: { solution: Solution }) {
   return (
     <section className="solution" id={s.id}>
       <div className="sol-head">
-        <SectionMark />
         <h2>{s.name}</h2>
-        {s.tag && <span className="tag">{s.tag}</span>}
+        {s.tag && <span className="sol-tag">{s.tag}</span>}
       </div>
-      <div className="specsheet with-img">
-        <Image src={s.photo} alt={s.caption} className="ss-img" />
+
+      <div className="specsheet">
         <div className="ss-l">
           <div className="ref">{s.short}</div>
           <h3>{s.hed}</h3>
           {s.body.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+
           <div className="uses">
             {s.uses.map((u) => (
               <div key={u}>
-                <b>USE CASE</b>
+                <b>Use case</b>
                 {u}
               </div>
             ))}
           </div>
         </div>
         <div className="ss-r">
-          <div className="lbl">SPEC SHEET</div>
+          <div className="lbl">Spec sheet</div>
           <SpecTable rows={s.spec} />
         </div>
       </div>

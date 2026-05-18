@@ -1,54 +1,95 @@
 /*
- * Design tokens — the single source of truth for the entire site.
+ * Design tokens — single source of truth for the Aptiveon Sky design system.
  *
- * Change one value here and it cascades through the whole UI:
- *  • Tailwind v4 reads @theme to generate utility classes (text-base,
- *    p-4, bg-paper, rounded-md, etc.).
- *  • All custom CSS in src/styles/** references these via var(...).
+ * Architecture preserved from the previous palette:
+ *  1. Tailwind v4 `@theme` block — drives generated utilities
+ *     (bg-paper, text-ink, border-line, text-accent, font-display, ...).
+ *  2. `:root` role aliases — what components actually reference via var(...).
+ *  3. data-attribute selectors on the documentElement flip variants:
+ *       data-accent       clay (default) | sky | electric | forest | ink
+ *       data-mode         light (default) | dark
+ *       data-display-font serif (default) | newsreader | sans | inter | poppins | grotesk | mono | condensed
+ *       data-density      airy (default) | compact
  *
- * Naming follows Tailwind / Material UI / Stripe conventions:
- *  --color-*   palette + semantic role aliases
- *  --font-*    family stacks
- *  --text-*    type scale (rem)
- *  --leading-* line-heights
- *  --tracking-* letter-spacing
- *  --weight-*  font-weights
- *  --space-*   4-pt grid (rem)
- *  --radius-*  corner radii
- *  --shadow-*  elevation
- *  --z-*       stacking
- *  --container-*  max-widths
+ *  Token naming follows the Tailwind / Stripe convention:
+ *   --color-*    palette + semantic role aliases
+ *   --font-*     family stacks
+ *   --text-*     type scale (rem)
+ *   --leading-*  line-heights
+ *   --tracking-* letter-spacing
+ *   --weight-*   font weights
+ *   --space-*    4-pt grid (rem)
+ *   --radius-*   corner radii
+ *   --shadow-*   elevation
+ *   --z-*        stacking
+ *   --container-*  max-widths
+ *   --gutter     page-edge padding
+ *   --section-y  vertical rhythm
  */
 @theme {
-  /* ── Colour palette (raw) ──────────────────────────────────── */
-  --color-paper: #f2eee3;
-  --color-paper-2: #ece7d7;
-  --color-ink: #141413;
-  --color-ink-2: #2e2c28;
-  --color-mute: #8b867a;
-  --color-rule: #d9d3c4;
-  --color-rule-2: #e5dfcf;
+  /* ── Colour palette (raw — warm paper / clay default) ───── */
+  --color-paper: #f4efe6;
+  --color-paper-2: #ece6da;
+  --color-paper-3: #e1d9c8;
+  --color-ink: #16140f;
+  --color-ink-2: #3a342a;
+  --color-ink-3: #6b6353;
+  --color-ink-4: #98907d;
 
-  --color-orange: #ff5b1f;
-  --color-orange-ink: #b33a0f;
-  --color-cobalt: #1f3a8a;
-  --color-cobalt-2: #2d4fb0;
-  --color-moss: #4f6a2e;
+  --color-line: rgba(22, 20, 15, 0.1);
+  --color-line-strong: rgba(22, 20, 15, 0.18);
 
-  /* ── Type families ─────────────────────────────────────────── */
+  --color-accent: #b54b2c;
+  --color-accent-2: #d36b48;
+  --color-accent-soft: rgba(181, 75, 44, 0.1);
+  --color-accent-line: rgba(181, 75, 44, 0.3);
+
+  --color-good: #2f6b47;
+  --color-warn: #c98a18;
+  --color-bad: #ef4444;
+
+  /* ── Sky scale (the brand scale for data-accent="sky") ─── */
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #e0f2fe;
+  --color-sky-200: #bae6fd;
+  --color-sky-300: #7dd3fc;
+  --color-sky-400: #38bdf8;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+  --color-sky-700: #036aa3;
+  --color-sky-800: #075985;
+  --color-sky-900: #0c4a6e;
+
+  /* ── Slate scale (neutral text + surface scale) ─────────── */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  /* ── Type families ──────────────────────────────────────── */
+  --font-display:
+    'Instrument Serif', 'Iowan Old Style', Georgia, ui-serif, serif;
   --font-sans:
-    'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif;
   --font-mono:
-    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
 
-  /* ── Type scale (rem; 1rem = 16px @ root) ──────────────────── */
+  /* ── Type scale (rem; 1rem = 16px @ root) ───────────────── */
   --text-2xs: 0.625rem; /* 10px */
   --text-xs: 0.6875rem; /* 11px */
   --text-sm: 0.75rem; /* 12px */
   --text-md: 0.8125rem; /* 13px */
-  --text-base: 0.9375rem; /* 15px */
+  --text-base: 0.875rem; /* 14px */
   --text-lg: 1rem; /* 16px */
-  --text-xl: 1.125rem; /* 18px */
+  --text-xl: 1.1875rem; /* 19px (lede) */
   --text-2xl: 1.375rem; /* 22px */
   --text-3xl: 1.625rem; /* 26px */
   --text-4xl: 2rem; /* 32px */
@@ -56,36 +97,42 @@
   --text-6xl: 3rem; /* 48px */
   --text-7xl: 4rem; /* 64px */
 
-  /* Fluid display sizes — clamp(min, vw, max) */
-  --text-display: clamp(3.5rem, 9vw, 7.75rem); /* hero h1 */
-  --text-hero: clamp(2.25rem, 5.6vw, 4.75rem); /* page-title */
-  --text-headline: clamp(2rem, 4vw, 3.25rem); /* section heads */
-  --text-eyebrow: clamp(1.5rem, 2.5vw, 1.875rem); /* small heads */
+  /* Fluid display sizes (clamp ramps tuned for Instrument Serif). */
+  --text-display: clamp(3.5rem, 8vw, 7.25rem); /* hero h1 */
+  --text-hero: clamp(2.5rem, 5.5vw, 5rem); /* section heads */
+  --text-section: clamp(2.5rem, 5.5vw, 5rem);
+  --text-headline: clamp(2.25rem, 4.4vw, 4rem);
+  --text-card: clamp(1.75rem, 3.4vw, 2.75rem);
 
-  /* ── Line heights ──────────────────────────────────────────── */
-  --leading-tight: 0.95;
-  --leading-snug: 1.05;
+  /* ── Line heights ───────────────────────────────────────── */
+  --leading-display: 0.94;
+  --leading-section: 0.98;
+  --leading-card: 1.02;
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
   --leading-normal: 1.55;
   --leading-relaxed: 1.65;
 
-  /* ── Letter spacing ────────────────────────────────────────── */
+  /* ── Letter spacing ─────────────────────────────────────── */
+  --tracking-display: -0.025em;
+  --tracking-section: -0.025em;
+  --tracking-card: -0.02em;
   --tracking-tightest: -0.038em;
   --tracking-tighter: -0.028em;
   --tracking-tight: -0.022em;
-  --tracking-normal: -0.012em;
-  --tracking-wide: 0;
-  --tracking-wider: 0.04em;
-  --tracking-widest: 0.06em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.06em;
+  --tracking-widest: 0.1em;
 
-  /* ── Font weights ──────────────────────────────────────────── */
+  /* ── Font weights ───────────────────────────────────────── */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semi: 600;
   --weight-bold: 700;
 
-  /* ── Spacing scale (4-pt grid) ─────────────────────────────── */
-  --spacing: 0.25rem; /* Tailwind base; p-4 = 1rem etc. */
-
+  /* ── Spacing scale (4-pt grid) ──────────────────────────── */
+  --spacing: 0.25rem;
   --space-0: 0;
   --space-1: 0.25rem; /*  4px */
   --space-2: 0.5rem; /*  8px */
@@ -106,40 +153,37 @@
   --space-32: 8rem; /* 128px */
   --space-40: 10rem; /* 160px */
 
-  /* ── Radii ─────────────────────────────────────────────────── */
+  /* ── Radii ──────────────────────────────────────────────── */
   --radius-none: 0;
   --radius-xs: 0.125rem; /* 2px */
   --radius-sm: 0.25rem; /* 4px */
-  --radius-md: 0.5rem; /* 8px */
-  --radius-lg: 0.875rem; /* 14px */
+  --radius-md: 0.375rem; /* 6px */
+  --radius-lg: 0.625rem; /* 10px */
   --radius-pill: 9999px;
 
-  /* ── Shadows ───────────────────────────────────────────────── */
-  --shadow-card: 0 1rem 2.5rem rgba(20, 20, 19, 0.08);
-  --shadow-frame: 0 1.5rem 3.75rem -1.25rem rgba(20, 20, 19, 0.25);
-  --shadow-fab: 0 0.5rem 1.5rem rgba(20, 20, 19, 0.18);
-  --shadow-pop: 0 0.75rem 2.5rem rgba(20, 20, 19, 0.18);
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-card: 0 1rem 2.5rem rgba(22, 20, 15, 0.08);
+  --shadow-frame: 0 1.5rem 3.75rem -2rem rgba(22, 20, 15, 0.22);
+  --shadow-pop: 0 0.75rem 2.5rem rgba(22, 20, 15, 0.18);
 
-  /* ── Z-index scale ─────────────────────────────────────────── */
+  /* ── Z-index scale ──────────────────────────────────────── */
   --z-below: -1;
   --z-base: 0;
   --z-content: 1;
-  --z-nav: 20;
-  --z-menu: 30;
-  --z-overlay: 40;
-  --z-tweaks: 9998;
-  --z-tweaks-toggle: 9999;
+  --z-nav: 50;
+  --z-menu: 60;
+  --z-overlay: 70;
 
-  /* ── Containers ────────────────────────────────────────────── */
+  /* ── Containers ─────────────────────────────────────────── */
   --container-shell: 82.5rem; /* 1320px */
-  --container-wrap: 77.5rem; /* 1240px */
+  --container-wrap: 80rem; /* 1280px (new max-w) */
   --container-prose: 60ch;
 
-  /* ── Page chrome ───────────────────────────────────────────── */
+  /* ── Page chrome ────────────────────────────────────────── */
   --topbar-height: 4rem; /* 64px */
-  --scroll-pad-top: 5rem; /* 80px */
+  --scroll-pad-top: 4.5rem; /* 72px */
 
-  /* ── Motion ────────────────────────────────────────────────── */
+  /* ── Motion ─────────────────────────────────────────────── */
   --ease-out-expo: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --duration-fast: 150ms;
@@ -147,13 +191,11 @@
   --duration-slow: 600ms;
   --duration-slowest: 900ms;
 
-  /* ── Keyframes (used by class-based animations below) ──────── */
+  /* ── Keyframes (named animations referenced by classes) ──── */
   --animate-rise: rise var(--duration-slowest) var(--ease-out-expo) forwards;
   --animate-fadein: fadein 800ms ease forwards;
-  --animate-livedot: livedot 2.4s ease-in-out infinite;
-  --animate-cue: cue 2s ease-in-out infinite;
-  --animate-breathe: breathe 6s ease-in-out infinite;
-  --animate-flipbg: flipBg 1.6s ease;
+  --animate-livedot: livedot 2.2s ease-in-out infinite;
+  --animate-pulse: pulse 2.2s ease-in-out infinite;
 
   @keyframes rise {
     to {
@@ -176,64 +218,222 @@
       transform: scale(0.85);
     }
   }
-  @keyframes cue {
+  @keyframes pulse {
     0%,
     100% {
-      transform: scaleY(0.3);
-      opacity: 0.4;
+      box-shadow: 0 0 0 0 var(--color-accent-line);
     }
     50% {
-      transform: scaleY(1);
-      opacity: 1;
+      box-shadow: 0 0 0 6px transparent;
     }
   }
-  @keyframes breathe {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) scale(0.8);
-      opacity: 0.6;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
     }
-    50% {
-      transform: translate(-50%, -50%) scale(1.15);
-      opacity: 1;
+    to {
+      transform: translateX(-50%);
     }
   }
-  @keyframes flipBg {
-    0% {
-      background: transparent;
+  @keyframes trace-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
     }
-    50% {
-      background: rgba(255, 91, 31, 0.06);
-    }
-    100% {
-      background: transparent;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
 
 /*
- * Semantic role aliases — refer to these in components, not the raw palette.
- * This is the layer that lets you swap themes (e.g. dark mode) by changing
- * the role bindings without touching component CSS.
+ * Role aliases — components reference these, not the raw palette.
+ * Swapping any data-* attribute on <html> remaps these without touching CSS
+ * downstream.
  */
 :root {
-  --color-bg: var(--color-paper);
-  --color-bg-2: var(--color-paper-2);
-  --color-fg: var(--color-ink);
-  --color-fg-2: var(--color-ink-2);
-  --color-fg-mute: var(--color-mute);
-  --color-rule-base: var(--color-rule);
-  --color-rule-soft: var(--color-rule-2);
-  --color-accent: var(--color-orange);
-  --color-accent-ink: var(--color-orange-ink);
-  --color-link: var(--color-cobalt);
-  --color-link-hover: var(--color-orange-ink);
-  --color-success: var(--color-moss);
+  /* Page rhythm */
+  --gutter: 2rem; /* 32px */
+  --max-w: var(--container-wrap);
+  --section-y: 9rem; /* 144px */
+  --col-y: 1.375rem; /* 22px */
 
-  /* Inverted surface (used on dark sections — stats, cta, prod-banner) */
-  --color-bg-invert: var(--color-ink);
-  --color-bg-invert-2: var(--color-ink-2);
-  --color-fg-invert: var(--color-paper);
-  --color-fg-invert-mute: #c9c4b6;
-  --color-rule-invert: #2e2c28;
+  /* Semantic surfaces */
+  --paper: var(--color-paper);
+  --paper-2: var(--color-paper-2);
+  --paper-3: var(--color-paper-3);
+
+  /* Semantic foreground */
+  --ink: var(--color-ink);
+  --ink-2: var(--color-ink-2);
+  --ink-3: var(--color-ink-3);
+  --ink-4: var(--color-ink-4);
+
+  /* Lines */
+  --line: var(--color-line);
+  --line-strong: var(--color-line-strong);
+
+  /* Accent (default clay; see [data-accent="…"] below) */
+  --accent: var(--color-accent);
+  --accent-2: var(--color-accent-2);
+  --accent-soft: var(--color-accent-soft);
+  --accent-line: var(--color-accent-line);
+
+  /* Status */
+  --good: var(--color-good);
+  --warn: var(--color-warn);
+  --bad: var(--color-bad);
+
+  /* Legacy compatibility aliases (still referenced by older CSS). */
+  --color-bg: var(--paper);
+  --color-bg-2: var(--paper-2);
+  --color-fg: var(--ink);
+  --color-fg-2: var(--ink-2);
+  --color-fg-mute: var(--ink-3);
+  --color-rule-base: var(--line);
+  --color-rule-soft: var(--line);
+  --color-rule-invert: var(--paper-3);
+  --color-accent-ink: var(--accent);
+  --color-link: var(--accent);
+  --color-link-hover: var(--ink);
+  --color-success: var(--good);
+  --color-bg-invert: var(--ink);
+  --color-bg-invert-2: var(--ink-2);
+  --color-fg-invert: var(--paper);
+  --color-fg-invert-mute: var(--paper-3);
+  --color-rule: var(--line);
+  --color-rule-2: var(--line-strong);
+  --color-moss: var(--good);
+  --color-cobalt: #2e4cff;
+}
+
+/* ── Accent variants ─────────────────────────────────────── */
+:root[data-accent='clay'] {
+  --accent: #b54b2c;
+  --accent-2: #d36b48;
+  --accent-soft: rgba(181, 75, 44, 0.1);
+  --accent-line: rgba(181, 75, 44, 0.3);
+}
+:root[data-accent='electric'] {
+  --accent: #2e4cff;
+  --accent-2: #5a72ff;
+  --accent-soft: rgba(46, 76, 255, 0.1);
+  --accent-line: rgba(46, 76, 255, 0.3);
+}
+:root[data-accent='forest'] {
+  --accent: #2f6b47;
+  --accent-2: #4a8a64;
+  --accent-soft: rgba(47, 107, 71, 0.1);
+  --accent-line: rgba(47, 107, 71, 0.3);
+}
+:root[data-accent='ink'] {
+  --accent: var(--ink);
+  --accent-2: var(--ink-2);
+  --accent-soft: rgba(22, 20, 15, 0.06);
+  --accent-line: rgba(22, 20, 15, 0.22);
+}
+/* Heritage Sky — original Aptiveon cool palette */
+:root[data-accent='sky'] {
+  --paper: #f7f9fc;
+  --paper-2: #ffffff;
+  --paper-3: #eef2f7;
+  --ink: #0f172a;
+  --ink-2: #475569;
+  --ink-3: #64748b;
+  --ink-4: #94a3b8;
+  --line: rgba(15, 23, 42, 0.08);
+  --line-strong: rgba(15, 23, 42, 0.16);
+  --accent: #0ea5e9;
+  --accent-2: #38bdf8;
+  --accent-soft: rgba(14, 165, 233, 0.1);
+  --accent-line: rgba(14, 165, 233, 0.3);
+}
+
+/* ── Dark mode ───────────────────────────────────────────── */
+:root[data-mode='dark'] {
+  --paper: #0e0d0a;
+  --paper-2: #161410;
+  --paper-3: #221f18;
+  --ink: #f1ebdb;
+  --ink-2: #c9c0ac;
+  --ink-3: #8d8470;
+  --ink-4: #5a5347;
+  --line: rgba(241, 235, 219, 0.1);
+  --line-strong: rgba(241, 235, 219, 0.18);
+}
+:root[data-mode='dark'][data-accent='clay'] {
+  --accent-soft: rgba(211, 107, 72, 0.14);
+  --accent-line: rgba(211, 107, 72, 0.36);
+  --accent: #e07a55;
+  --accent-2: #ec9573;
+}
+:root[data-mode='dark'][data-accent='electric'] {
+  --accent-soft: rgba(90, 114, 255, 0.16);
+  --accent-line: rgba(90, 114, 255, 0.36);
+  --accent: #7d92ff;
+}
+:root[data-mode='dark'][data-accent='forest'] {
+  --accent-soft: rgba(74, 138, 100, 0.16);
+  --accent-line: rgba(74, 138, 100, 0.36);
+  --accent: #6fae87;
+}
+:root[data-mode='dark'][data-accent='ink'] {
+  --accent: var(--ink);
+  --accent-soft: rgba(241, 235, 219, 0.06);
+  --accent-line: rgba(241, 235, 219, 0.22);
+}
+:root[data-mode='dark'][data-accent='sky'] {
+  --paper: #0b1220;
+  --paper-2: #0f172a;
+  --paper-3: #1e293b;
+  --ink: #e2e8f0;
+  --ink-2: #94a3b8;
+  --ink-3: #64748b;
+  --ink-4: #475569;
+  --line: rgba(226, 232, 240, 0.08);
+  --line-strong: rgba(226, 232, 240, 0.18);
+  --accent: #38bdf8;
+  --accent-2: #7dd3fc;
+  --accent-soft: rgba(56, 189, 248, 0.14);
+  --accent-line: rgba(56, 189, 248, 0.36);
+}
+
+/* ── Display-font swap ───────────────────────────────────── */
+:root[data-display-font='sans'] {
+  --font-display: 'Geist', system-ui, -apple-system, sans-serif;
+}
+:root[data-display-font='grotesk'] {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}
+:root[data-display-font='mono'] {
+  --font-display:
+    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+}
+:root[data-display-font='newsreader'] {
+  --font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+}
+:root[data-display-font='condensed'] {
+  --font-display:
+    'Big Shoulders Display', Impact, 'Arial Narrow', sans-serif;
+}
+:root[data-display-font='poppins'] {
+  --font-display: 'Poppins', system-ui, sans-serif;
+}
+:root[data-display-font='inter'] {
+  --font-display: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Density ─────────────────────────────────────────────── */
+:root[data-density='compact'] {
+  --section-y: 6rem; /* 96px */
+  --col-y: 1rem;
+}
+
+/* Mobile gutter / rhythm tweak */
+@media (max-width: 55rem) {
+  :root {
+    --gutter: 1.25rem; /* 20px */
+    --section-y: 5.5rem; /* 88px */
+  }
 }

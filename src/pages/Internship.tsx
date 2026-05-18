@@ -1,199 +1,267 @@
 import { useState, type FormEvent } from 'react';
 import Crumb from '@/components/ui/Crumb';
-import PageHero from '@/components/ui/PageHero';
-import Section from '@/components/ui/Section';
 import SpecTable from '@/components/ui/SpecTable';
-import Image from '@/components/ui/Image';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 
-interface Phase {
-  num: string;
-  title: string;
-  weeks: string;
-  body: string;
-}
-
 interface ProjectType {
-  tag: string;
+  type: string;
   title: string;
-  body: string;
+  desc: string;
   example: string;
 }
 
-const PHASES: Phase[] = [
+const PROJECT_TYPES: ProjectType[] = [
   {
-    num: 'DESIGN',
-    title: 'Scope & design',
-    weeks: 'weeks 1–2',
-    body: 'Pick a real problem with a real user. Write a one-page spec. Argue it with your mentor.',
+    type: 'ASSISTANT',
+    title: 'A digital assistant for a real role',
+    desc: 'Pick a role, sit with someone in it for a day, build the assistant they actually need. Cite everything.',
+    example:
+      'e.g. SOP assistant for ops · drafting tool for a writer · triage for a support queue',
   },
   {
-    num: 'BUILD',
-    title: 'Build',
-    weeks: 'weeks 3–10',
-    body: 'Ship the system. Weekly demos, code review, paired sessions on the hard parts.',
+    type: 'RAG',
+    title: 'A retrieval pipeline + eval harness',
+    desc: 'Build a grounded Q&A system over a real corpus, evaluation harness included. Accuracy is measurable.',
+    example: 'e.g. policy Q&A · technical-document search with citations',
   },
   {
-    num: 'DEPLOY',
-    title: 'Deploy & observe',
-    weeks: 'weeks 10–14',
-    body: 'Put it in front of the real user. Watch it. Fix what breaks. Measure what matters.',
+    type: 'WORKFLOW',
+    title: 'An automation with human review',
+    desc: 'Make a workflow automation. Do the dirty 80%, route the hard 20% to a human. Audit every run.',
+    example:
+      'e.g. invoice extraction · doc routing · case-system reconciliation',
   },
   {
-    num: 'WRITE',
-    title: 'Write it up',
-    weeks: 'weeks 14–16',
-    body: "A public-quality writeup of what you built, why, and what you'd do differently.",
+    type: 'APPLIED SYSTEMS',
+    title: 'An internal tool that replaces an email',
+    desc: "Find a spreadsheet that ought to be a system. Build the system. No dashboards — something that's used.",
+    example:
+      'e.g. headcount tracker · asset tracker · on-call schedule with escalation',
   },
 ];
 
-const PROJECT_TYPES: ProjectType[] = [
-  {
-    tag: 'TYPE · ASSISTANT',
-    title: 'A digital assistant for a real role',
-    body: 'Pick a role, sit with someone in it for a day, build the assistant they actually need. Cite everything.',
-    example: 'e.g. SOP assistant for ops · drafting tool for a writer · triage for a support queue',
-  },
-  {
-    tag: 'TYPE · RAG',
-    title: 'A retrieval pipeline + eval harness',
-    body: 'Build a grounded Q&A system over a real corpus. Write the evals. Beat your own baseline twice.',
-    example: 'e.g. policy Q&A · technical-docs assistant · academic-paper retrieval',
-  },
-  {
-    tag: 'TYPE · WORKFLOW',
-    title: 'An automation with human review',
-    body: 'Take a manual workflow, automate the easy 80%, route the hard 20% to a human. Audit every run.',
-    example: 'e.g. invoice extraction · doc routing · cross-system reconciliation',
-  },
-  {
-    tag: 'TYPE · APPLIED SYSTEMS',
-    title: 'An internal tool that replaces a spreadsheet',
-    body: 'Find a spreadsheet that ought to be a system. Build the system. Keep it boring.',
-    example: 'e.g. ops dashboard · admin tool · partner intake portal',
-  },
+const ELIGIBILITY = [
+  { label: 'Year', value: '1st & 2nd year undergrad' },
+  { label: 'Time', value: '12–16 weeks · full or part time' },
+  { label: 'Format', value: 'Project-based, mentored' },
+  { label: 'Output', value: 'Shipped system + write-up' },
+  { label: 'LLM-paired', value: 'Yes' },
+  { label: 'Apply by', value: '2026.05.30' },
+];
+
+const COHORT_PORTRAITS = [
+  { p: 'women/44', n: 'Sarah Chen' },
+  { p: 'men/19', n: 'Liam Park' },
+  { p: 'women/25', n: 'Aisha Torres' },
+  { p: 'men/22', n: 'Ryan Torres' },
+  { p: 'men/7', n: 'James Okafor' },
+  { p: 'women/9', n: 'Elara Kim' },
 ];
 
 export default function Internship() {
   const [applyOpen, setApplyOpen] = useState(false);
+  const handleApply = () => setApplyOpen(true);
 
   return (
-    <>
-      <Crumb current="internship" />
+    <div className="page-main">
+      <div className="page-wrap">
+        <Crumb current="internship" />
+      </div>
 
-      <PageHero
-        title={
-          <>
-            Real systems, <span className="mark">not</span> tiny tasks.
-          </>
-        }
-        dek="The Applied Systems Internship is for first- and second-year students who want to build real software under engineering mentorship. Each intern ships at least one system that goes into production with a real user on the other end."
-        meta={[
-          { label: 'COHORT', value: '02 · 2026' },
-          { label: 'LENGTH', value: '12–16 weeks' },
-          { label: 'STIPEND', value: 'Yes' },
-          { label: 'STATUS', value: 'Applications open' },
-        ]}
-      />
-
-      <Section title="How it works" meta="4 phases · 12–16 weeks" id="how">
-        <Image
-          src="intern_strip"
-          alt="cohort 01 · build week 06"
-          className="intern-photo-plate"
-        />
-        <p>
-          One project per intern, end-to-end. You design it with a mentor, build it, put it in
-          front of a real user, and write up what you learned.
-        </p>
-        <div className="phases">
-          {PHASES.map((p) => (
-            <div key={p.num} className="phase">
-              <div className="ph-num">{p.num}</div>
-              <h4>{p.title}</h4>
-              <div className="wks">{p.weeks}</div>
-              <p>{p.body}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Project types" meta="pick one, scope it down" id="projects">
-        <Image src="intern_b" alt="pair · review" className="intern-photo-plate" />
-        <p>
-          Every intern project lands in one of these four buckets. The exact problem changes by
-          cohort and partner — these are the shapes.
-        </p>
-        <div className="ptypes" style={{ marginTop: 'var(--space-4)' }}>
-          {PROJECT_TYPES.map((t) => (
-            <div key={t.tag} className="ptype">
-              <div className="tg">{t.tag}</div>
-              <h4>{t.title}</h4>
-              <p>{t.body}</p>
-              <div className="ex">{t.example}</div>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Eligibility & apply" meta="cohort 02 — applications open" id="apply">
-        <div className="applybox">
-          <div>
-            <h3>Show us what you've built.</h3>
-            <p>
-              A half-finished side project, a Github repo, a writeup of something that didn't work
-              — any of those beats a polished resume. We want evidence that you make things, not
-              evidence that you study things.
-            </p>
-            <p>
-              Send a short note: what you've built, what you'd want to build with us, and one
-              technical thing you've recently changed your mind about.
-            </p>
-            <button type="button" className="applycta" onClick={() => setApplyOpen(true)}>
-              Apply for cohort 02 →
-            </button>
-          </div>
-          <div>
-            <SpecTable
-              rows={[
-                { label: 'Eligibility', value: '1st & 2nd year undergraduates' },
-                { label: 'Time', value: '12–16 weeks · full or part time' },
-                { label: 'Format', value: 'Project-based, mentored' },
-                { label: 'Output', value: 'Shipped system + writeup' },
-                { label: 'Stipend', value: 'Yes' },
-                { label: 'Apply by', value: '2026.06.30' },
-              ]}
-            />
-          </div>
-        </div>
-      </Section>
+      <InternshipHero onApply={handleApply} />
+      <CohortPhoto />
+      <ProjectTypes />
+      <EligibilityApply onApply={handleApply} />
 
       <ApplyModal open={applyOpen} onClose={() => setApplyOpen(false)} />
-    </>
+    </div>
   );
 }
 
-function ApplyModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+function InternshipHero({ onApply }: { onApply: () => void }) {
+  return (
+    <section className="ip-hero" id="top">
+      <div className="wrap">
+        <div className="ip-eyebrow-row">
+          <span className="eyebrow">
+            <span className="dot" aria-hidden="true" />
+            Applied Systems Program
+          </span>
+        </div>
+        <h1 className="ip-title">
+          Build something
+          <br />
+          that actually <em>runs.</em>
+        </h1>
+        <p className="ip-desc">
+          Aptiveon's internship program puts you on real systems used by
+          enterprise clients. Ship to production in week one. Work alongside
+          senior engineers on workflows that people depend on Monday morning.
+        </p>
+        <div className="ip-actions">
+          <button type="button" onClick={onApply} className="btn btn-primary">
+            Apply for cohort 02 <span className="arr">→</span>
+          </button>
+          <a href="#project-types" className="btn btn-ghost">
+            ▸ See project types
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CohortPhoto() {
+  return (
+    <section className="cohort-photo-section">
+      <div className="wrap">
+        <figure className="cohort-photo-frame">
+          <img
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=85&auto=format&fit=crop"
+            alt="Cohort 01 team working together"
+            className="cohort-photo"
+            loading="lazy"
+          />
+          <figcaption className="cohort-photo-caption">
+            <span className="num">01</span>
+            <span>Cohort 01 — Singapore, 2025</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
+function ProjectTypes() {
+  return (
+    <section className="ip-section" id="project-types">
+      <div className="wrap">
+        <div className="section-head">
+          <div>
+            <div className="eyebrow-row">
+              <span className="eyebrow">
+                <span className="dot" aria-hidden="true" />
+                Project types
+              </span>
+            </div>
+            <h2>
+              Every intern project lands in
+              <br />
+              <em>one of these four buckets.</em>
+            </h2>
+          </div>
+          <p>
+            The exact problem changes by cohort and partner — these are the
+            shapes. Real work, real deliverables, real users on the other side.
+          </p>
+        </div>
+
+        <div className="proj-grid">
+          {PROJECT_TYPES.map((p, i) => (
+            <article key={p.type} className="proj-card">
+              <div className="proj-num">0{i + 1} / 04</div>
+              <div className="proj-label">Type · {p.type}</div>
+              <h3 className="proj-title">{p.title}</h3>
+              <p className="proj-desc">{p.desc}</p>
+              <p className="proj-example">{p.example}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EligibilityApply({ onApply }: { onApply: () => void }) {
+  return (
+    <section className="ip-section eligibility-section" id="apply">
+      <div className="wrap">
+        <div className="elig-grid">
+          <div className="elig-left">
+            <div className="eyebrow-row">
+              <span className="eyebrow">
+                <span className="dot" aria-hidden="true" />
+                Eligibility & apply
+              </span>
+            </div>
+            <h2 className="elig-title">
+              Show us what
+              <br />
+              <em>you've built.</em>
+            </h2>
+            <p className="elig-desc">
+              A half-finished side project, a GitHub repo, a writeup of
+              something that didn't work — any of those beats a polished
+              resume. We want evidence that you make things, not evidence
+              that you study things.
+            </p>
+            <p className="elig-note">
+              Send a short note: what you've built, what you'd want to build
+              with us, and one technical thing you've recently changed your
+              mind about.
+            </p>
+            <button type="button" onClick={onApply} className="btn btn-primary">
+              Apply for cohort 02 <span className="arr">→</span>
+            </button>
+          </div>
+
+          <div className="elig-right">
+            <SpecTable rows={ELIGIBILITY} className="elig-spec" />
+
+            <div className="cohort-avs">
+              {COHORT_PORTRAITS.map((p) => (
+                <span key={p.p} className="cohort-av">
+                  <img
+                    src={`https://randomuser.me/api/portraits/${p.p}.jpg`}
+                    alt={p.n}
+                    loading="lazy"
+                  />
+                </span>
+              ))}
+            </div>
+            <p className="cohort-label">
+              Cohort 01 — 6 engineers shipped to production
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ApplyModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   const [submitted, setSubmitted] = useState(false);
+  const [name, setName] = useState('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // No backend yet — same fake-send behaviour as the contact form.
+    // No backend — placeholder confirmation state.
     setSubmitted(true);
   };
 
   const handleClose = () => {
     onClose();
-    // Reset for next open after the close animation finishes.
     setTimeout(() => setSubmitted(false), 250);
   };
 
   return (
-    <Modal open={open} onClose={handleClose} title="Apply for cohort 02">
+    <Modal open={open} onClose={handleClose} title="Tell us what you've built">
       {submitted ? (
         <div className="apply-sent">
-          <p>Thanks — we'll write back within two business days.</p>
+          <p>
+            Thanks{name ? `, ${name}` : ''} — we've got your application.
+          </p>
+          <p>
+            We read every submission. Expect a short reply within 5 business
+            days, even if it's a no.
+          </p>
           <div className="actions">
             <Button onClick={handleClose} variant="ghost">
               Close
@@ -203,12 +271,21 @@ function ApplyModal({ open, onClose }: { open: boolean; onClose: () => void }) {
       ) : (
         <form className="apply-form" onSubmit={handleSubmit}>
           <p className="apply-intro">
-            Tell us what you've built, what you'd want to build with us, and one technical thing
-            you've recently changed your mind about.
+            A half-finished side project beats a polished resume. Tell us what
+            you've built, what you'd want to build with us, and one technical
+            thing you've recently changed your mind about.
           </p>
 
           <label htmlFor="apply-name">Your name</label>
-          <input id="apply-name" name="name" type="text" required autoFocus />
+          <input
+            id="apply-name"
+            name="name"
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            autoFocus
+          />
 
           <label htmlFor="apply-email">Email</label>
           <input id="apply-email" name="email" type="email" required />
@@ -225,7 +302,10 @@ function ApplyModal({ open, onClose }: { open: boolean; onClose: () => void }) {
           <textarea id="apply-note" name="note" required rows={6} />
 
           <div className="submit-row">
-            <span className="help">A two-paragraph note beats a three-page brief.</span>
+            <span className="help">
+              We reply to every applicant · No coding challenges · No GPA
+              filter
+            </span>
             <Button type="submit" variant="primary" arrow>
               Send
             </Button>

@@ -2,9 +2,9 @@
  * Entry stylesheet — imports, in order:
  *   1. Tailwind core
  *   2. Design tokens (CSS variables) — single source of truth
- *   3. Base resets
+ *   3. Base resets / shared typography
  *   4. Component styles (chrome + primitives)
- *   5. Page-specific styles (only for things utilities can't express)
+ *   5. Page-specific styles
  */
 @import 'tailwindcss';
 
@@ -20,6 +20,8 @@
 @import './components/modal.css';
 @import './components/select.css';
 @import './components/splash.css';
+@import './components/marquee.css';
+@import './components/live-trace.css';
 
 @import './pages/home.css';
 @import './pages/solutions.css';

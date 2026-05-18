@@ -1,34 +1,24 @@
-import { useRef, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import Crumb from '@/components/ui/Crumb';
 import PageHero from '@/components/ui/PageHero';
 import SpecTable, { type SpecRow } from '@/components/ui/SpecTable';
-import Counter from '@/components/ui/Counter';
-import Reveal from '@/components/ui/Reveal';
 import Button from '@/components/ui/Button';
-import Image from '@/components/ui/Image';
-import SectionMark from '@/components/ui/SectionMark';
-import { useAmbientParticles } from '@/hooks/useAmbientParticles';
-import type { ImgKey } from '@/lib/imagery';
 
 interface CaseResult {
-  num: ReactNode;
-  unit?: string;
+  num: string;
   label: string;
 }
-
 interface CaseQuote {
   body: ReactNode;
   who: string;
 }
-
 interface CaseStudy {
   id: string;
   name: string;
   tag: string;
-  tagColor?: 'cobalt' | 'moss';
+  photo: string;
   sub: string;
   stamp: { quarter: string; note: string };
-  photo: ImgKey;
   spec: SpecRow[];
   problem: { hed: string; body: string };
   approach: { hed: string; body: string };
@@ -42,9 +32,9 @@ const CASES: CaseStudy[] = [
     id: 'northarc',
     name: 'NorthArc Capital',
     tag: 'capital markets',
+    photo: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=85&auto=format&fit=crop',
     sub: 'CASE STUDY · CAPITAL MARKETS · SINGAPORE / ZURICH / LONDON',
     stamp: { quarter: '2026.Q1', note: '12-week build · ongoing operate' },
-    photo: 'cust_northarc',
     spec: [
       { label: 'Sector', value: 'Capital markets — structured products' },
       { label: 'Size', value: '1,200 staff · 3 jurisdictions' },
@@ -68,40 +58,26 @@ const CASES: CaseStudy[] = [
     quote: {
       body: (
         <>
-          Three analysts spent a week on each prospectus. We get to a defensible read in{' '}
-          <em style={{ color: 'var(--color-accent-ink)', fontStyle: 'normal' }}>
-            under four hours
-          </em>{' '}
-          — and every flag points to the paragraph it came from.
+          Three analysts spent a week on each prospectus. We get to a defensible
+          read in <em>under four hours</em> — and every flag points to the
+          paragraph it came from.
         </>
       ),
       who: 'Priya Raman · Head of Compliance Engineering, NorthArc Capital',
     },
     results: [
-      {
-        num: <Counter from={40} to={4} />,
-        unit: 'h → 4h',
-        label: 'time to first defensible read · per prospectus',
-      },
-      {
-        num: <Counter to={312} />,
-        label: 'documents reviewed per quarter · cohort 2026.Q1',
-      },
-      {
-        num: <Counter to={86} />,
-        unit: '%',
-        label: 'analyst-hours saved · 6-month rolling',
-      },
+      { num: '40h → 4h', label: 'time to first defensible read · per prospectus' },
+      { num: '312', label: 'documents reviewed per quarter · cohort 2026.Q1' },
+      { num: '86%', label: 'analyst-hours saved · 6-month rolling' },
     ],
   },
   {
     id: 'brackmoor',
     name: 'Brackmoor Health',
     tag: 'healthcare',
-    tagColor: 'moss',
+    photo: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=900&q=85&auto=format&fit=crop',
     sub: 'CASE STUDY · HOSPITAL NETWORK · UNITED KINGDOM',
     stamp: { quarter: '2026.Q1', note: '16-week build · in operation' },
-    photo: 'cust_brackmoor',
     spec: [
       { label: 'Sector', value: 'Hospital network — 7 sites' },
       { label: 'Size', value: '4,800 clinical staff' },
@@ -116,7 +92,7 @@ const CASES: CaseStudy[] = [
     },
     approach: {
       hed: 'A grounded assistant, on the ward tablet.',
-      body: 'We deployed the Knowledge Assistant against the SOP corpus, with strict refusal behaviour for out-of-corpus questions and explicit "see the senior on call" routing for clinical decisions. Every answer cites the SOP and section number. The whole thing runs on-prem inside Brackmoor\'s tenancy.',
+      body: "We deployed the Knowledge Assistant against the SOP corpus, with strict refusal behaviour for out-of-corpus questions and explicit \"see the senior on call\" routing for clinical decisions. Every answer cites the SOP and section number. The whole thing runs on-prem inside Brackmoor's tenancy.",
     },
     outcome: {
       hed: 'The right paragraph, in seconds.',
@@ -125,29 +101,25 @@ const CASES: CaseStudy[] = [
     quote: {
       body: (
         <>
-          Our registrars stopped asking each other where the SOP was. They ask the assistant, get
-          the{' '}
-          <em style={{ color: 'var(--color-accent-ink)', fontStyle: 'normal' }}>
-            cited paragraph
-          </em>
-          , and move on.
+          Our registrars stopped asking each other where the SOP was. They ask
+          the assistant, get the <em>cited paragraph</em>, and move on.
         </>
       ),
       who: 'Dr. Iwan Hollis · Director of Clinical Governance, Brackmoor Health',
     },
     results: [
-      { num: <Counter to={11} />, unit: 's', label: 'median question → cited paragraph' },
-      { num: <Counter to={1400} />, label: 'SOPs indexed · across 7 sites' },
-      { num: <Counter to={0} />, label: 'out-of-corpus answers in shadow audit' },
+      { num: '11s', label: 'median question → cited paragraph' },
+      { num: '1,400', label: 'SOPs indexed · across 7 sites' },
+      { num: '0', label: 'out-of-corpus answers in shadow audit' },
     ],
   },
   {
     id: 'meridian',
     name: 'Meridian/H',
     tag: 'public infra',
+    photo: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&q=85&auto=format&fit=crop',
     sub: 'CASE STUDY · PUBLIC INFRASTRUCTURE · NETHERLANDS',
     stamp: { quarter: '2025.Q4', note: '14-week build · operating' },
-    photo: 'cust_meridian',
     spec: [
       { label: 'Sector', value: 'Public infrastructure — water' },
       { label: 'Size', value: '900 staff · 11 facilities' },
@@ -171,27 +143,26 @@ const CASES: CaseStudy[] = [
     quote: {
       body: (
         <>
-          The workflow tells me{' '}
-          <em style={{ color: 'var(--color-accent-ink)', fontStyle: 'normal' }}>why</em> it routed
-          an application here. I can see the precedent, the readings, and what the model thinks.
-          Then I decide.
+          The workflow tells me <em>why</em> it routed an application here. I
+          can see the precedent, the readings, and what the model thinks. Then
+          I decide.
         </>
       ),
       who: 'Saskia Bekker · Senior Permit Reviewer, Meridian/H',
     },
     results: [
-      { num: <Counter from={42} to={9} />, unit: 'd', label: 'median permit cycle · 42d → 9d' },
-      { num: <Counter to={6200} />, label: 'applications processed · 12 months' },
-      { num: <Counter to={78} />, unit: '%', label: 'auto-approved with cited rationale' },
+      { num: '42d → 9d', label: 'median permit cycle' },
+      { num: '6,200', label: 'applications processed · 12 months' },
+      { num: '78%', label: 'auto-approved with cited rationale' },
     ],
   },
   {
     id: 'halden',
     name: 'Halden & Lo',
     tag: 'law',
+    photo: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=85&auto=format&fit=crop',
     sub: 'CASE STUDY · LAW FIRM · SINGAPORE / HONG KONG',
     stamp: { quarter: '2025.Q3', note: '10-week build · ongoing' },
-    photo: 'cust_halden',
     spec: [
       { label: 'Sector', value: 'Law — corporate / arbitration' },
       { label: 'Size', value: '180 lawyers · 2 offices' },
@@ -215,25 +186,16 @@ const CASES: CaseStudy[] = [
     quote: {
       body: (
         <>
-          It surfaces the{' '}
-          <em style={{ color: 'var(--color-accent-ink)', fontStyle: 'normal' }}>2019 memo</em> I
-          forgot I'd written. Three lines of citation. That's the entire game.
+          It surfaces the <em>2019 memo</em> I forgot I'd written. Three lines
+          of citation. That's the entire game.
         </>
       ),
       who: 'Tessa Halden · Senior Partner, Halden & Lo',
     },
     results: [
-      {
-        num: (
-          <>
-            −<Counter to={64} />
-          </>
-        ),
-        unit: '%',
-        label: 'research → first-draft memo time',
-      },
-      { num: <Counter to={18} />, unit: 'y', label: 'years of firm work-product indexed' },
-      { num: <Counter to={100} />, unit: '%', label: 'in-tenant · no model training on data' },
+      { num: '−64%', label: 'research → first-draft memo time' },
+      { num: '18y', label: 'years of firm work-product indexed' },
+      { num: '100%', label: 'in-tenant · no model training on data' },
     ],
   },
 ];
@@ -251,196 +213,193 @@ const LOGOS: Array<{ name: string; style: React.CSSProperties }> = [
 ];
 
 export default function Customers() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  useAmbientParticles(canvasRef);
-
   return (
-    <>
-      <canvas ref={canvasRef} className="cust-particles" />
+    <div className="page-main">
+      <div className="page-wrap">
+        <Crumb current="customers" />
 
-      <Crumb current="customers" />
+        <PageHero
+          title={
+            <>
+              Production, <span className="mark">not</span> pilot.
+            </>
+          }
+          dek="Four customers across capital markets, healthcare, public infrastructure, and law. Each is running an Aptiveon system in production — with auditors who've already looked at it, and operators who depend on it on Tuesday morning."
+          meta={[
+            { label: 'CUSTOMERS', value: '9 in production · 4 sectors' },
+            { label: 'RUNS · LAST 24h', value: '54,812' },
+            { label: 'REGIONS', value: 'SG · EU · UK · US' },
+            { label: 'STATUS', value: 'Open for partner pilots' },
+          ]}
+        />
 
-      <PageHero
-        title={
-          <>
-            Production, <span className="mark">not</span> pilot.
-          </>
-        }
-        dek="Four customers across capital markets, healthcare, public infrastructure, and law. Each is running an Aptiveon system in production — with auditors who've already looked at it, and operators who depend on it on Tuesday morning."
-        meta={[
-          { label: 'CUSTOMERS', value: '9 in production · 4 sectors' },
-          { label: 'RUNS · LAST 24h', value: '54,812' },
-          { label: 'REGIONS', value: 'SG · EU · UK · US' },
-          { label: 'STATUS', value: 'Open for partner pilots' },
-        ]}
-      />
-
-      <Reveal as="section" variant="rv" className="section">
-        <div className="cust-index">
-          {CASES.map((c) => (
-            <a key={c.id} href={`#${c.id}`}>
-              <div className="name">{c.name}</div>
-              <div className="sec">{c.spec[0]?.value as string}</div>
-            </a>
-          ))}
-        </div>
-      </Reveal>
-
-      <Reveal as="section" variant="rv" className="agg">
-        <div className="stat">
-          <div className="num">
-            <Counter to={9} />
-            <span className="u">+</span>
+        <section className="case-index-section">
+          <div className="case-index">
+            {CASES.map((c) => (
+              <a key={c.id} href={`#${c.id}`}>
+                <div className="name">{c.name}</div>
+                <div className="sec">{c.spec[0]?.value as string}</div>
+              </a>
+            ))}
           </div>
-          <div className="lbl">enterprise customers · 4 regulated sectors</div>
-        </div>
-        <div className="stat">
-          <div className="num">
-            <Counter to={4.2} decimals={1} />
-            <span className="u">M</span>
-          </div>
-          <div className="lbl">documents indexed across customer tenants</div>
-        </div>
-        <div className="stat">
-          <div className="num">
-            <Counter to={99.4} decimals={1} />
-            <span className="u">%</span>
-          </div>
-          <div className="lbl">median cited-answer accuracy · last 90 days</div>
-        </div>
-        <div className="stat">
-          <div className="num">
-            <Counter to={86} />
-            <span className="u">%</span>
-          </div>
-          <div className="lbl">analyst-hours saved on the workflow that runs most</div>
-        </div>
-      </Reveal>
+        </section>
 
-      {CASES.map((c) => (
-        <CaseStudyBlock key={c.id} study={c} />
-      ))}
-
-      <Reveal as="section" variant="rv" className="logos-section">
-        <div className="lbl">PILOTS &amp; PARTNER ENGAGEMENTS · IN FLIGHT</div>
-        <div className="row">
-          {LOGOS.map((l) => (
-            <div key={l.name} className="l" style={l.style}>
-              {l.name}
+        <section className="agg-stats">
+          <div className="stat">
+            <div className="num">
+              9<span className="u">+</span>
             </div>
-          ))}
-        </div>
-      </Reveal>
+            <div className="lbl">enterprise customers · 4 regulated sectors</div>
+          </div>
+          <div className="stat">
+            <div className="num">
+              4.2<span className="u">M</span>
+            </div>
+            <div className="lbl">documents indexed across customer tenants</div>
+          </div>
+          <div className="stat">
+            <div className="num">
+              99.4<span className="u">%</span>
+            </div>
+            <div className="lbl">median cited-answer accuracy · last 90 days</div>
+          </div>
+          <div className="stat">
+            <div className="num">
+              86<span className="u">%</span>
+            </div>
+            <div className="lbl">
+              analyst-hours saved on the workflow that runs most
+            </div>
+          </div>
+        </section>
 
-      <Reveal as="section" variant="rv" className="ework">
-        <div className="head">
-          <h3>How an engagement runs</h3>
-          <span className="meta">build · operate · transfer</span>
-        </div>
-        <div className="ework-grid">
-          <div>
-            <div className="ref">PHASE 01 · BUILD</div>
-            <h4>6–14 weeks</h4>
-            <p>
-              We sit with the operators who'll use the system. We write the spec, ship the build,
-              hook up the integrations, and put it in front of a real user inside week 4.
-            </p>
-          </div>
-          <div>
-            <div className="ref">PHASE 02 · OPERATE</div>
-            <h4>3–6 months</h4>
-            <p>
-              We run it with you in production. On-call rotation, eval harness in place, monthly
-              written reports that go to your audit committee, not just your CTO.
-            </p>
-          </div>
-          <div>
-            <div className="ref">PHASE 03 · TRANSFER</div>
-            <h4>By month 9</h4>
-            <p>
-              Your team takes ownership. We stay on a thin retainer for incidents and the next
-              thing — but the system, the docs, and the runbook are yours.
-            </p>
-          </div>
-        </div>
-      </Reveal>
+        {CASES.map((c) => (
+          <CaseStudyBlock key={c.id} study={c} />
+        ))}
 
-      <Reveal as="section" variant="rv" className="cust-cta">
-        <h3>
-          Want to be the <em>fifth case study?</em>
-        </h3>
-        <Button to="/contact" variant="accent" arrow>
-          Talk to sales
-        </Button>
-      </Reveal>
-    </>
+        <section className="logos-section">
+          <div className="lbl">PILOTS &amp; PARTNER ENGAGEMENTS · IN FLIGHT</div>
+          <div className="row">
+            {LOGOS.map((l) => (
+              <div key={l.name} className="logo" style={l.style}>
+                {l.name}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="ework">
+          <div className="sec-head">
+            <h2 className="sec-title">How an engagement runs</h2>
+            <span className="sec-meta">build · operate · transfer</span>
+          </div>
+          <div className="ework-grid">
+            <div>
+              <div className="ref">PHASE 01 · BUILD</div>
+              <h4>6–14 weeks</h4>
+              <p>
+                We sit with the operators who'll use the system. We write the
+                spec, ship the build, hook up the integrations, and put it in
+                front of a real user inside week 4.
+              </p>
+            </div>
+            <div>
+              <div className="ref">PHASE 02 · OPERATE</div>
+              <h4>3–6 months</h4>
+              <p>
+                We run it with you in production. On-call rotation, eval
+                harness in place, monthly written reports that go to your
+                audit committee, not just your CTO.
+              </p>
+            </div>
+            <div>
+              <div className="ref">PHASE 03 · TRANSFER</div>
+              <h4>By month 9</h4>
+              <p>
+                Your team takes ownership. We stay on a thin retainer for
+                incidents and the next thing — but the system, the docs, and
+                the runbook are yours.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="cust-cta">
+          <h3>
+            Want to be the <em>fifth case study?</em>
+          </h3>
+          <Button to="/contact" variant="primary" arrow>
+            Talk to sales
+          </Button>
+        </section>
+      </div>
+    </div>
   );
 }
 
 function CaseStudyBlock({ study: c }: { study: CaseStudy }) {
-  const tagStyle =
-    c.tagColor === 'moss'
-      ? { borderColor: 'var(--color-moss)', color: 'var(--color-moss)' }
-      : undefined;
   return (
-    <Reveal as="section" variant="rv" className="case" id={c.id}>
+    <section className="case" id={c.id}>
       <div className="case-head">
-        <SectionMark />
-        <h2>
+        <h2 className="case-name">
           {c.name}
-          <span className="tag" style={tagStyle}>
-            {c.tag}
-          </span>
-          <span className="sub">{c.sub}</span>
+          <span className="case-tag">{c.tag}</span>
         </h2>
-        <div className="stamp">
-          <b>{c.stamp.quarter}</b>
-          {c.stamp.note}
+        <div className="case-sub">{c.sub}</div>
+        <div className="case-stamp">
+          <b>{c.stamp.quarter}</b> · {c.stamp.note}
         </div>
       </div>
+
       <div className="case-body">
         <div className="case-l">
-          <Image src={c.photo} alt={c.name} className="case-photo" />
+          <figure className="case-photo-frame">
+            <img
+              src={c.photo}
+              alt={`${c.name} — ${c.tag}`}
+              className="case-photo"
+              loading="lazy"
+            />
+          </figure>
+          <div className="lbl">Spec sheet</div>
           <SpecTable rows={c.spec} />
         </div>
+
         <div className="case-r">
-          <Arc label="PROBLEM" hed={c.problem.hed} body={c.problem.body} />
-          <Arc label="APPROACH" hed={c.approach.hed} body={c.approach.body} />
-          <Arc label="OUTCOME" hed={c.outcome.hed} body={c.outcome.body} />
-
-          <div className="case-quote">
-            <blockquote>{c.quote.body}</blockquote>
-            <div className="who">
-              <b>{c.quote.who.split(' · ')[0]}</b>
-              {c.quote.who.includes(' · ') ? ` · ${c.quote.who.split(' · ').slice(1).join(' · ')}` : ''}
+          {(
+            [
+              { lbl: 'Problem', data: c.problem },
+              { lbl: 'Approach', data: c.approach },
+              { lbl: 'Outcome', data: c.outcome },
+            ] as const
+          ).map((arc) => (
+            <div key={arc.lbl} className="arc">
+              <div className="arc-lbl">{arc.lbl}</div>
+              <h4 className="arc-hed">{arc.data.hed}</h4>
+              <p className="arc-body">{arc.data.body}</p>
             </div>
-          </div>
+          ))}
 
-          <div className="results">
+          <blockquote className="case-quote">
+            <p>"{c.quote.body}"</p>
+            <footer>
+              <b>{c.quote.who.split(' · ')[0]}</b>
+              {c.quote.who.includes(' · ')
+                ? ` · ${c.quote.who.split(' · ').slice(1).join(' · ')}`
+                : ''}
+            </footer>
+          </blockquote>
+
+          <div className="case-results">
             {c.results.map((r, i) => (
-              <div key={i} className="r">
-                <div className="num">
-                  {r.num}
-                  {r.unit && <span className="u">{r.unit}</span>}
-                </div>
-                <div className="lbl">{r.label}</div>
+              <div key={i} className="cr">
+                <div className="cr-num">{r.num}</div>
+                <div className="cr-lbl">{r.label}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
-    </Reveal>
-  );
-}
-
-function Arc({ label, hed, body }: { label: string; hed: string; body: string }) {
-  return (
-    <div className="arc">
-      <div className="lbl">{label}</div>
-      <div>
-        <h4>{hed}</h4>
-        <p>{body}</p>
-      </div>
-    </div>
+    </section>
   );
 }
