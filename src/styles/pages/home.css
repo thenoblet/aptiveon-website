@@ -138,7 +138,22 @@
   }
   .home-hero-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-14);
+    gap: var(--space-12);
+  }
+}
+@media (max-width: 36rem) {
+  .home-hero {
+    padding: 6rem 0 2.5rem;
+  }
+  .hero-title {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+  .hero-desc {
+    font-size: 16px;
+  }
+  .hero-trust {
+    flex-wrap: wrap;
+    gap: 10px;
   }
 }
 
@@ -354,9 +369,13 @@
   .gf-row {
     grid-template-columns: 1fr;
     gap: var(--space-5);
+    padding: 40px 0;
   }
   .gf-num {
     padding-top: 0;
+  }
+  .gf-text h3 {
+    font-size: clamp(28px, 7vw, 40px);
   }
 }
 
@@ -687,6 +706,12 @@
   .arch-diagram {
     grid-template-columns: 1fr;
     gap: var(--space-5);
+  }
+  .arch {
+    padding: 96px 0;
+  }
+  .arch-bottom {
+    margin-top: var(--space-10);
   }
 }
 
@@ -1176,6 +1201,38 @@
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
+  .show-frame-body {
+    min-height: 0;
+    padding: 18px;
+  }
+}
+@media (max-width: 36rem) {
+  .show-tab {
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+  .wf-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .wf-edge {
+    display: none;
+  }
+  .wf-stats {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .wf-stats .ws {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+  }
+  .wf-stats .ws:last-child {
+    border-bottom: 0;
+  }
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ── Integrations ─────────────────────────────────────────── */
@@ -1500,11 +1557,29 @@
 @media (max-width: 60rem) {
   .lf-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
   .lf-event {
     grid-template-columns: 5rem 1fr 4rem;
   }
   .lf-event .time {
+    display: none;
+  }
+}
+@media (max-width: 36rem) {
+  .lf-bars .b {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+  }
+  .lf-events {
+    height: 360px;
+  }
+  .lf-event {
+    grid-template-columns: 4.5rem 1fr;
+    font-size: 11px;
+  }
+  .lf-event .lat {
     display: none;
   }
 }
@@ -1602,6 +1677,22 @@
 @media (prefers-reduced-motion: reduce) {
   .tst-track {
     animation: none;
+  }
+}
+
+@media (max-width: 36rem) {
+  .tst-card {
+    width: 88vw;
+    max-width: 360px;
+    padding: 24px;
+    gap: 20px;
+  }
+  .tst-card .quote {
+    font-size: 18px;
+  }
+  .tst-track-wrap::before,
+  .tst-track-wrap::after {
+    width: 40px;
   }
 }
 
@@ -2017,5 +2108,24 @@
   }
   .cta-proof .cp {
     border-right: 0;
+    padding: 0;
+  }
+}
+@media (max-width: 36rem) {
+  .cta-inner {
+    padding: 40px 20px;
+  }
+  .cta-title {
+    font-size: clamp(36px, 9vw, 56px);
+  }
+  .cta-sub {
+    font-size: 15px;
+  }
+  .cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cta-actions .btn {
+    justify-content: center;
   }
 }

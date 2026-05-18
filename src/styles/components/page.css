@@ -112,10 +112,17 @@
   }
   .page-title {
     max-width: 100%;
+    font-size: clamp(40px, 10vw, 56px);
+  }
+  .page-dek {
+    font-size: 16px;
   }
   .hero-meta {
     grid-template-columns: 1fr;
     column-gap: 0;
+  }
+  .crumb {
+    margin: 20px 0 16px;
   }
 }
 

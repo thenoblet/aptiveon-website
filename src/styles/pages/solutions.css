@@ -139,4 +139,10 @@
   .uses {
     grid-template-columns: 1fr;
   }
+  .sol-head h2 {
+    font-size: clamp(26px, 7vw, 36px);
+  }
+  .solution {
+    margin-bottom: 64px;
+  }
 }

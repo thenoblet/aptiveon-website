@@ -241,4 +241,30 @@
   .ip-title {
     max-width: 100%;
   }
+  .ip-hero {
+    padding: 88px 0 56px;
+  }
+  .cohort-photo-frame {
+    aspect-ratio: 16 / 10;
+  }
+  .cohort-photo-caption {
+    left: 16px;
+    bottom: 14px;
+    font-size: 10px;
+  }
+  .cohort-photo-caption .num {
+    font-size: 18px;
+  }
+  .proj-grid {
+    grid-template-columns: 1fr;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .proj-card {
+    padding: 24px;
+    border-right: 0;
+  }
+  .elig-title {
+    font-size: clamp(28px, 8vw, 44px);
+  }
 }
